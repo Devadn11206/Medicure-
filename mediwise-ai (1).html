@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MediWise AI — Healthcare Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0B0E1A;
+  --ink2:#1A1F35;
+  --cobalt:#1A6BFF;
+  --cobalt2:#0052E0;
+  --violet:#7B2FFF;
+  --violet2:#5B1FCC;
+  --rose:#FF3D7F;
+  --sky:#00C2FF;
+  --white:#FFFFFF;
+  --muted:#8892A4;
+  --border:rgba(255,255,255,0.08);
+  --glass:rgba(255,255,255,0.04);
+  --glass2:rgba(255,255,255,0.07);
+}
+html{scroll-behavior:smooth}
+body{
+  background:#060B18;
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(26,107,255,0.35);border-radius:2px}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;height:70px;
+  background:rgba(6,11,24,0.75);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:background 0.3s;
+}
+nav.scrolled{background:rgba(6,11,24,0.95)}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:1.15rem;
+  letter-spacing:-0.02em;text-decoration:none;color:var(--white);
+}
+.logo-icon{
+  width:34px;height:34px;border-radius:10px;
+  background:linear-gradient(135deg,#1A6BFF,#7B2FFF);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;font-weight:800;flex-shrink:0;color:#fff;
+}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  color:var(--muted);text-decoration:none;
+  font-size:0.875rem;font-weight:500;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--white)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-ghost{
+  background:transparent;color:var(--muted);
+  border:1px solid var(--border);padding:9px 18px;border-radius:25px;
+  font-size:0.85rem;font-weight:500;cursor:pointer;
+  transition:color 0.2s,border-color 0.2s;
+  font-family:'Inter',sans-serif;
+}
+.nav-ghost:hover{color:var(--white);border-color:rgba(255,255,255,0.2)}
+.nav-cta{
+  background:linear-gradient(135deg,#1A6BFF,#7B2FFF);
+  color:#fff;border:none;padding:10px 22px;border-radius:25px;
+  font-size:0.875rem;font-weight:600;cursor:pointer;
+  transition:opacity 0.2s,transform 0.2s;
+  font-family:'Inter',sans-serif;
+  box-shadow:0 0 20px rgba(26,107,255,0.25);
+}
+.nav-cta:hover{opacity:0.85;transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  padding:130px 6% 90px;
+  position:relative;overflow:hidden;
+}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.orb1{width:600px;height:600px;background:rgba(26,107,255,0.15);top:-150px;left:-150px}
+.orb2{width:450px;height:450px;background:rgba(123,47,255,0.13);bottom:-80px;right:-120px}
+.orb3{width:350px;height:350px;background:rgba(255,61,127,0.07);top:45%;left:50%;transform:translateX(-50%)}
+.orb4{width:250px;height:250px;background:rgba(0,194,255,0.06);top:20%;right:10%}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(26,107,255,0.1);
+  border:1px solid rgba(26,107,255,0.28);
+  border-radius:30px;padding:6px 16px;
+  font-size:0.75rem;font-weight:700;color:#7BB8FF;
+  margin-bottom:2rem;letter-spacing:0.07em;text-transform:uppercase;
+}
+.badge-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:#1A6BFF;box-shadow:0 0 8px #1A6BFF;
+  animation:pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.5)}}
+
+.hero h1{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(2.8rem,6vw,5.2rem);
+  font-weight:800;line-height:1.06;
+  letter-spacing:-0.035em;
+  margin-bottom:1.5rem;
+  max-width:820px;
+}
+.gradient-text{
+  background:linear-gradient(135deg,#1A6BFF 0%,#7B2FFF 50%,#FF3D7F 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-size:1.1rem;color:#9BA8BB;max-width:560px;
+  margin:0 auto 2.5rem;line-height:1.75;
+}
+.hero-ctas{
+  display:flex;gap:1rem;justify-content:center;
+  flex-wrap:wrap;margin-bottom:4.5rem;
+}
+.btn-primary{
+  background:linear-gradient(135deg,#1A6BFF,#7B2FFF);
+  color:#fff;border:none;padding:15px 34px;border-radius:50px;
+  font-size:1rem;font-weight:600;cursor:pointer;
+  transition:transform 0.2s,box-shadow 0.2s;
+  font-family:'Inter',sans-serif;
+  box-shadow:0 0 40px rgba(26,107,255,0.3);
+  letter-spacing:-0.01em;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 50px rgba(26,107,255,0.45)}
+.btn-ghost{
+  background:rgba(255,255,255,0.05);color:var(--white);
+  border:1px solid rgba(255,255,255,0.12);padding:15px 34px;border-radius:50px;
+  font-size:1rem;font-weight:500;cursor:pointer;
+  transition:background 0.2s,border-color 0.2s;
+  font-family:'Inter',sans-serif;
+  backdrop-filter:blur(10px);
+}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.22)}
+
+/* ECG PULSE */
+.pulse-wrap{width:100%;max-width:720px;height:64px;margin-bottom:1.5rem;position:relative}
+.pulse-wrap svg{width:100%;height:100%}
+
+/* TRUST PILLS */
+.trust-row{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+}
+.trust-pill{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:30px;padding:5px 14px;
+  font-size:0.75rem;color:#7A8899;font-weight:500;
+}
+.trust-pill span{color:#4ADE80;font-size:0.8rem}
+
+/* ── STATS ── */
+.stats-row{
+  display:flex;gap:0;justify-content:center;flex-wrap:wrap;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,0.015);
+}
+.stat{
+  text-align:center;padding:2.5rem 3rem;
+  border-right:1px solid var(--border);
+  flex:1;min-width:160px;
+}
+.stat:last-child{border-right:none}
+.stat-num{
+  font-family:'Outfit',sans-serif;font-size:2.1rem;
+  font-weight:800;letter-spacing:-0.025em;line-height:1;
+  margin-bottom:6px;
+}
+.stat-label{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:500}
+
+/* ── WORKFLOW ── */
+.workflow-section{padding:7rem 6%}
+.section-eyebrow{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:#1A6BFF;margin-bottom:1rem;
+}
+.section-title{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800;letter-spacing:-0.03em;line-height:1.12;
+  margin-bottom:1rem;
+}
+.section-sub{color:#7A8899;font-size:1rem;max-width:520px;line-height:1.75}
+
+.steps-outer{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:4rem}
+.steps-track{display:flex;flex-direction:column;gap:0}
+.step-item{display:flex;gap:1.5rem;align-items:flex-start}
+.step-connector{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.step-num{
+  width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:0.85rem;font-family:'Outfit',sans-serif;
+  border:1.5px solid;flex-shrink:0;
+}
+.step-line{
+  width:1.5px;height:38px;
+  background:linear-gradient(to bottom,rgba(26,107,255,0.4),rgba(123,47,255,0.1));
+}
+.step-item:last-child .step-line{display:none}
+.step-body{padding-bottom:2.25rem}
+.step-body h3{
+  font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:700;
+  margin-bottom:5px;letter-spacing:-0.015em;
+}
+.step-body p{font-size:0.875rem;color:var(--muted);line-height:1.65}
+
+/* RIGHT PANEL DEMO */
+.workflow-preview{
+  position:sticky;top:100px;
+  background:#080D1C;border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;
+}
+.wp-header{
+  padding:1rem 1.5rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.wp-title{font-family:'Outfit',sans-serif;font-size:0.875rem;font-weight:700}
+.wp-status{
+  display:flex;align-items:center;gap:6px;
+  font-size:0.72rem;color:#4ADE80;font-weight:600;
+}
+.wp-dot{width:6px;height:6px;border-radius:50%;background:#4ADE80;box-shadow:0 0 6px #4ADE80}
+.wp-body{padding:1.5rem}
+.wp-upload-zone{
+  border:1.5px dashed rgba(26,107,255,0.3);border-radius:12px;
+  padding:2rem;text-align:center;background:rgba(26,107,255,0.04);
+  margin-bottom:1.25rem;cursor:pointer;transition:background 0.2s;
+}
+.wp-upload-zone:hover{background:rgba(26,107,255,0.08)}
+.wp-upload-icon{font-size:1.8rem;margin-bottom:0.5rem}
+.wp-upload-text{font-size:0.8rem;color:var(--muted)}
+.wp-upload-text strong{color:#7BB8FF;display:block;font-size:0.9rem;margin-bottom:4px}
+.analysis-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:8px;
+  font-size:0.75rem;font-weight:600;margin:0 4px 8px 0;
+}
+.tag-blue{background:rgba(26,107,255,0.12);color:#7BB8FF;border:1px solid rgba(26,107,255,0.2)}
+.tag-green{background:rgba(74,222,128,0.08);color:#4ADE80;border:1px solid rgba(74,222,128,0.15)}
+.tag-rose{background:rgba(255,61,127,0.08);color:#FF7BAD;border:1px solid rgba(255,61,127,0.15)}
+.tag-violet{background:rgba(123,47,255,0.1);color:#B085FF;border:1px solid rgba(123,47,255,0.2)}
+.tag-amber{background:rgba(251,191,36,0.08);color:#FBBF24;border:1px solid rgba(251,191,36,0.15)}
+.tags-row{display:flex;flex-wrap:wrap;margin-top:0.75rem}
+.wp-divider{height:1px;background:var(--border);margin:1rem 0}
+.wp-result-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.75rem;border-radius:10px;
+  background:rgba(255,255,255,0.03);border:1px solid var(--border);
+  margin-bottom:0.6rem;
+}
+.wr-name{font-size:0.825rem;font-weight:600}
+.wr-sub{font-size:0.72rem;color:var(--muted);margin-top:2px}
+.wr-save{font-size:0.875rem;font-weight:700;color:#4ADE80}
+.wp-total{
+  background:rgba(26,107,255,0.08);border:1px solid rgba(26,107,255,0.2);
+  border-radius:10px;padding:0.875rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:0.5rem;
+}
+.wt-label{font-size:0.8rem;color:#7BB8FF;font-weight:600}
+.wt-val{font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:800;color:#1A6BFF}
+
+/* ── FEATURES ── */
+.features-section{background:#040810;padding:7rem 6%}
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5px;
+  border:1.5px solid var(--border);
+  border-radius:22px;overflow:hidden;
+  background:var(--border);
+  margin-top:3.5rem;
+}
+.feature-card{
+  background:#080D1C;padding:2rem 2rem 1.75rem;
+  transition:background 0.3s,transform 0.2s;
+  cursor:default;position:relative;overflow:hidden;
+}
+.feature-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%,rgba(26,107,255,0.06),transparent 60%);
+  opacity:0;transition:opacity 0.3s;
+}
+.feature-card:hover{background:#0C1220}
+.feature-card:hover::before{opacity:1}
+.feat-icon{
+  width:50px;height:50px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:1.5rem;
+}
+.feature-card h3{
+  font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;
+  margin-bottom:0.6rem;letter-spacing:-0.01em;
+}
+.feature-card p{font-size:0.85rem;color:var(--muted);line-height:1.7}
+.feat-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:0.68rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+  padding:3px 10px;border-radius:30px;margin-top:1.2rem;
+}
+
+/* ── SAVINGS DEMO ── */
+.savings-section{padding:7rem 6%}
+.demo-split{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2rem;margin-top:3.5rem;align-items:start;
+}
+.demo-card{
+  background:#080D1C;border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;
+}
+.demo-header{
+  padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);
+  font-family:'Outfit',sans-serif;font-size:0.875rem;font-weight:700;
+  display:flex;align-items:center;gap:8px;
+}
+.demo-body{padding:1.5rem}
+.rx-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.75rem 0.875rem;border-radius:10px;
+  background:rgba(255,255,255,0.025);
+  margin-bottom:0.75rem;border:1px solid var(--border);
+  transition:background 0.2s;
+}
+.rx-row:hover{background:rgba(255,255,255,0.04)}
+.rx-name{font-size:0.875rem;font-weight:600}
+.rx-dosage{font-size:0.72rem;color:var(--muted);margin-top:2px}
+.rx-price-branded{font-size:0.875rem;font-weight:700;color:#FF7BAD}
+.rx-price-generic{font-size:0.875rem;font-weight:700;color:#4ADE80}
+.rx-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+.savings-callout{
+  background:rgba(26,107,255,0.08);border:1px solid rgba(26,107,255,0.2);
+  border-radius:12px;padding:1rem 1.25rem;margin-top:0.75rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.savings-label{font-size:0.8rem;color:#7BB8FF;font-weight:600}
+.savings-amount{font-family:'Outfit',sans-serif;font-size:1.5rem;font-weight:800;color:#1A6BFF}
+
+/* INTERACTIONS */
+.int-row{
+  display:flex;align-items:center;gap:0.75rem;
+  padding:0.875rem 1rem;border-radius:10px;margin-bottom:0.6rem;
+}
+.int-danger{background:rgba(255,61,127,0.07);border:1px solid rgba(255,61,127,0.18)}
+.int-warn{background:rgba(251,191,36,0.05);border:1px solid rgba(251,191,36,0.13)}
+.int-ok{background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.13)}
+.int-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-danger{background:#FF3D7F;box-shadow:0 0 8px #FF3D7F}
+.dot-warn{background:#FBBF24;box-shadow:0 0 8px #FBBF24}
+.dot-ok{background:#4ADE80;box-shadow:0 0 8px #4ADE80}
+.int-info{flex:1}
+.int-title{font-size:0.825rem;font-weight:600}
+.int-sub{font-size:0.72rem;color:var(--muted);margin-top:2px}
+.sev-badge{
+  font-size:0.65rem;font-weight:700;padding:3px 9px;border-radius:6px;
+  flex-shrink:0;letter-spacing:0.04em;
+}
+.sev-high{background:rgba(255,61,127,0.15);color:#FF3D7F}
+.sev-med{background:rgba(251,191,36,0.12);color:#FBBF24}
+.sev-low{background:rgba(74,222,128,0.1);color:#4ADE80}
+
+/* PRICE TRACKER */
+.tracker-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0.875rem;
+  margin-top:1.25rem;
+}
+.tracker-card{
+  background:rgba(255,255,255,0.03);border:1px solid var(--border);
+  border-radius:12px;padding:1rem;
+}
+.t-name{font-size:0.78rem;font-weight:700;margin-bottom:0.6rem}
+.t-bar-track{height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:0.75rem;overflow:hidden}
+.t-bar-fill{height:100%;border-radius:2px;transition:width 0.8s ease}
+.t-prices{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4px}
+.t-old{font-size:0.72rem;color:var(--muted);text-decoration:line-through}
+.t-new{font-size:1.05rem;font-weight:800;font-family:'Outfit',sans-serif}
+.t-badge{
+  font-size:0.63rem;font-weight:700;padding:2px 7px;border-radius:6px;
+  display:inline-block;
+}
+.t-drop{background:rgba(74,222,128,0.1);color:#4ADE80}
+.t-warn{background:rgba(255,61,127,0.1);color:#FF7BAD}
+
+/* ── SAVINGS SIMULATOR ── */
+.simulator-section{background:#040810;padding:7rem 6%}
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:3.5rem}
+.sim-controls{display:flex;flex-direction:column;gap:1.5rem}
+.sim-label{font-size:0.8rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.sim-slider{
+  width:100%;-webkit-appearance:none;appearance:none;
+  height:4px;border-radius:2px;outline:none;cursor:pointer;
+  background:linear-gradient(to right,#1A6BFF,#7B2FFF);
+}
+.sim-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:18px;height:18px;border-radius:50%;
+  background:linear-gradient(135deg,#1A6BFF,#7B2FFF);
+  cursor:pointer;box-shadow:0 0 10px rgba(26,107,255,0.5);
+  border:2px solid #060B18;
+}
+.sim-val{
+  font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:700;
+  color:#7BB8FF;float:right;margin-top:-4px;
+}
+.sim-result{
+  background:#080D1C;border:1px solid var(--border);
+  border-radius:20px;padding:2rem;
+}
+.sim-big{
+  font-family:'Outfit',sans-serif;font-size:3.5rem;font-weight:800;
+  letter-spacing:-0.03em;line-height:1;margin-bottom:0.5rem;
+}
+.sim-sub{font-size:0.875rem;color:var(--muted);margin-bottom:2rem}
+.sim-breakdown{display:flex;flex-direction:column;gap:0.75rem}
+.sim-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.75rem 1rem;border-radius:10px;background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+}
+.sim-row-label{font-size:0.825rem;color:var(--muted)}
+.sim-row-val{font-size:0.925rem;font-weight:700;font-family:'Outfit',sans-serif}
+
+/* ── SAFETY ── */
+.safety-section{padding:7rem 6%}
+.safety-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1.5rem;margin-top:3.5rem;
+}
+.safety-card{
+  text-align:center;padding:2.25rem 1.5rem;
+  background:#080D1C;border:1px solid var(--border);
+  border-radius:18px;transition:border-color 0.2s;
+}
+.safety-card:hover{border-color:rgba(26,107,255,0.25)}
+.safety-icon{font-size:2rem;margin-bottom:1.1rem}
+.safety-card h3{
+  font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;
+  margin-bottom:0.6rem;letter-spacing:-0.01em;
+}
+.safety-card p{font-size:0.82rem;color:var(--muted);line-height:1.65}
+
+/* ── TESTIMONIALS ── */
+.testi-section{background:#040810;padding:7rem 6%}
+.testi-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin-top:3rem;
+}
+.testi-card{
+  background:#080D1C;border:1px solid var(--border);
+  border-radius:18px;padding:1.75rem;
+  transition:border-color 0.2s;
+}
+.testi-card:hover{border-color:rgba(26,107,255,0.2)}
+.testi-stars{color:#FBBF24;font-size:0.875rem;margin-bottom:1rem;letter-spacing:2px}
+.testi-quote{
+  font-size:0.9rem;color:#C5CDD9;line-height:1.75;
+  margin-bottom:1.5rem;font-style:italic;
+}
+.testi-author{display:flex;align-items:center;gap:10px}
+.testi-avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.78rem;font-weight:700;flex-shrink:0;
+}
+.testi-name{font-size:0.875rem;font-weight:600}
+.testi-role{font-size:0.75rem;color:var(--muted);margin-top:1px}
+
+/* ── CTA BANNER ── */
+.cta-section{padding:0 6% 7rem}
+.cta-banner{
+  background:linear-gradient(135deg,#0D1E42 0%,#150D2A 50%,#1A0814 100%);
+  border:1px solid rgba(26,107,255,0.2);
+  border-radius:26px;padding:5rem 3rem;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-banner::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 25% 50%,rgba(26,107,255,0.15) 0%,transparent 55%),
+    radial-gradient(ellipse at 75% 50%,rgba(123,47,255,0.12) 0%,transparent 55%);
+  pointer-events:none;
+}
+.cta-banner h2{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:800;letter-spacing:-0.025em;line-height:1.15;
+  margin-bottom:1rem;position:relative;
+}
+.cta-banner p{
+  color:#8892A4;margin-bottom:2.5rem;
+  font-size:1.05rem;position:relative;max-width:500px;margin-left:auto;margin-right:auto;
+  margin-bottom:2.5rem;
+}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);
+  padding:2.5rem 6%;
+  background:rgba(0,0,0,0.25);
+}
+.footer-top{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1.5rem;margin-bottom:2rem;
+}
+.footer-logo{
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;
+  display:flex;align-items:center;gap:8px;color:var(--white);
+}
+.footer-logo .logo-icon{width:28px;height:28px;font-size:0.72rem}
+.footer-nav{display:flex;gap:1.75rem}
+.footer-nav a{color:var(--muted);text-decoration:none;font-size:0.8rem;transition:color 0.2s}
+.footer-nav a:hover{color:var(--white)}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+  border-top:1px solid var(--border);padding-top:1.5rem;
+}
+.footer-copy{font-size:0.75rem;color:#3A4558}
+.footer-disclaimer{
+  font-size:0.72rem;color:#3A4558;max-width:420px;text-align:right;line-height:1.5;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.animate{opacity:0}
+.animate.visible{animation:fadeUp 0.65s ease forwards}
+.d1{animation-delay:0.05s}
+.d2{animation-delay:0.15s}
+.d3{animation-delay:0.25s}
+.d4{animation-delay:0.35s}
+.d5{animation-delay:0.45s}
+.d6{animation-delay:0.55s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .steps-outer{grid-template-columns:1fr}
+  .demo-split{grid-template-columns:1fr}
+  .sim-grid{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  .stat{padding:2rem 1.5rem}
+}
+@media(max-width:600px){
+  .features-grid{grid-template-columns:1fr}
+  .tracker-grid{grid-template-columns:1fr 1fr}
+  nav{padding:0 4%}
+  .hero{padding:110px 4% 80px}
+  .cta-banner{padding:3rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ NAV ════════════════ -->
+<nav id="main-nav">
+  <a class="nav-logo" href="#">
+    <div class="logo-icon">M+</div>
+    MediWise AI
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#savings-demo">Savings</a></li>
+    <li><a href="#simulator">Simulator</a></li>
+    <li><a href="#safety">Safety</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-ghost">Sign In</button>
+    <button class="nav-cta">Get Started Free</button>
+  </div>
+</nav>
+
+<!-- ════════════════ HERO ════════════════ -->
+<section class="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
+
+  <div class="hero-badge animate d1">
+    <span class="badge-dot"></span>
+    AI-Powered Healthcare Intelligence Platform
+  </div>
+
+  <h1 class="animate d2">
+    Healthcare that's<br/>
+    <span class="gradient-text">smarter than the bill.</span>
+  </h1>
+
+  <p class="hero-sub animate d3">
+    Upload any prescription. MediWise AI finds savings, catches dangerous interactions, audits your hospital bill, and delivers a complete healthcare intelligence report — in seconds.
+  </p>
+
+  <div class="hero-ctas animate d4">
+    <button class="btn-primary">Upload a Prescription &rarr;</button>
+    <button class="btn-ghost">&#9654;&nbsp; Watch Demo</button>
+  </div>
+
+  <!-- ANIMATED ECG LINE -->
+  <div class="pulse-wrap animate d5">
+    <svg viewBox="0 0 720 64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#1A6BFF" stop-opacity="0.1"/>
+          <stop offset="30%" stop-color="#1A6BFF" stop-opacity="0.9"/>
+          <stop offset="60%" stop-color="#7B2FFF" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#FF3D7F" stop-opacity="0.15"/>
+        </linearGradient>
+        <filter id="glow-ecg" x="-20%" y="-50%" width="140%" height="200%">
+          <feGaussianBlur stdDeviation="2.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <polyline id="ecg-line"
+        points="0,32 120,32 155,32 168,32 180,6 192,58 204,14 218,32 260,32 720,32"
+        stroke="url(#pg)" stroke-width="2.2" fill="none"
+        filter="url(#glow-ecg)"
+        stroke-dasharray="1200" stroke-dashoffset="1200"/>
+    </svg>
+  </div>
+
+  <!-- TRUST PILLS -->
+  <div class="trust-row animate d6">
+    <div class="trust-pill"><span>✓</span> No credit card required</div>
+    <div class="trust-pill"><span>✓</span> OpenFDA verified data</div>
+    <div class="trust-pill"><span>✓</span> 2,400+ Indian medicines</div>
+    <div class="trust-pill"><span>✓</span> End-to-end encrypted</div>
+  </div>
+</section>
+
+<!-- ════════════════ STATS ════════════════ -->
+<div class="stats-row">
+  <div class="stat animate">
+    <div class="stat-num gradient-text">&#8377;15,000</div>
+    <div class="stat-label">Avg. Annual Savings</div>
+  </div>
+  <div class="stat animate d1">
+    <div class="stat-num gradient-text">2,400+</div>
+    <div class="stat-label">Medicines Indexed</div>
+  </div>
+  <div class="stat animate d2">
+    <div class="stat-num gradient-text">99.2%</div>
+    <div class="stat-label">OCR Accuracy</div>
+  </div>
+  <div class="stat animate d3">
+    <div class="stat-num gradient-text">9</div>
+    <div class="stat-label">AI Features</div>
+  </div>
+  <div class="stat animate d4">
+    <div class="stat-num gradient-text">50K+</div>
+    <div class="stat-label">Patients Helped</div>
+  </div>
+</div>
+
+<!-- ════════════════ HOW IT WORKS ════════════════ -->
+<section class="workflow-section" id="how-it-works">
+  <div class="animate">
+    <div class="section-eyebrow">Workflow</div>
+    <div class="section-title">From prescription to<br/><span class="gradient-text">full intelligence.</span></div>
+    <p class="section-sub">Upload once. Get everything — savings, interaction warnings, insurance breakdown, bill audit, and shortage alerts.</p>
+  </div>
+
+  <div class="steps-outer">
+    <div class="steps-track animate d1">
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#1A6BFF;color:#1A6BFF;background:rgba(26,107,255,0.08)">01</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Upload Prescription</h3>
+          <p>Photo, PDF, or typed text — our AI OCR handles handwritten scripts in any format with 99.2% accuracy.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#2B5AFF;color:#2B5AFF;background:rgba(43,90,255,0.08)">02</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>AI Medicine Extraction</h3>
+          <p>Names, dosages, frequencies and durations — structured and verified against our 2,400+ Indian medicine database.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#5048FF;color:#5048FF;background:rgba(80,72,255,0.08)">03</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Drug Interaction Check</h3>
+          <p>Cross-references every medicine combination against OpenFDA clinical data to catch dangerous interactions instantly.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#7B2FFF;color:#7B2FFF;background:rgba(123,47,255,0.08)">04</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Therapeutic Substitution</h3>
+          <p>Finds clinically identical generics at a fraction of the branded price — same molecule, same efficacy, real savings.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#A020CC;color:#A020CC;background:rgba(160,32,204,0.08)">05</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Insurance Decoding + Bill Audit</h3>
+          <p>Calculates your exact out-of-pocket cost and scans your hospital bill for duplicates and overcharges.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#FF3D7F;color:#FF3D7F;background:rgba(255,61,127,0.08)">06</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Personalized Intelligence Report</h3>
+          <p>A complete brief covering prices, risks, savings, nearby pharmacies, alerts and shortage predictions — all in one view.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STICKY PREVIEW -->
+    <div class="animate d2">
+      <div class="workflow-preview">
+        <div class="wp-header">
+          <span class="wp-title">&#128196; Prescription Analyzer</span>
+          <div class="wp-status"><span class="wp-dot"></span>Live Analysis</div>
+        </div>
+        <div class="wp-body">
+          <div class="wp-upload-zone">
+            <div class="wp-upload-icon">&#128220;</div>
+            <div class="wp-upload-text">
+              <strong>Augmentin 625 Rx — Dr. Ramesh</strong>
+              Uploaded &middot; 3 medicines detected
+            </div>
+          </div>
+          <div style="font-size:0.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Analysis Active</div>
+          <div class="tags-row">
+            <span class="analysis-tag tag-blue">&#10003; OCR Complete</span>
+            <span class="analysis-tag tag-rose">&#9888; 1 Interaction</span>
+            <span class="analysis-tag tag-green">&#8595; 3 Generics Found</span>
+            <span class="analysis-tag tag-violet">&#128176; Insurance Decoded</span>
+            <span class="analysis-tag tag-amber">&#128276; 2 Price Drops</span>
+          </div>
+          <div class="wp-divider"></div>
+          <div style="font-size:0.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Recommended Alternatives</div>
+          <div class="wp-result-row">
+            <div>
+              <div class="wr-name">Amoxicillin + Clavulanate</div>
+              <div class="wr-sub">Alt. for Augmentin 625 &middot; 1-0-1 &middot; 5 Days</div>
+            </div>
+            <div class="wr-save">&#8377;145 saved</div>
+          </div>
+          <div class="wp-result-row">
+            <div>
+              <div class="wr-name">Glycomet 500mg</div>
+              <div class="wr-sub">Alt. for Metformin 500 &middot; 1-1-1 &middot; 30 Days</div>
+            </div>
+            <div class="wr-save">&#8377;78 saved</div>
+          </div>
+          <div class="wp-result-row">
+            <div>
+              <div class="wr-name">Calpol 500mg</div>
+              <div class="wr-sub">Alt. for Crocin 500 &middot; SOS</div>
+            </div>
+            <div class="wr-save">&#8377;38 saved</div>
+          </div>
+          <div class="wp-total">
+            <div class="wt-label">Total Monthly Savings</div>
+            <div class="wt-val">&#8377;261</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FEATURES GRID ════════════════ -->
+<section class="features-section" id="features">
+  <div class="animate">
+    <div class="section-eyebrow">Features</div>
+    <div class="section-title">Nine ways to make<br/><span class="gradient-text">healthcare work for you.</span></div>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card animate">
+      <div class="feat-icon" style="background:rgba(26,107,255,0.12)">&#128269;</div>
+      <h3>Prescription OCR</h3>
+      <p>AI reads handwritten prescriptions and converts them into structured digital records. Any language, any handwriting, any format.</p>
+      <span class="feat-badge" style="background:rgba(26,107,255,0.1);color:#7BB8FF">&#10003; Core Feature</span>
+    </div>
+    <div class="feature-card animate d1">
+      <div class="feat-icon" style="background:rgba(74,222,128,0.1)">&#128138;</div>
+      <h3>Therapeutic Substitution</h3>
+      <p>Swap branded drugs for clinically identical generics. Crocin 650 at &#8377;60 vs Paracetamol at &#8377;20. Same molecule, real savings.</p>
+      <span class="feat-badge" style="background:rgba(74,222,128,0.08);color:#4ADE80">Save up to 70%</span>
+    </div>
+    <div class="feature-card animate d2">
+      <div class="feat-icon" style="background:rgba(255,61,127,0.1)">&#9888;&#65039;</div>
+      <h3>Drug Interaction Checker</h3>
+      <p>Real-time cross-referencing of your full medicine list against clinical databases. Warfarin + Aspirin? You'll know before the pharmacy.</p>
+      <span class="feat-badge" style="background:rgba(255,61,127,0.08);color:#FF7BAD">Safety Critical</span>
+    </div>
+    <div class="feature-card animate d3">
+      <div class="feat-icon" style="background:rgba(123,47,255,0.12)">&#128737;&#65039;</div>
+      <h3>Insurance Cost Decoder</h3>
+      <p>Know exactly what you'll pay before treatment starts. &#8377;50,000 hospital bill → &#8377;8,000 patient cost — decoded in seconds, not weeks.</p>
+      <span class="feat-badge" style="background:rgba(123,47,255,0.1);color:#B085FF">No Surprises</span>
+    </div>
+    <div class="feature-card animate d4">
+      <div class="feat-icon" style="background:rgba(251,191,36,0.1)">&#128270;</div>
+      <h3>AI Medical Bill Auditor</h3>
+      <p>Detects duplicate charges, inflated test prices, and billing inconsistencies hospitals hope you'll miss. Average catch: &#8377;2,350+.</p>
+      <span class="feat-badge" style="background:rgba(251,191,36,0.08);color:#FBBF24">Catch Errors</span>
+    </div>
+    <div class="feature-card animate d5">
+      <div class="feat-icon" style="background:rgba(0,194,255,0.1)">&#128507;</div>
+      <h3>Pharmacy Trip Optimizer</h3>
+      <p>Compares nearby pharmacy prices against travel distance. Apollo &#8377;550 vs MedPlus &#8377;420 at 1.2km — the choice is data-driven.</p>
+      <span class="feat-badge" style="background:rgba(0,194,255,0.08);color:#00C2FF">Location Smart</span>
+    </div>
+    <div class="feature-card animate">
+      <div class="feat-icon" style="background:rgba(74,222,128,0.1)">&#128200;</div>
+      <h3>Health Savings Simulator</h3>
+      <p>Projects your annual healthcare savings across all recommendations. See &#8377;24,000/year transform into &#8377;9,000 with smarter decisions.</p>
+      <span class="feat-badge" style="background:rgba(74,222,128,0.08);color:#4ADE80">Plan Ahead</span>
+    </div>
+    <div class="feature-card animate d1">
+      <div class="feat-icon" style="background:rgba(251,191,36,0.1)">&#128276;</div>
+      <h3>Price Alert System</h3>
+      <p>Tracks your medicines daily and alerts when prices fall. Metformin drops &#8377;120→&#8377;90? Instant notification — buy at the right moment.</p>
+      <span class="feat-badge" style="background:rgba(251,191,36,0.08);color:#FBBF24">Live Monitoring</span>
+    </div>
+    <div class="feature-card animate d2">
+      <div class="feat-icon" style="background:rgba(255,61,127,0.1)">&#128202;</div>
+      <h3>Medicine Shortage Predictor</h3>
+      <p>Reads demand signals and supply data to warn you before critical medicines run out. Insulin shortage risk? 5 days early notice.</p>
+      <span class="feat-badge" style="background:rgba(255,61,127,0.08);color:#FF7BAD">Stay Prepared</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ SAVINGS DEMO ════════════════ -->
+<section class="savings-section" id="savings-demo">
+  <div class="animate">
+    <div class="section-eyebrow">Live Demo</div>
+    <div class="section-title">See the savings<br/><span class="gradient-text">in real time.</span></div>
+    <p class="section-sub">Below is what MediWise AI returns for a real diabetes + hypertension + antibiotic prescription.</p>
+  </div>
+
+  <div class="demo-split">
+    <!-- Left: Prescription extraction -->
+    <div class="animate d1">
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#1A6BFF">&#128196;</span>
+          Extracted Prescription &amp; Generics
+        </div>
+        <div class="demo-body">
+          <div class="rx-row">
+            <div>
+              <div class="rx-name">Augmentin 625mg</div>
+              <div class="rx-dosage">1-0-1 &middot; 5 Days &middot; Branded</div>
+            </div>
+            <div style="text-align:right">
+              <div class="rx-label" style="color:var(--muted)">Prescribed</div>
+              <div class="rx-price-branded">&#8377;220</div>
+            </div>
+          </div>
+          <div class="rx-row" style="border-color:rgba(74,222,128,0.2);background:rgba(74,222,128,0.03)">
+            <div>
+              <div class="rx-name">Amoxicillin + Clavulanate</div>
+              <div class="rx-dosage">1-0-1 &middot; 5 Days &middot; Generic Alt.</div>
+            </div>
+            <div style="text-align:right">
+              <div class="rx-label" style="color:#4ADE80">Recommended</div>
+              <div class="rx-price-generic">&#8377;75</div>
+            </div>
+          </div>
+          <div class="rx-row">
+            <div>
+              <div class="rx-name">Glycomet SR 500mg</div>
+              <div class="rx-dosage">1-1-1 &middot; 30 Days &middot; Branded</div>
+            </div>
+            <div style="text-align:right">
+              <div class="rx-label" style="color:var(--muted)">Prescribed</div>
+              <div class="rx-price-branded">&#8377;120</div>
+            </div>
+          </div>
+          <div class="rx-row" style="border-color:rgba(74,222,128,0.2);background:rgba(74,222,128,0.03)">
+            <div>
+              <div class="rx-name">Metformin 500mg</div>
+              <div class="rx-dosage">1-1-1 &middot; 30 Days &middot; Generic Alt.</div>
+            </div>
+            <div style="text-align:right">
+              <div class="rx-label" style="color:#4ADE80">Recommended</div>
+              <div class="rx-price-generic">&#8377;42</div>
+            </div>
+          </div>
+          <div class="rx-row">
+            <div>
+              <div class="rx-name">Crocin 650mg</div>
+              <div class="rx-dosage">SOS &middot; As needed &middot; Branded</div>
+            </div>
+            <div style="text-align:right">
+              <div class="rx-label" style="color:var(--muted)">Prescribed</div>
+              <div class="rx-price-branded">&#8377;60</div>
+            </div>
+          </div>
+          <div class="rx-row" style="border-color:rgba(74,222,128,0.2);background:rgba(74,222,128,0.03)">
+            <div>
+              <div class="rx-name">Paracetamol 650mg</div>
+              <div class="rx-dosage">SOS &middot; As needed &middot; Generic Alt.</div>
+            </div>
+            <div style="text-align:right">
+              <div class="rx-label" style="color:#4ADE80">Recommended</div>
+              <div class="rx-price-generic">&#8377;20</div>
+            </div>
+          </div>
+          <div class="savings-callout">
+            <div>
+              <div class="savings-label">Total Savings This Month</div>
+              <div style="font-size:0.72rem;color:#4A7BAA;margin-top:2px">Switching to all recommended generics</div>
+            </div>
+            <div class="savings-amount">&#8377;263</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Interactions + Tracker -->
+    <div class="animate d2" style="display:flex;flex-direction:column;gap:1.5rem">
+      <!-- Interactions -->
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#FF3D7F">&#9889;</span>
+          Drug Interaction Analysis
+        </div>
+        <div class="demo-body">
+          <div class="int-row int-danger">
+            <div class="int-dot dot-danger"></div>
+            <div class="int-info">
+              <div class="int-title">Warfarin + Aspirin</div>
+              <div class="int-sub">Increased bleeding risk — consult prescribing doctor immediately</div>
+            </div>
+            <span class="sev-badge sev-high">HIGH</span>
+          </div>
+          <div class="int-row int-warn">
+            <div class="int-dot dot-warn"></div>
+            <div class="int-info">
+              <div class="int-title">Metformin + Alcohol</div>
+              <div class="int-sub">May cause lactic acidosis — avoid alcohol during course</div>
+            </div>
+            <span class="sev-badge sev-med">MED</span>
+          </div>
+          <div class="int-row int-ok">
+            <div class="int-dot dot-ok"></div>
+            <div class="int-info">
+              <div class="int-title">Amoxicillin + Paracetamol</div>
+              <div class="int-sub">No clinically significant interaction detected</div>
+            </div>
+            <span class="sev-badge sev-low">SAFE</span>
+          </div>
+          <div class="int-row int-ok">
+            <div class="int-dot dot-ok"></div>
+            <div class="int-info">
+              <div class="int-title">Metformin + Amoxicillin</div>
+              <div class="int-sub">No interaction — safe to take concurrently</div>
+            </div>
+            <span class="sev-badge sev-low">SAFE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price Tracker -->
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#FBBF24">&#128201;</span>
+          Live Price Tracker
+        </div>
+        <div class="demo-body">
+          <div class="tracker-grid">
+            <div class="tracker-card">
+              <div class="t-name" style="color:#B085FF">Metformin</div>
+              <div class="t-bar-track">
+                <div class="t-bar-fill" style="width:75%;background:linear-gradient(90deg,#1A6BFF,#7B2FFF)"></div>
+              </div>
+              <div class="t-prices">
+                <span class="t-old">&#8377;120</span>
+                <span class="t-new" style="color:#4ADE80">&#8377;90</span>
+              </div>
+              <span class="t-badge t-drop">&#8595; 25%</span>
+            </div>
+            <div class="tracker-card">
+              <div class="t-name" style="color:#FF7BAD">Insulin</div>
+              <div class="t-bar-track">
+                <div class="t-bar-fill" style="width:92%;background:linear-gradient(90deg,#FF3D7F,#FBBF24)"></div>
+              </div>
+              <div class="t-prices">
+                <span class="t-old">&#8377;340</span>
+                <span class="t-new" style="color:#FF7BAD">&#8377;340</span>
+              </div>
+              <span class="t-badge t-warn">&#9888; Low Stock</span>
+            </div>
+            <div class="tracker-card">
+              <div class="t-name" style="color:#7BB8FF">Lisinopril</div>
+              <div class="t-bar-track">
+                <div class="t-bar-fill" style="width:58%;background:linear-gradient(90deg,#1A6BFF,#00C2FF)"></div>
+              </div>
+              <div class="t-prices">
+                <span class="t-old">&#8377;85</span>
+                <span class="t-new" style="color:#4ADE80">&#8377;62</span>
+              </div>
+              <span class="t-badge t-drop">&#8595; 27%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ SAVINGS SIMULATOR ════════════════ -->
+<section class="simulator-section" id="simulator">
+  <div class="animate">
+    <div class="section-eyebrow">Simulator</div>
+    <div class="section-title">Calculate your<br/><span class="gradient-text">annual savings.</span></div>
+    <p class="section-sub">Adjust the sliders to match your prescription profile and see how much MediWise AI can save you each year.</p>
+  </div>
+
+  <div class="sim-grid">
+    <div class="sim-controls animate d1">
+      <div>
+        <div class="sim-label">Monthly Medicine Spend <span class="sim-val" id="spend-val">&#8377;2,000</span></div>
+        <input type="range" class="sim-slider" id="spend-slider" min="500" max="10000" step="100" value="2000"/>
+      </div>
+      <div>
+        <div class="sim-label">Number of Medicines <span class="sim-val" id="meds-val">5</span></div>
+        <input type="range" class="sim-slider" id="meds-slider" min="1" max="15" step="1" value="5"/>
+      </div>
+      <div>
+        <div class="sim-label">Generic Availability <span class="sim-val" id="generic-val">65%</span></div>
+        <input type="range" class="sim-slider" id="generic-slider" min="20" max="90" step="5" value="65"/>
+      </div>
+      <div>
+        <div class="sim-label">Bill Audit Potential <span class="sim-val" id="audit-val">&#8377;500 / visit</span></div>
+        <input type="range" class="sim-slider" id="audit-slider" min="0" max="5000" step="100" value="500"/>
+      </div>
+    </div>
+
+    <div class="sim-result animate d2">
+      <div style="margin-bottom:0.25rem;font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:600">Estimated Annual Savings</div>
+      <div class="sim-big gradient-text" id="sim-total">&#8377;12,480</div>
+      <div class="sim-sub">across all MediWise AI recommendations</div>
+      <div class="sim-breakdown">
+        <div class="sim-row">
+          <span class="sim-row-label">Generic Substitution</span>
+          <span class="sim-row-val" id="sim-generic" style="color:#4ADE80">&#8377;9,360</span>
+        </div>
+        <div class="sim-row">
+          <span class="sim-row-label">Bill Audit Recovery</span>
+          <span class="sim-row-val" id="sim-audit" style="color:#7BB8FF">&#8377;2,400</span>
+        </div>
+        <div class="sim-row">
+          <span class="sim-row-label">Price Alert Savings</span>
+          <span class="sim-row-val" id="sim-alerts" style="color:#B085FF">&#8377;720</span>
+        </div>
+        <div class="sim-row" style="border-color:rgba(26,107,255,0.2);background:rgba(26,107,255,0.06)">
+          <span class="sim-row-label" style="color:#7BB8FF;font-weight:600">Total Annual Saving</span>
+          <span class="sim-row-val" id="sim-total2" style="color:#1A6BFF;font-size:1.1rem">&#8377;12,480</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ SAFETY ════════════════ -->
+<section class="safety-section" id="safety">
+  <div style="max-width:680px;margin:0 auto;text-align:center" class="animate">
+    <div class="section-eyebrow">Trust &amp; Safety</div>
+    <div class="section-title">Built for patients.<br/><span class="gradient-text">Trusted by families.</span></div>
+    <p class="section-sub" style="margin:0 auto">Every piece of data, every recommendation, every alert runs through multiple validation layers before reaching you.</p>
+  </div>
+
+  <div class="safety-grid">
+    <div class="safety-card animate">
+      <div class="safety-icon">&#128272;</div>
+      <h3>End-to-End Encrypted</h3>
+      <p>Your prescription data is encrypted at rest and in transit. We never share, sell, or monetize your health records.</p>
+    </div>
+    <div class="safety-card animate d1">
+      <div class="safety-icon">&#127973;</div>
+      <h3>OpenFDA Verified</h3>
+      <p>All drug interaction and substitution data is cross-referenced with OpenFDA clinical databases — not crowd-sourced.</p>
+    </div>
+    <div class="safety-card animate d2">
+      <div class="safety-icon">&#128203;</div>
+      <h3>Doctor-First Philosophy</h3>
+      <p>MediWise AI empowers informed conversations with your doctor. It surfaces information — never replaces professional advice.</p>
+    </div>
+    <div class="safety-card animate d3">
+      <div class="safety-icon">&#9889;</div>
+      <h3>Real-Time Data</h3>
+      <p>Price alerts, shortage warnings and interaction data update continuously. You're always working with the latest information.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ TESTIMONIALS ════════════════ -->
+<section class="testi-section">
+  <div class="animate">
+    <div class="section-eyebrow">Stories</div>
+    <div class="section-title">Real patients.<br/><span class="gradient-text">Real savings.</span></div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card animate d1">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="testi-quote">"My father takes 7 medicines daily. MediWise found a dangerous Warfarin interaction that two different doctors had both missed. It may have saved his life."</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:rgba(26,107,255,0.15);color:#7BB8FF">RK</div>
+        <div>
+          <div class="testi-name">Rahul Kapoor</div>
+          <div class="testi-role">Son &amp; Caregiver &middot; Mumbai</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card animate d2">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="testi-quote">"Switched our entire family to generics based on the recommendations. We save &#8377;12,000 every month now. The AI explained everything — no medical jargon."</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:rgba(123,47,255,0.15);color:#B085FF">PM</div>
+        <div>
+          <div class="testi-name">Priya Mehta</div>
+          <div class="testi-role">School Teacher &middot; Chennai</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card animate d3">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="testi-quote">"The bill auditor caught &#8377;4,200 in duplicate charges from my hospital stay. MediWise paid for itself a hundred times over in a single afternoon."</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:rgba(255,61,127,0.12);color:#FF7BAD">AS</div>
+        <div>
+          <div class="testi-name">Arjun Sharma</div>
+          <div class="testi-role">Software Engineer &middot; Bengaluru</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ CTA ════════════════ -->
+<div class="cta-section">
+  <div class="cta-banner animate">
+    <h2>Your prescriptions cost<br/><span class="gradient-text">more than they should.</span></h2>
+    <p>Join thousands of patients saving money, catching billing errors, and staying safer — completely free to start.</p>
+    <div class="cta-btns">
+      <button class="btn-primary">Upload a Prescription — It's Free</button>
+      <button class="btn-ghost">Schedule a Demo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">
+      <div class="logo-icon">M+</div>
+      MediWise AI
+    </div>
+    <nav class="footer-nav">
+      <a href="#">Features</a>
+      <a href="#">How It Works</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Disclaimer</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2025 MediWise AI &middot; All rights reserved</div>
+    <div class="footer-disclaimer">
+      MediWise AI is an informational platform and does not constitute medical advice. Always consult a qualified healthcare professional before making changes to your medication.
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════ SCRIPTS ════════════════ -->
+<script>
+// Nav scroll
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ECG animation on load
+window.addEventListener('load', () => {
+  const ecg = document.getElementById('ecg-line');
+  if(ecg){
+    setTimeout(() => {
+      ecg.style.transition = 'stroke-dashoffset 2.2s cubic-bezier(0.4,0,0.2,1) 0.3s';
+      ecg.style.strokeDashoffset = '0';
+    }, 200);
+  }
+});
+
+// Intersection Observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:0.12});
+document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+// Savings Simulator
+function rupee(n){ return '\u20B9' + Math.round(n).toLocaleString('en-IN'); }
+
+function updateSim(){
+  const spend  = +document.getElementById('spend-slider').value;
+  const meds   = +document.getElementById('meds-slider').value;
+  const gen    = +document.getElementById('generic-slider').value / 100;
+  const audit  = +document.getElementById('audit-slider').value;
+
+  document.getElementById('spend-val').textContent   = rupee(spend);
+  document.getElementById('meds-val').textContent    = meds;
+  document.getElementById('generic-val').textContent = Math.round(gen * 100) + '%';
+  document.getElementById('audit-val').textContent   = rupee(audit) + ' / visit';
+
+  const genericSaving  = spend * gen * 12;
+  const auditSaving    = audit * 4;
+  const alertSaving    = spend * 0.03 * 12;
+  const total          = genericSaving + auditSaving + alertSaving;
+
+  document.getElementById('sim-generic').textContent = rupee(genericSaving);
+  document.getElementById('sim-audit').textContent   = rupee(auditSaving);
+  document.getElementById('sim-alerts').textContent  = rupee(alertSaving);
+  document.getElementById('sim-total').textContent   = rupee(total);
+  document.getElementById('sim-total2').textContent  = rupee(total);
+}
+
+['spend-slider','meds-slider','generic-slider','audit-slider'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updateSim);
+});
+updateSim();
+
+// Feature card hover glow
+document.querySelectorAll('.feature-card').forEach(card => {
+  card.addEventListener('mouseenter', () => card.style.boxShadow = '0 0 40px rgba(26,107,255,0.07) inset');
+  card.addEventListener('mouseleave', () => card.style.boxShadow = 'none');
+});
+</script>
+</body>
+</html>
