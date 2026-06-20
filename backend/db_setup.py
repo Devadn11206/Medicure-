@@ -106,6 +106,68 @@ def init_db(db_path: Optional[str] = None) -> None:
                     # If seeding fails, silently continue; system will still work using OpenFDA lookups.
                     pass
 
+        # Seed pharmacy tables
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS pharmacy (
+                pharmacy_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                address TEXT NOT NULL,
+                lat REAL NOT NULL,
+                lng REAL NOT NULL,
+                city TEXT
+            );
+            """
+        )
+
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS pharmacy_inventory (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                pharmacy_id INTEGER NOT NULL,
+                medicine_name TEXT NOT NULL,
+                price_inr INTEGER NOT NULL,
+                in_stock INTEGER DEFAULT 1,
+                FOREIGN KEY (pharmacy_id) REFERENCES pharmacy(pharmacy_id),
+                UNIQUE(pharmacy_id, medicine_name)
+            );
+            """
+        )
+        conn.commit()
+
+        # Seed pharmacy data if empty
+        cur.execute("SELECT COUNT(1) FROM pharmacy")
+        row = cur.fetchone()
+        if row and row[0] == 0:
+            from backend.pharmacy import PHARMACY_DATA, MEDICINE_BASE_PRICES, get_pharmacy_price_variant
+
+            # Insert pharmacies
+            for pharmacy in PHARMACY_DATA:
+                cur.execute(
+                    "INSERT INTO pharmacy (name, address, lat, lng, city) VALUES (?, ?, ?, ?, ?)",
+                    (pharmacy["name"], pharmacy["address"], pharmacy["lat"], pharmacy["lng"], "Bengaluru")
+                )
+            conn.commit()
+
+            # Get pharmacy IDs
+            cur.execute("SELECT pharmacy_id FROM pharmacy")
+            pharmacy_ids = [row[0] for row in cur.fetchall()]
+
+            # Insert inventory for each pharmacy
+            for pharmacy_id in pharmacy_ids:
+                for medicine_name, base_price in MEDICINE_BASE_PRICES.items():
+                    varied_price = get_pharmacy_price_variant(base_price, pharmacy_id)
+                    # 90% of pharmacies stock each medicine (deterministic: based on pharmacy_id)
+                    in_stock = 1 if (pharmacy_id % 10 != 9) else 0
+                    try:
+                        cur.execute(
+                            "INSERT INTO pharmacy_inventory (pharmacy_id, medicine_name, price_inr, in_stock) VALUES (?, ?, ?, ?)",
+                            (pharmacy_id, medicine_name, varied_price, in_stock)
+                        )
+                    except sqlite3.IntegrityError:
+                        pass
+            conn.commit()
+
     finally:
         conn.close()
 

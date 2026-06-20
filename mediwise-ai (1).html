@@ -1054,6 +1054,73 @@ footer{
   </div>
 </section>
 
+<!-- ════════════════ PHARMACY OPTIMIZER ════════════════ -->
+<section style="background:#040810;padding:7rem 6%">
+  <div class="animate">
+    <div class="section-eyebrow">Smart Routing</div>
+    <div class="section-title">Find the best<br/><span class="gradient-text">pharmacy for your needs.</span></div>
+    <p class="section-sub">Compare prices and travel distance. MediWise AI recommends the pharmacy that saves you the most time and money.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:3.5rem">
+    <!-- Pharmacy Optimizer Input -->
+    <div class="animate d1">
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#00C2FF">&#128307;</span>
+          Pharmacy Trip Optimizer
+        </div>
+        <div class="demo-body">
+          <div style="margin-bottom:1rem;">
+            <label style="font-size:0.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;display:block;margin-bottom:0.5rem">Medicines to find</label>
+            <div class="pill-input-wrapper" id="pharmacy-pill-list" aria-label="Pharmacy medicines list" style="min-height:50px;margin-bottom:0.5rem;">
+              <div class="medicine-pill"><span>Augmentin 625</span><div class="pill-remove">×</div></div>
+              <div class="medicine-pill"><span>Crocin 650</span><div class="pill-remove">×</div></div>
+              <input id="pharmacy-input" class="medicine-input" type="text" placeholder="Add medicine, press Enter" />
+            </div>
+          </div>
+          <div style="margin-bottom:1.5rem;">
+            <label style="font-size:0.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;display:block;margin-bottom:0.5rem">Your location</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+              <input id="user-lat" type="number" step="0.0001" placeholder="Latitude" value="12.9716" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.75rem;border-radius:10px;font-size:0.9rem;outline:none" />
+              <input id="user-lng" type="number" step="0.0001" placeholder="Longitude" value="77.5946" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.75rem;border-radius:10px;font-size:0.9rem;outline:none" />
+            </div>
+            <div style="font-size:0.75rem;color:#7A8899;margin-top:0.5rem;text-align:center">Bengaluru, India (default)</div>
+          </div>
+          <button id="run-pharmacy" class="btn-primary" style="width:100%;padding:12px;font-size:0.9rem;">Find Best Pharmacy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pharmacy Results -->
+    <div class="animate d2">
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#4ADE80">✓</span>
+          Recommended Pharmacy
+        </div>
+        <div class="demo-body" id="pharmacy-results-container" style="display:none;">
+          <div id="pharmacy-best-result"></div>
+          <div class="wp-divider"></div>
+          <div style="font-size:0.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem">Alternatives</div>
+          <div id="pharmacy-alternatives" style="display:flex;flex-direction:column;gap:0.75rem;"></div>
+          <div style="margin-top:1rem;padding:1rem;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.15);border-radius:10px;display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:1.2rem;color:#4ADE80">💰</span>
+            <div>
+              <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;font-weight:600">Savings vs Worst</div>
+              <div id="pharmacy-savings" style="font-size:1.25rem;font-weight:800;color:#4ADE80;font-family:'Outfit',sans-serif">₹180</div>
+            </div>
+          </div>
+        </div>
+        <div id="pharmacy-results-empty" style="text-align:center;color:var(--muted);padding:2rem 1rem;">
+          <div style="font-size:2rem;margin-bottom:1rem">📍</div>
+          <p>Add at least one medicine and click "Find Best Pharmacy" to see recommendations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ════════════════ SAVINGS SIMULATOR ════════════════ -->
 <section class="simulator-section" id="simulator">
   <div class="animate">
@@ -1406,6 +1473,132 @@ document.getElementById('run-interactions').addEventListener('click', loadIntera
 window.addEventListener('load', () => {
   attachPillInputHandlers();
   loadInteractions();
+});
+
+// ════════ PHARMACY OPTIMIZER ════════
+function getPharmacyMedicinesFromInput() {
+  const pills = Array.from(document.querySelectorAll('#pharmacy-pill-list .medicine-pill span'))
+    .map(el => el.textContent.trim())
+    .filter(Boolean);
+  return pills;
+}
+
+function addPharmacyMedicinePill(name) {
+  const trimmed = String(name || '').trim();
+  if (!trimmed) return;
+  const pills = getPharmacyMedicinesFromInput();
+  if (pills.includes(trimmed)) return;
+
+  const list = document.getElementById('pharmacy-pill-list');
+  const pill = document.createElement('div');
+  pill.className = 'medicine-pill';
+  pill.innerHTML = `<span>${trimmed}</span><div class="pill-remove" title="Remove">×</div>`;
+  list.insertBefore(pill, document.getElementById('pharmacy-input'));
+  pill.querySelector('.pill-remove').addEventListener('click', () => pill.remove());
+}
+
+function attachPharmacyPillInputHandlers() {
+  const input = document.getElementById('pharmacy-input');
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ',' || event.key === ';') {
+      event.preventDefault();
+      const value = input.value.replace(/[;,]$/, '').trim();
+      if (value) {
+        addPharmacyMedicinePill(value);
+        input.value = '';
+      }
+    }
+  });
+  input.addEventListener('blur', () => {
+    const value = input.value.trim();
+    if (value) {
+      addPharmacyMedicinePill(value);
+      input.value = '';
+    }
+  });
+}
+
+async function loadPharmacyResults() {
+  const container = document.getElementById('pharmacy-results-container');
+  const empty = document.getElementById('pharmacy-results-empty');
+  const medicines = getPharmacyMedicinesFromInput();
+  const user_lat = parseFloat(document.getElementById('user-lat').value);
+  const user_lng = parseFloat(document.getElementById('user-lng').value);
+
+  if (!medicines.length) {
+    empty.style.display = 'block';
+    container.style.display = 'none';
+    return;
+  }
+
+  try {
+    const response = await fetch('http://127.0.0.1:8000/pharmacy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ medicines, user_lat, user_lng }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    if (data.error) {
+      empty.textContent = data.error;
+      empty.style.display = 'block';
+      container.style.display = 'none';
+      return;
+    }
+
+    // Render best pharmacy
+    const rec = data.recommended;
+    const bestHTML = `
+      <div class="wp-result-row" style="background:rgba(0,194,255,0.08);border-color:rgba(0,194,255,0.2)">
+        <div>
+          <div class="wr-name" style="color:#00C2FF">${rec.pharmacy_name}</div>
+          <div class="wr-sub">${rec.address}</div>
+          <div style="font-size:0.8rem;color:#7A8899;margin-top:0.4rem">Distance: <strong>${rec.distance_km}km</strong> | Cost: <strong>₹${rec.total_medicine_cost}</strong></div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;font-weight:600">Score</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#00C2FF;font-family:'Outfit',sans-serif">${rec.score}</div>
+        </div>
+      </div>
+      <div style="font-size:0.8rem;color:#7A8899;margin-top:0.75rem;">
+        <div style="margin-bottom:0.4rem"><strong>${rec.medicines_available.length}</strong> medicines available</div>
+        ${rec.medicines_unavailable.length > 0 ? `<div style="color:#FF7BAD">⚠️ ${rec.medicines_unavailable.join(', ')} not in stock</div>` : ''}
+      </div>
+    `;
+    document.getElementById('pharmacy-best-result').innerHTML = bestHTML;
+
+    // Render alternatives
+    const altHTML = data.all_pharmacies.slice(1).map(p => `
+      <div class="wp-result-row">
+        <div>
+          <div class="wr-name">${p.pharmacy_name}</div>
+          <div style="font-size:0.8rem;color:var(--muted);margin-top:0.3rem">${p.distance_km}km • ₹${p.total_medicine_cost}</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem">${p.medicines_available_count}/${p.medicines_available_count + p.medicines_unavailable_count} medicines</div>
+        </div>
+        <div style="text-align:right;color:#7A8899;font-family:'Outfit',sans-serif;font-weight:700">${p.score}</div>
+      </div>
+    `).join('');
+    document.getElementById('pharmacy-alternatives').innerHTML = altHTML;
+
+    // Savings
+    document.getElementById('pharmacy-savings').textContent = `₹${Math.round(data.savings_vs_worst)}`;
+
+    empty.style.display = 'none';
+    container.style.display = 'block';
+  } catch (err) {
+    empty.textContent = `Error: ${err.message}`;
+    empty.style.display = 'block';
+    container.style.display = 'none';
+  }
+}
+
+document.getElementById('run-pharmacy').addEventListener('click', loadPharmacyResults);
+window.addEventListener('load', () => {
+  attachPharmacyPillInputHandlers();
 });
 
 ['spend-slider','meds-slider','generic-slider','audit-slider'].forEach(id => {
