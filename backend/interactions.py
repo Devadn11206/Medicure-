@@ -143,6 +143,77 @@ def normalize_name(raw: str) -> str:
     return s
 
 
+def rxnorm_lookup(name: str) -> Optional[str]:
+    """Try to resolve a medicine name via RxNorm (RxNav API). Returns a normalized name or None.
+
+    This is a best-effort lookup and may fail due to network or API changes. We keep it optional.
+    """
+    try:
+        term = str(name).strip()
+        if not term:
+            return None
+
+        # Use approximateTerm to get candidate rxcui
+        url = "https://rxnav.nlm.nih.gov/REST/approximateTerm.json"
+        resp = requests.get(url, params={"term": term, "maxEntries": 1}, timeout=3)
+        resp.raise_for_status()
+        data = resp.json()
+        group = data.get("approximateGroup") or {}
+        candidates = group.get("candidate") or []
+        if not candidates:
+            return None
+
+        rxcui = candidates[0].get("rxcui")
+        if not rxcui:
+            return None
+
+        # Fetch properties for the rxcui
+        prop_url = f"https://rxnav.nlm.nih.gov/REST/rxcui/{rxcui}/properties.json"
+        p = requests.get(prop_url, timeout=3)
+        p.raise_for_status()
+        props = p.json().get("properties") or {}
+        name_prop = props.get("name")
+        if name_prop:
+            return name_prop.strip().lower()
+    except Exception:
+        return None
+
+
+def normalize_name(raw: str) -> str:
+    """Normalize medicine name to a lookup-friendly generic form.
+
+    Enhanced: try brand map first, then RxNorm, then fallback to token-based heuristics.
+    """
+    if raw is None:
+        return ""
+
+    s = str(raw).strip().lower()
+
+    # Remove dosage like: "Warfarin 5mg", "Paracetamol 650 mg", "Metformin 500mg SR"
+    s = re.sub(r"\b(\d+(?:\.\d+)?)\s*(mg|mcg|g|gm|ml|mL|unit|units|sr|xl|er|od|twice|t[dD]|bd|tid|q[dD]s|qhs)\b.*$", "", s)
+    s = re.sub(r"\b\d+(?:\.\d+)?\s*(mg|mcg|g|ml)\b.*$", "", s)
+    s = re.sub(r"\s+", " ", s).strip()
+
+    # Brand mapping
+    if s in BRAND_TO_GENERIC:
+        return BRAND_TO_GENERIC[s]
+
+    tokens = [t for t in re.split(r"[^a-z0-9+]+", s) if t]
+    for t in tokens:
+        if t in BRAND_TO_GENERIC:
+            return BRAND_TO_GENERIC[t]
+
+    if s.startswith("combiflam") or "combiflam" in s:
+        return BRAND_TO_GENERIC["combiflam"]
+
+    # Try RxNorm lookup (best-effort)
+    rx = rxnorm_lookup(s)
+    if rx:
+        return rx
+
+    return s
+
+
 def generate_pairs(medicines: List[str]) -> List[Tuple[str, str]]:
     return list(itertools.combinations(medicines, 2))
 

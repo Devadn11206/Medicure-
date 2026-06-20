@@ -1,0 +1,28 @@
+# Local database
+*.db
+medicines.db
+
+# CSV imports
+all_medicine*.csv
+*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Brand mappings (generated)
+brand_to_generic.json

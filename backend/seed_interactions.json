@@ -1,0 +1,42 @@
+[
+  {
+    "drug_a": "aspirin",
+    "drug_b": "warfarin",
+    "risk_level": "HIGH",
+    "description": "Increased bleeding risk. Combined use significantly raises hemorrhage risk.",
+    "recommendation": "Consult doctor before taking together.",
+    "source": "seed"
+  },
+  {
+    "drug_a": "ibuprofen",
+    "drug_b": "warfarin",
+    "risk_level": "HIGH",
+    "description": "Increased bleeding risk with NSAIDs such as ibuprofen when combined with warfarin.",
+    "recommendation": "Avoid combination unless doctor advises; monitor closely.",
+    "source": "seed"
+  },
+  {
+    "drug_a": "ssri",
+    "drug_b": "tramadol",
+    "risk_level": "MODERATE",
+    "description": "Potential increased risk of serotonin-related effects when combined.",
+    "recommendation": "Use only under medical supervision.",
+    "source": "seed"
+  },
+  {
+    "drug_a": "methotrexate",
+    "drug_b": "nsaid",
+    "risk_level": "HIGH",
+    "description": "Potential for increased methotrexate toxicity when combined with NSAIDs.",
+    "recommendation": "Avoid unless specifically prescribed; monitor labs.",
+    "source": "seed"
+  },
+  {
+    "drug_a": "amiodarone",
+    "drug_b": "digoxin",
+    "risk_level": "HIGH",
+    "description": "Amiodarone may increase digoxin levels, raising risk of digoxin toxicity.",
+    "recommendation": "Monitor digoxin levels and clinical status.",
+    "source": "seed"
+  }
+]

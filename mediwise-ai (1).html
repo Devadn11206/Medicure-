@@ -32,6 +32,22 @@ body{
   overflow-x:hidden;
 }
 
+.pill-input-wrapper{
+  display:flex;flex-wrap:wrap;gap:0.5rem;padding:0.75rem 0.75rem 0.5rem;border:1px solid rgba(255,255,255,0.12);border-radius:16px;background:rgba(255,255,255,0.05);
+}
+.medicine-pill{
+  display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.8rem;border-radius:999px;background:rgba(26,107,255,0.14);border:1px solid rgba(26,107,255,0.2);color:#fff;font-size:0.9rem;
+}
+.medicine-pill span{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pill-remove{
+  width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.08);color:#fff;cursor:pointer;transition:background 0.2s;
+}
+.pill-remove:hover{background:rgba(255,255,255,0.16);}
+.medicine-input{
+  flex:1;min-width:160px;border:none;background:transparent;color:#fff;font-size:0.95rem;outline:none;padding:0.35rem 0;
+}
+.medicine-input::placeholder{color:rgba(255,255,255,0.55);}
+
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
@@ -965,38 +981,28 @@ footer{
           Drug Interaction Analysis
         </div>
         <div class="demo-body">
-          <div class="int-row int-danger">
-            <div class="int-dot dot-danger"></div>
-            <div class="int-info">
-              <div class="int-title">Warfarin + Aspirin</div>
-              <div class="int-sub">Increased bleeding risk — consult prescribing doctor immediately</div>
+          <div class="int-control" style="margin-bottom:1rem;display:flex;flex-direction:column;gap:0.75rem;">
+            <label for="medicine-input" style="font-size:0.9rem;color:var(--muted)">Add medicines below, then click Analyze.</label>
+            <div class="pill-input-wrapper" id="medicine-pill-list" aria-label="Medicine list">
+              <div class="medicine-pill"><span>Warfarin 5mg</span><div class="pill-remove" data-pill="Warfarin 5mg">×</div></div>
+              <div class="medicine-pill"><span>Aspirin 75 mg</span><div class="pill-remove" data-pill="Aspirin 75 mg">×</div></div>
+              <div class="medicine-pill"><span>Metformin 500mg</span><div class="pill-remove" data-pill="Metformin 500mg">×</div></div>
+              <input id="medicine-input" class="medicine-input" type="text" placeholder="Type a medicine and press Enter" />
             </div>
-            <span class="sev-badge sev-high">HIGH</span>
-          </div>
-          <div class="int-row int-warn">
-            <div class="int-dot dot-warn"></div>
-            <div class="int-info">
-              <div class="int-title">Metformin + Alcohol</div>
-              <div class="int-sub">May cause lactic acidosis — avoid alcohol during course</div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;justify-content:space-between">
+              <div style="font-size:0.85rem;color:#9BA8BB">Add at least 2 medicines to check interactions.</div>
+              <button id="run-interactions" class="btn-primary" style="padding:10px 18px;font-size:0.85rem;min-width:180px;">Analyze medicines</button>
             </div>
-            <span class="sev-badge sev-med">MED</span>
           </div>
-          <div class="int-row int-ok">
+          <div id="interaction-status" class="int-row int-ok" style="display:none;justify-content:center">
             <div class="int-dot dot-ok"></div>
             <div class="int-info">
-              <div class="int-title">Amoxicillin + Paracetamol</div>
-              <div class="int-sub">No clinically significant interaction detected</div>
+              <div class="int-title">Checking interactions...</div>
+              <div class="int-sub">Fetching the latest data from the MediWise backend.</div>
             </div>
-            <span class="sev-badge sev-low">SAFE</span>
           </div>
-          <div class="int-row int-ok">
-            <div class="int-dot dot-ok"></div>
-            <div class="int-info">
-              <div class="int-title">Metformin + Amoxicillin</div>
-              <div class="int-sub">No interaction — safe to take concurrently</div>
-            </div>
-            <span class="sev-badge sev-low">SAFE</span>
-          </div>
+          <div id="interaction-results"></div>
+          <div id="interaction-error" style="color:#FF6B6B;display:none;margin-top:1rem;font-size:0.95rem"></div>
         </div>
       </div>
 
@@ -1268,6 +1274,139 @@ function updateSim(){
   document.getElementById('sim-total').textContent   = rupee(total);
   document.getElementById('sim-total2').textContent  = rupee(total);
 }
+
+function getMedicinesFromInput() {
+  const pills = Array.from(document.querySelectorAll('#medicine-pill-list .medicine-pill span'))
+    .map(el => el.textContent.trim())
+    .filter(Boolean);
+  return pills;
+}
+
+function addMedicinePill(name) {
+  const trimmed = String(name || '').trim();
+  if (!trimmed) return;
+  const pills = getMedicinesFromInput();
+  if (pills.includes(trimmed)) return;
+
+  const list = document.getElementById('medicine-pill-list');
+  const pill = document.createElement('div');
+  pill.className = 'medicine-pill';
+  pill.innerHTML = `<span>${trimmed}</span><div class="pill-remove" title="Remove">×</div>`;
+  list.insertBefore(pill, document.getElementById('medicine-input'));
+  pill.querySelector('.pill-remove').addEventListener('click', () => pill.remove());
+}
+
+function attachPillInputHandlers() {
+  const input = document.getElementById('medicine-input');
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ',' || event.key === ';') {
+      event.preventDefault();
+      const value = input.value.replace(/[;,]$/, '').trim();
+      if (value) {
+        addMedicinePill(value);
+        input.value = '';
+      }
+    }
+  });
+  input.addEventListener('blur', () => {
+    const value = input.value.trim();
+    if (value) {
+      addMedicinePill(value);
+      input.value = '';
+    }
+  });
+  document.querySelectorAll('#medicine-pill-list .pill-remove').forEach(btn => {
+    btn.addEventListener('click', () => btn.closest('.medicine-pill').remove());
+  });
+}
+
+function getRiskState(risk) {
+  switch (risk) {
+    case 'HIGH': return { row: 'int-danger', badge: 'sev-high', label: 'HIGH' };
+    case 'MODERATE': return { row: 'int-warn', badge: 'sev-med', label: 'MED' };
+    default: return { row: 'int-ok', badge: 'sev-low', label: 'SAFE' };
+  }
+}
+
+function renderInteractionItem(interaction) {
+  const state = getRiskState(interaction.risk_level);
+  return `
+    <div class="int-row ${state.row}">
+      <div class="int-dot ${state.row === 'int-danger' ? 'dot-danger' : state.row === 'int-warn' ? 'dot-warn' : 'dot-ok'}"></div>
+      <div class="int-info">
+        <div class="int-title">${interaction.drug_a} + ${interaction.drug_b}</div>
+        <div class="int-sub">${interaction.description}</div>
+      </div>
+      <span class="sev-badge ${state.badge}">${state.label}</span>
+    </div>
+  `;
+}
+
+async function loadInteractions() {
+  const status = document.getElementById('interaction-status');
+  const results = document.getElementById('interaction-results');
+  const error = document.getElementById('interaction-error');
+  const medicines = getMedicinesFromInput();
+
+  if (medicines.length < 2) {
+    error.textContent = 'Enter at least 2 medicines to analyze interactions.';
+    error.style.display = 'block';
+    results.innerHTML = '';
+    status.style.display = 'none';
+    return;
+  }
+
+  status.style.display = 'flex';
+  results.innerHTML = '';
+  error.style.display = 'none';
+
+  try {
+    const response = await fetch('http://127.0.0.1:8000/interactions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ medicines }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    if (!data.interactions || data.interactions.length === 0) {
+      results.innerHTML = `
+        <div class="int-row int-ok">
+          <div class="int-dot dot-ok"></div>
+          <div class="int-info">
+            <div class="int-title">No interactions detected</div>
+            <div class="int-sub">All presented medicine pairs appear safe.</div>
+          </div>
+          <span class="sev-badge sev-low">SAFE</span>
+        </div>
+      `;
+    } else {
+      results.innerHTML = data.interactions.map(renderInteractionItem).join('');
+      if (data.safe_pairs && data.safe_pairs.length > 0) {
+        results.innerHTML += `
+          <div style="margin-top:1rem;padding:1rem;border:1px solid rgba(255,255,255,0.08);border-radius:14px;background:rgba(255,255,255,0.02);">
+            <div class="int-title" style="margin-bottom:0.5rem;color:#7BB8FF">Safe pairs</div>
+            ${data.safe_pairs.map(pair => `<div style="font-size:0.9rem;margin-bottom:0.35rem;color:#B0BACC">${pair.drug_a} + ${pair.drug_b}</div>`).join('')}
+          </div>
+        `;
+      }
+    }
+  } catch (err) {
+    error.textContent = `Unable to fetch interactions: ${err.message}`;
+    error.style.display = 'block';
+  } finally {
+    status.style.display = 'none';
+  }
+}
+
+document.getElementById('run-interactions').addEventListener('click', loadInteractions);
+window.addEventListener('load', () => {
+  attachPillInputHandlers();
+  loadInteractions();
+});
 
 ['spend-slider','meds-slider','generic-slider','audit-slider'].forEach(id => {
   document.getElementById(id).addEventListener('input', updateSim);
