@@ -1175,6 +1175,197 @@ footer{
   </div>
 </section>
 
+<!-- ════════════════ INSURANCE COST DECODER ════════════════ -->
+<section class="safety-section" id="insurance">
+  <div style="max-width:680px;margin:0 auto;text-align:center" class="animate">
+    <div class="section-eyebrow">Insurance</div>
+    <div class="section-title">Decode your<br/><span class="gradient-text">out-of-pocket costs.</span></div>
+    <p class="section-sub" style="margin:0 auto">Enter your bill details and insurance plan to see exactly what the insurer covers and what you pay.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3.5rem">
+    <div class="animate d1">
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#7B2FFF">&#128181;</span>
+          Insurance Cost Decoder
+        </div>
+        <div class="demo-body">
+          <div style="margin-bottom:1rem;display:grid;gap:0.85rem;">
+            <label class="sim-label">Total bill amount</label>
+            <input id="insurance-total" type="number" value="50000" min="0" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
+          </div>
+          <div style="margin-bottom:1rem;display:grid;gap:0.85rem;">
+            <label class="sim-label">Treatment type</label>
+            <select id="insurance-treatment" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none">
+              <option value="surgery">Surgery</option>
+              <option value="hospitalization">Hospitalization</option>
+              <option value="consultation">Consultation</option>
+            </select>
+          </div>
+          <div style="margin-bottom:1rem;display:grid;gap:0.85rem;">
+            <label class="sim-label">Insurance plan</label>
+            <select id="insurance-plan" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none">
+              <option value="star_health_comprehensive">Star Health Comprehensive</option>
+              <option value="hdfc_ergo_optima">HDFC Ergo Optima</option>
+              <option value="niva_bupa_reassure">Niva Bupa ReAssure</option>
+              <option value="care_health_care500">Care Health Care500</option>
+              <option value="no_insurance">No Insurance</option>
+            </select>
+          </div>
+          <div style="margin-bottom:1rem;display:grid;gap:0.85rem;">
+            <label class="sim-label">Bill item details</label>
+            <textarea id="insurance-items" rows="6" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none;resize:vertical">[{ "name": "Room charges", "amount": 15000, "category": "room" },
+{ "name": "Surgery fees", "amount": 25000, "category": "surgery" },
+{ "name": "Medicines", "amount": 5000, "category": "medicine" },
+{ "name": "Diagnostic tests", "amount": 5000, "category": "diagnostics" }]</textarea>
+          </div>
+          <button id="run-insurance" class="btn-primary" style="width:100%;padding:12px;font-size:0.95rem;">Decode my bill</button>
+          <div id="insurance-error" style="color:#FF6B6B;display:none;margin-top:1rem;font-size:0.95rem"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate d2">
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#4ADE80">&#128221;</span>
+          Insurance Breakdown
+        </div>
+        <div class="demo-body" id="insurance-results" style="min-height:420px;">
+          <div style="font-size:0.9rem;color:var(--muted);">Run the decoder to display the coverage breakdown here.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ PRICE ALERTS ════════════════ -->
+<section class="safety-section" id="price-alerts">
+  <div style="max-width:680px;margin:0 auto;text-align:center" class="animate">
+    <div class="section-eyebrow">Price Alerts</div>
+    <div class="section-title">Track medicine prices and buy at the right time.</div>
+    <p class="section-sub" style="margin:0 auto">Subscribe to alerts, monitor trends, and get buy/hold guidance when prices move.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3.5rem">
+    <div class="animate d1">
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#F2C94C">&#128200;</span>
+          Price Alert Manager
+        </div>
+        <div class="demo-body">
+          <div style="display:grid;gap:0.85rem;margin-bottom:1rem;">
+            <label class="sim-label">User ID</label>
+            <input id="alert-user-id" type="text" value="user_123" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
+          </div>
+          <div style="display:grid;gap:0.85rem;margin-bottom:1rem;">
+            <label class="sim-label">Medicine</label>
+            <input id="alert-medicine" type="text" value="Metformin 500mg" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
+          </div>
+          <div style="display:grid;gap:0.85rem;margin-bottom:1rem;grid-template-columns:1fr 1fr;">
+            <div>
+              <label class="sim-label">Current price</label>
+              <input id="alert-current-price" type="number" value="120" min="1" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
+            </div>
+            <div>
+              <label class="sim-label">Target price</label>
+              <input id="alert-target-price" type="number" value="90" min="1" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
+            </div>
+          </div>
+          <label style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem;font-size:0.95rem;color:var(--muted);">
+            <input id="alert-notify-any-drop" type="checkbox" style="width:16px;height:16px;" checked />
+            Notify on any price drop
+          </label>
+          <button id="run-alert-subscribe" class="btn-primary" style="width:100%;padding:12px;font-size:0.95rem;">Subscribe to alert</button>
+          <button id="run-alert-check" class="btn-ghost" style="width:100%;margin-top:0.75rem;padding:12px;font-size:0.95rem;border:1px solid rgba(255,255,255,0.12);">Run price check now</button>
+          <div id="alert-status" style="margin-top:1rem;font-size:0.95rem;color:#fff;min-height:1.5rem"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate d2">
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#4ADE80">&#128202;</span>
+          Alert Dashboard
+        </div>
+        <div class="demo-body" id="alert-dashboard" style="min-height:420px;display:grid;gap:1rem;">
+          <div style="font-size:0.9rem;color:var(--muted);">Subscribe to an alert to see active notifications and price history here.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ MEDICINE SHORTAGE PREDICTOR ════════════════ -->
+<section class="safety-section" id="shortage-predictor">
+  <div style="max-width:680px;margin:0 auto;text-align:center" class="animate">
+    <div class="section-eyebrow">Shortage Predictor</div>
+    <div class="section-title">Warn before<br/><span class="gradient-text">run-out.</span></div>
+    <p class="section-sub" style="margin:0 auto">Predict shortage risk using demand patterns, search signals, seasonal trends, and user reports.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3.5rem">
+    <div class="animate d1">
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#FF7BAD">⏳</span>
+          Predict Shortage
+        </div>
+        <div class="demo-body">
+          <div style="display:grid;gap:0.85rem;margin-bottom:1rem;">
+            <label class="sim-label">Medicines</label>
+            <div class="pill-input-wrapper" id="shortage-pill-list" aria-label="Shortage medicine list" style="min-height:50px;">
+              <div class="medicine-pill"><span>Insulin Glargine</span><div class="pill-remove" title="Remove">×</div></div>
+              <div class="medicine-pill"><span>Metformin 500mg</span><div class="pill-remove" title="Remove">×</div></div>
+              <input id="shortage-medicine-input" class="medicine-input" type="text" placeholder="Add medicine, press Enter" />
+            </div>
+          </div>
+
+          <div style="display:grid;gap:0.85rem;margin-bottom:1rem;">
+            <label class="sim-label">Your location</label>
+            <input id="shortage-location" type="text" value="Bengaluru" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
+          </div>
+
+          <button id="run-shortage-predict" class="btn-primary" style="width:100%;padding:12px;font-size:0.95rem;">Predict shortage</button>
+          <div id="shortage-status" style="margin-top:1rem;font-size:0.95rem;color:#fff;min-height:1.5rem"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate d2">
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#4ADE80">⚡</span>
+          Predictions
+        </div>
+        <div class="demo-body" id="shortage-predictions" style="min-height:420px;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="font-size:0.9rem;color:var(--muted);">
+            Click <strong>Predict shortage</strong> to see risks and recommendations.
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-card" style="margin-top:1.5rem;">
+        <div class="demo-header">
+          <span style="color:#FBBF24">📌</span>
+          Watchlist &amp; Alerts
+        </div>
+        <div class="demo-body">
+          <div style="display:grid;grid-template-columns:1fr;gap:0.85rem;">
+            <button id="load-shortage-watchlist" class="btn-ghost" style="width:100%;padding:12px;font-size:0.9rem;border:1px solid rgba(255,255,255,0.12);">Load watchlist</button>
+            <button id="load-shortage-alerts" class="btn-ghost" style="width:100%;padding:12px;font-size:0.9rem;border:1px solid rgba(255,255,255,0.12);">Load HIGH alerts</button>
+          </div>
+          <div class="wp-divider"></div>
+          <div id="shortage-watchlist" style="display:flex;flex-direction:column;gap:0.75rem;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ════════════════ SAFETY ════════════════ -->
 <section class="safety-section" id="safety">
   <div style="max-width:680px;margin:0 auto;text-align:center" class="animate">
@@ -1287,6 +1478,7 @@ footer{
 </footer>
 
 <!-- ════════════════ SCRIPTS ════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 // Nav scroll
 const nav = document.getElementById('main-nav');
@@ -1361,6 +1553,295 @@ function addMedicinePill(name) {
   pill.innerHTML = `<span>${trimmed}</span><div class="pill-remove" title="Remove">×</div>`;
   list.insertBefore(pill, document.getElementById('medicine-input'));
   pill.querySelector('.pill-remove').addEventListener('click', () => pill.remove());
+}
+
+function getInsurancePayload() {
+  const totalBill = parseFloat(document.getElementById('insurance-total').value) || 0;
+  const treatmentType = document.getElementById('insurance-treatment').value;
+  const insurancePlan = document.getElementById('insurance-plan').value;
+  const itemsText = document.getElementById('insurance-items').value;
+  let items = [];
+
+  try {
+    items = JSON.parse(itemsText);
+  } catch (err) {
+    return { error: 'Invalid items JSON. Please fix the bill item list.' };
+  }
+
+  return {
+    total_bill: totalBill,
+    treatment_type: treatmentType,
+    insurance_plan: insurancePlan,
+    items,
+  };
+}
+
+async function loadInsurancePlans() {
+  const select = document.getElementById('insurance-plan');
+  if (!select) return;
+
+  try {
+    const response = await fetch('http://127.0.0.1:8000/insurance/plans');
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    if (!data.plans || !Array.isArray(data.plans)) return;
+
+    select.innerHTML = data.plans
+      .map(plan => `<option value="${plan.key}">${plan.display_name}</option>`)
+      .join('');
+  } catch (err) {
+    console.warn('Unable to load insurance plans:', err);
+  }
+}
+
+async function loadInsuranceResults() {
+  const errorEl = document.getElementById('insurance-error');
+  const resultsEl = document.getElementById('insurance-results');
+  const payload = getInsurancePayload();
+
+  if (payload.error) {
+    errorEl.textContent = payload.error;
+    errorEl.style.display = 'block';
+    resultsEl.innerHTML = '';
+    return;
+  }
+
+  errorEl.style.display = 'none';
+  resultsEl.innerHTML = '<div style="color:var(--muted);">Calculating coverage...</div>';
+
+  try {
+    const response = await fetch('http://127.0.0.1:8000/insurance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.detail ? JSON.stringify(data.detail) : response.statusText);
+    }
+
+    const breakdownHtml = data.breakdown.map(item => `
+      <div class="sim-row" style="display:grid;grid-template-columns:1fr auto;gap:0.75rem;">
+        <div>
+          <div style="font-size:0.95rem;font-weight:700">${item.item}</div>
+          <div style="font-size:0.82rem;color:var(--muted);margin-top:0.25rem">${item.reason}</div>
+        </div>
+        <div style="text-align:right;min-width:140px;">
+          <div style="font-size:0.9rem;color:#fff">₹${item.amount}</div>
+          <div style="font-size:0.85rem;color:#7BB8FF">Covered ₹${item.covered}</div>
+          <div style="font-size:0.85rem;color:#FF7BAD">You pay ₹${item.patient_pays}</div>
+        </div>
+      </div>
+    `).join('');
+
+    resultsEl.innerHTML = `
+      <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+        <div style="min-width:220px;">
+          <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Total bill</div>
+          <div style="font-size:1.4rem;font-weight:800;margin-top:0.35rem;">₹${data.total_bill}</div>
+        </div>
+        <div style="min-width:220px;">
+          <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Patient pays</div>
+          <div style="font-size:1.4rem;font-weight:800;margin-top:0.35rem;color:#FF7BAD;">₹${data.summary.total_patient_pays}</div>
+        </div>
+        <div style="min-width:220px;">
+          <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Coverage</div>
+          <div style="font-size:1.4rem;font-weight:800;margin-top:0.35rem;color:#4ADE80;">${data.summary.coverage_percentage}%</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+        ${data.warnings && data.warnings.length > 0 ? `<div style="padding:0.9rem 1rem;border:1px solid rgba(255,107,107,0.2);border-radius:12px;background:rgba(255,107,107,0.08);color:#FF7BAD;flex:1;min-width:220px;"><strong>Warnings</strong><ul style="margin:0.75rem 0 0 1rem;color:#FFB3C4;">${data.warnings.map(w => `<li>${w}</li>`).join('')}</ul></div>` : ''}
+      </div>
+      <div style="display:grid;gap:0.75rem;">${breakdownHtml}</div>
+    `;
+  } catch (err) {
+    errorEl.textContent = `Unable to decode insurance: ${err.message}`;
+    errorEl.style.display = 'block';
+    resultsEl.innerHTML = '';
+  }
+}
+
+let alertHistoryChart = null;
+
+function getPriceAlertPayload() {
+  const userId = document.getElementById('alert-user-id').value.trim();
+  const medicine = document.getElementById('alert-medicine').value.trim();
+  const currentPrice = parseFloat(document.getElementById('alert-current-price').value);
+  const targetPrice = parseFloat(document.getElementById('alert-target-price').value);
+  const notifyOnAnyDrop = document.getElementById('alert-notify-any-drop').checked;
+
+  return {
+    user_id: userId,
+    medicine,
+    current_price: isNaN(currentPrice) ? 0 : currentPrice,
+    target_price: isNaN(targetPrice) ? 0 : targetPrice,
+    notify_on_any_drop: notifyOnAnyDrop,
+  };
+}
+
+function formatDateLabel(timestamp) {
+  return new Date(timestamp).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' });
+}
+
+async function loadPriceHistoryChart(medicine) {
+  const dashboard = document.getElementById('alert-dashboard');
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/alerts/history/${encodeURIComponent(medicine)}`);
+    if (!response.ok) {
+      throw new Error(`History fetch failed ${response.status}`);
+    }
+    const data = await response.json();
+    const history = data.history || [];
+    const chartCanvas = document.getElementById('alert-history-chart');
+    if (!chartCanvas) return;
+
+    if (alertHistoryChart) {
+      alertHistoryChart.destroy();
+      alertHistoryChart = null;
+    }
+
+    alertHistoryChart = new Chart(chartCanvas.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: history.map(entry => formatDateLabel(entry.recorded_at)),
+        datasets: [
+          {
+            label: 'Price (₹)',
+            data: history.map(entry => entry.price),
+            borderColor: '#4ADE80',
+            backgroundColor: 'rgba(74,222,128,0.18)',
+            tension: 0.3,
+            fill: true,
+            pointRadius: 2,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+        },
+        scales: {
+          x: { ticks: { color: '#A7B5D3' } },
+          y: { ticks: { color: '#A7B5D3' } },
+        },
+      },
+    });
+  } catch (err) {
+    console.warn('Price history chart error', err);
+  }
+}
+
+async function renderPriceAlerts(userId) {
+  const dashboard = document.getElementById('alert-dashboard');
+  if (!dashboard) return;
+  dashboard.innerHTML = '<div style="color:var(--muted);">Loading alerts…</div>';
+
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/alerts/${encodeURIComponent(userId)}`);
+    if (!response.ok) {
+      throw new Error(`Unable to load alerts: ${response.status}`);
+    }
+    const data = await response.json();
+    const alerts = data.alerts || [];
+
+    if (!alerts.length) {
+      dashboard.innerHTML = '<div style="font-size:0.9rem;color:var(--muted);">No active alerts yet. Subscribe to start tracking price movement.</div>';
+      return;
+    }
+
+    const activeHtml = alerts.map(alert => `
+      <div style="border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:1rem;background:rgba(255,255,255,0.03);">
+        <div style="display:flex;justify-content:space-between;gap:1rem;align-items:start;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:0.95rem;font-weight:700;color:#fff">${alert.medicine}</div>
+            <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.4rem">Target ₹${alert.target_price} | Current ₹${alert.current_price}</div>
+          </div>
+          <button onclick="deletePriceAlert('${alert.user_id}','${alert.medicine.replace("'","\\'")}')" style="border:1px solid rgba(255,255,255,0.12);background:transparent;color:#fff;padding:0.6rem 0.9rem;border-radius:10px;font-size:0.85rem;cursor:pointer">Cancel</button>
+        </div>
+      </div>
+    `).join('');
+
+    dashboard.innerHTML = `
+      <div style="display:grid;gap:1rem;">
+        <div>${activeHtml}</div>
+        <div style="padding:1rem;border:1px solid rgba(255,255,255,0.08);border-radius:16px;background:rgba(10,15,33,0.85);">
+          <div style="font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:0.75rem">Recent trend</div>
+          <canvas id="alert-history-chart" height="220"></canvas>
+        </div>
+      </div>
+    `;
+
+    await loadPriceHistoryChart(alerts[0].medicine);
+  } catch (err) {
+    dashboard.innerHTML = `<div style="color:#FF7BAD;">${err.message}</div>`;
+  }
+}
+
+async function subscribePriceAlert() {
+  const status = document.getElementById('alert-status');
+  status.textContent = 'Saving alert…';
+  try {
+    const payload = getPriceAlertPayload();
+    const response = await fetch('http://127.0.0.1:8000/alerts/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      const message = data.detail?.error || data.error || JSON.stringify(data);
+      status.style.color = '#FF6B6B';
+      status.textContent = `Unable to subscribe: ${message}`;
+      return;
+    }
+
+    status.style.color = '#4ADE80';
+    status.textContent = `Subscribed for ${data.medicine}. ${data.message}`;
+    await renderPriceAlerts(payload.user_id);
+  } catch (err) {
+    status.style.color = '#FF6B6B';
+    status.textContent = `Subscribe failed: ${err.message}`;
+  }
+}
+
+async function deletePriceAlert(userId, medicine) {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/alerts/${encodeURIComponent(userId)}/${encodeURIComponent(medicine)}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error(`Delete failed ${response.status}`);
+    }
+    await renderPriceAlerts(userId);
+  } catch (err) {
+    console.warn('Delete alert failed', err);
+  }
+}
+
+async function runPriceAlertCheck() {
+  const status = document.getElementById('alert-status');
+  status.style.color = '#fff';
+  status.textContent = 'Checking price alerts…';
+  try {
+    const response = await fetch('http://127.0.0.1:8000/alerts/check', {
+      method: 'POST',
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.detail?.error || JSON.stringify(data));
+    }
+
+    const message = data.triggered.length > 0 ? `Triggered ${data.triggered.length} alert(s)` : 'No alerts triggered.';
+    status.style.color = data.triggered.length > 0 ? '#4ADE80' : '#A7B5D3';
+    status.textContent = message;
+    const userId = document.getElementById('alert-user-id').value.trim();
+    if (userId) await renderPriceAlerts(userId);
+  } catch (err) {
+    status.style.color = '#FF6B6B';
+    status.textContent = `Alert check failed: ${err.message}`;
+  }
 }
 
 function attachPillInputHandlers() {
@@ -1597,8 +2078,15 @@ async function loadPharmacyResults() {
 }
 
 document.getElementById('run-pharmacy').addEventListener('click', loadPharmacyResults);
+document.getElementById('run-insurance').addEventListener('click', loadInsuranceResults);
+document.getElementById('run-alert-subscribe').addEventListener('click', subscribePriceAlert);
+document.getElementById('run-alert-check').addEventListener('click', runPriceAlertCheck);
 window.addEventListener('load', () => {
   attachPharmacyPillInputHandlers();
+  loadInsurancePlans();
+  attachShortagePillInputHandlers();
+  // Auto-load watchlist for a better UX
+  loadShortageWatchlist();
 });
 
 ['spend-slider','meds-slider','generic-slider','audit-slider'].forEach(id => {
@@ -1611,6 +2099,225 @@ document.querySelectorAll('.feature-card').forEach(card => {
   card.addEventListener('mouseenter', () => card.style.boxShadow = '0 0 40px rgba(26,107,255,0.07) inset');
   card.addEventListener('mouseleave', () => card.style.boxShadow = 'none');
 });
+
+// ════════════════ SHORTAGE PREDICTOR (Frontend Integration) ════════════════
+function getShortageMedicinesFromInput() {
+  const pills = Array.from(document.querySelectorAll('#shortage-pill-list .medicine-pill span'))
+    .map(el => el.textContent.trim())
+    .filter(Boolean);
+  return pills;
+}
+
+function addShortageMedicinePill(name) {
+  const trimmed = String(name || '').trim();
+  if (!trimmed) return;
+  const pills = getShortageMedicinesFromInput();
+  if (pills.includes(trimmed)) return;
+
+  const list = document.getElementById('shortage-pill-list');
+  const pill = document.createElement('div');
+  pill.className = 'medicine-pill';
+  pill.innerHTML = `<span>${trimmed}</span><div class="pill-remove" title="Remove">×</div>`;
+  list.insertBefore(pill, document.getElementById('shortage-medicine-input'));
+  pill.querySelector('.pill-remove').addEventListener('click', () => pill.remove());
+}
+
+function attachShortagePillInputHandlers() {
+  const input = document.getElementById('shortage-medicine-input');
+  if (!input) return;
+
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ',' || event.key === ';') {
+      event.preventDefault();
+      const value = input.value.replace(/[;,]$/, '').trim();
+      if (value) {
+        addShortageMedicinePill(value);
+        input.value = '';
+      }
+    }
+  });
+
+  input.addEventListener('blur', () => {
+    const value = input.value.trim();
+    if (value) {
+      addShortageMedicinePill(value);
+      input.value = '';
+    }
+  });
+
+  document.querySelectorAll('#shortage-pill-list .pill-remove').forEach(btn => {
+    btn.addEventListener('click', () => btn.closest('.medicine-pill').remove());
+  });
+}
+
+function riskBadgeHtml(risk, riskScore, seasonalFlag) {
+  let cls = 'sev-low';
+  let label = 'SAFE';
+  if (risk === 'HIGH') { cls = 'sev-high'; label = 'HIGH'; }
+  else if (risk === 'MODERATE') { cls = 'sev-med'; label = 'MED'; }
+
+  const seasonalPart = (seasonalFlag === 1) ? ' • Seasonal peak' : '';
+  return `<span class="sev-badge ${cls}" title="Risk score: ${riskScore}/100">${label}${seasonalPart}</span>`;
+}
+
+function renderShortagePredictions(predictions) {
+  const container = document.getElementById('shortage-predictions');
+  if (!container) return;
+
+  if (!predictions || predictions.length === 0) {
+    container.innerHTML = '<div style="font-size:0.9rem;color:var(--muted);">No predictions available.</div>';
+    return;
+  }
+
+  const cards = predictions.map(p => {
+    const risk = p.shortage_risk;
+    const score = p.risk_score ?? 0;
+    const seasonalFlag = (p.seasonal_flag !== undefined) ? p.seasonal_flag : null;
+
+    const daysText = (p.predicted_shortage_in_days === null || p.predicted_shortage_in_days === undefined)
+      ? 'No estimate'
+      : `${p.predicted_shortage_in_days} days (estimated)`;
+
+    const bullets = Array.isArray(p.reason) && p.reason.length
+      ? `<ul style="margin:0.5rem 0 0 1.1rem;color:#C5CDD9;">${p.reason.map(r => `<li>${r}</li>`).join('')}</ul>`
+      : '';
+
+    const altHtml = Array.isArray(p.alternatives) && p.alternatives.length
+      ? `<div style="margin-top:0.6rem;font-size:0.86rem;color:#A7B5D3;"><strong style="color:#7BB8FF;">Alternatives:</strong> ${p.alternatives.join(', ')}</div>`
+      : '';
+
+    return `
+      <div style="border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:1rem;background:rgba(255,255,255,0.03);">
+        <div style="display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:0.95rem;font-weight:800;color:#fff;">${p.medicine}</div>
+            <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.25rem;">${p.recommendation || ''}</div>
+            <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.25rem;">Shortage: <strong style="color:#fff;">${risk}</strong> • ${daysText}</div>
+            ${bullets}
+            ${altHtml}
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;align-items:flex-end;">
+            ${riskBadgeHtml(risk, score, seasonalFlag)}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = cards;
+}
+
+async function runShortagePredict() {
+  const statusEl = document.getElementById('shortage-status');
+  const pills = getShortageMedicinesFromInput();
+  const location = document.getElementById('shortage-location')?.value?.trim();
+
+  const predictionsEl = document.getElementById('shortage-predictions');
+  if (!predictionsEl) return;
+
+  if (!pills.length) {
+    statusEl.style.color = '#FF6B6B';
+    statusEl.textContent = 'Add at least one medicine.';
+    predictionsEl.innerHTML = '<div style="font-size:0.9rem;color:var(--muted);">No predictions.</div>';
+    return;
+  }
+
+  statusEl.style.color = '#fff';
+  statusEl.textContent = 'Predicting shortage…';
+
+  try {
+    const resp = await fetch('http://127.0.0.1:8000/shortage/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ medicines: pills, user_location: location || 'Unknown' }),
+    });
+
+    const data = await resp.json();
+    if (!resp.ok) {
+      throw new Error(data?.detail || data?.error || resp.statusText);
+    }
+
+    renderShortagePredictions(data.predictions || []);
+
+    statusEl.style.color = '#4ADE80';
+    statusEl.textContent = `Done. High/Moderate action required: ${data?.summary?.action_required ? 'Yes' : 'No'}.`;
+  } catch (err) {
+    statusEl.style.color = '#FF6B6B';
+    statusEl.textContent = `Prediction failed: ${err.message}`;
+  }
+}
+
+async function loadShortageWatchlist() {
+  const el = document.getElementById('shortage-watchlist');
+  if (!el) return;
+
+  el.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">Loading watchlist…</div>';
+  try {
+    const resp = await fetch('http://127.0.0.1:8000/shortage/watchlist');
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data?.detail || resp.statusText);
+
+    const items = (data.watchlist || []).slice(0, 20).map(w => {
+      const season = w.seasonal_flag === 1 ? ' • Seasonal peak' : '';
+      return `
+        <div style="border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:0.85rem;background:rgba(255,255,255,0.03);">
+          <div style="display:flex;justify-content:space-between;gap:1rem;align-items:center;">
+            <div>
+              <div style="font-weight:800;color:#fff;font-size:0.9rem;">${w.medicine}</div>
+              <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.25rem;">Risk: <strong style="color:#fff;">${w.risk_level}</strong> • ${w.risk_score}/100${season}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    el.innerHTML = items || '<div style="color:var(--muted);font-size:0.9rem;">No items.</div>';
+  } catch (err) {
+    el.innerHTML = `<div style="color:#FF6B6B;">Unable to load watchlist: ${err.message}</div>`;
+  }
+}
+
+async function loadShortageAlerts() {
+  const el = document.getElementById('shortage-watchlist');
+  if (!el) return;
+
+  el.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">Loading HIGH alerts…</div>';
+  try {
+    const resp = await fetch('http://127.0.0.1:8000/shortage/alerts');
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data?.detail || resp.statusText);
+
+    const alerts = data.alerts || [];
+    if (!alerts.length) {
+      el.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">No active HIGH risk alerts.</div>';
+      return;
+    }
+
+    el.innerHTML = alerts.map(a => `
+      <div style="border:1px solid rgba(255,61,127,0.18);border-radius:14px;padding:1rem;background:rgba(255,61,127,0.06);">
+        <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+          <div>
+            <div style="font-weight:900;color:#fff;font-size:0.95rem;">${a.medicine}</div>
+            <div style="margin-top:0.35rem;font-size:0.85rem;color:#FFB3C4;">${a.recommendation || 'Stock up soon'}</div>
+            <div style="margin-top:0.25rem;font-size:0.82rem;color:#C5CDD9;">Risk score: <strong style="color:#fff;">${a.risk_score}/100</strong> • ETA: ${a.predicted_shortage_in_days} days (estimated)</div>
+            ${Array.isArray(a.reason) && a.reason.length ? `<ul style="margin:0.6rem 0 0 1.1rem;color:#C5CDD9;">${a.reason.map(r=>`<li>${r}</li>`).join('')}</ul>` : ''}
+          </div>
+        </div>
+      </div>
+    `).join('');
+  } catch (err) {
+    el.innerHTML = `<div style="color:#FF6B6B;">Unable to load alerts: ${err.message}</div>`;
+  }
+}
+
+const shortageBtn = document.getElementById('run-shortage-predict');
+if (shortageBtn) shortageBtn.addEventListener('click', runShortagePredict);
+
+const watchBtn = document.getElementById('load-shortage-watchlist');
+if (watchBtn) watchBtn.addEventListener('click', loadShortageWatchlist);
+
+const alertsBtn = document.getElementById('load-shortage-alerts');
+if (alertsBtn) alertsBtn.addEventListener('click', loadShortageAlerts);
 </script>
 </body>
 </html>

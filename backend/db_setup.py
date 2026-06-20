@@ -133,9 +133,101 @@ def init_db(db_path: Optional[str] = None) -> None:
             );
             """
         )
-        conn.commit()
 
-        # Seed pharmacy data if empty
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS price_alerts (
+                user_id TEXT NOT NULL,
+                medicine TEXT NOT NULL,
+                target_price REAL NOT NULL,
+                current_price REAL NOT NULL,
+                notify_on_any_drop INTEGER NOT NULL DEFAULT 0,
+                is_active INTEGER NOT NULL DEFAULT 1,
+                created_at TIMESTAMP NOT NULL,
+                updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (user_id, medicine)
+            );
+            """
+        )
+
+        # Ensure schema compatibility for existing databases
+        cur.execute("PRAGMA table_info(price_alerts)")
+        columns = [row[1] for row in cur.fetchall()]
+        if "updated_at" not in columns:
+            cur.execute("ALTER TABLE price_alerts ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS price_history (
+                medicine TEXT NOT NULL,
+                price REAL NOT NULL,
+                recorded_at TIMESTAMP NOT NULL,
+                source TEXT NOT NULL
+            );
+            """
+        )
+
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS alert_log (
+                user_id TEXT NOT NULL,
+                medicine TEXT NOT NULL,
+                alert_type TEXT NOT NULL,
+                old_price REAL NOT NULL,
+                new_price REAL NOT NULL,
+                triggered_at TIMESTAMP NOT NULL,
+                was_seen INTEGER NOT NULL DEFAULT 0
+            );
+            """
+        )
+
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS search_frequency (
+                medicine TEXT NOT NULL,
+                location TEXT,
+                search_count INTEGER NOT NULL DEFAULT 1,
+                recorded_date DATE NOT NULL
+            );
+            """
+        )
+
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS shortage_reports (
+                medicine TEXT NOT NULL,
+                location TEXT NOT NULL,
+                reported_by TEXT NOT NULL,
+                pharmacy_name TEXT,
+                confirmed INTEGER NOT NULL DEFAULT 0,
+                reported_at TIMESTAMP NOT NULL
+            );
+            """
+        )
+
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS shortage_watchlist (
+                medicine TEXT PRIMARY KEY,
+                shortage_risk TEXT NOT NULL,
+                risk_score INTEGER NOT NULL,
+                last_updated TIMESTAMP NOT NULL,
+                seasonal_flag INTEGER NOT NULL DEFAULT 0
+            );
+            """
+        )
+
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS seasonal_patterns (
+                medicine TEXT PRIMARY KEY,
+                peak_months TEXT NOT NULL,
+                reason TEXT,
+                demand_increase_pct INTEGER NOT NULL DEFAULT 0
+            );
+            """
+        )
+        conn.commit()
         cur.execute("SELECT COUNT(1) FROM pharmacy")
         row = cur.fetchone()
         if row and row[0] == 0:

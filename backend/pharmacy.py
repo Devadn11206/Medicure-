@@ -4,21 +4,21 @@ from typing import List, Dict, Optional, Tuple
 
 # Bengaluru pharmacy locations (15 major chains with realistic coordinates)
 PHARMACY_DATA = [
-    {"name": "Apollo Pharmacy - Indiranagar", "address": "126, Bangalore 560038", "lat": 12.9716, "lng": 77.6412},
-    {"name": "MedPlus - Jayanagar", "address": "45, 11th Main, Jayanagar, Bengaluru", "lat": 12.9352, "lng": 77.5945},
-    {"name": "Netmeds - Koramangala", "address": "456, 4th Block, Koramangala, Bengaluru", "lat": 12.9352, "lng": 77.6245},
-    {"name": "1mg Pharmacy - Whitefield", "address": "789, Whitefield, Bengaluru", "lat": 12.9698, "lng": 77.7499},
-    {"name": "Wellness Forever - MG Road", "address": "123 MG Road, Bengaluru", "lat": 12.9352, "lng": 77.6096},
-    {"name": "Frank Ross - Bommanahalli", "address": "234, Bommanahalli, Bengaluru", "lat": 12.9352, "lng": 77.5945},
-    {"name": "Guardian Pharmacy - BTM Layout", "address": "567, BTM Layout, Bengaluru", "lat": 12.9179, "lng": 77.6099},
-    {"name": "Pharmeasy - HSR Layout", "address": "890, HSR Layout, Bengaluru", "lat": 12.9352, "lng": 77.6350},
-    {"name": "Medlife - Marathahalli", "address": "345, Marathahalli, Bengaluru", "lat": 12.9598, "lng": 77.6997},
-    {"name": "Care Pharmacy - Yeshwanthpur", "address": "678, Yeshwanthpur, Bengaluru", "lat": 13.0011, "lng": 77.5765},
-    {"name": "Cochin Pharmacy - Vijayanagar", "address": "123, Vijayanagar, Bengaluru", "lat": 12.9683, "lng": 77.5456},
-    {"name": "Apollo Pharmacy - BTM", "address": "456, BTM Layout, Bengaluru", "lat": 12.9179, "lng": 77.6099},
-    {"name": "MedPlus - Whitefield", "address": "789, Whitefield Main Road, Bengaluru", "lat": 12.9698, "lng": 77.7499},
-    {"name": "Netmeds - Indiranagar", "address": "234, Indiranagar, Bengaluru", "lat": 12.9716, "lng": 77.6412},
-    {"name": "Wellness Forever - Koramangala", "address": "567, Koramangala, Bengaluru", "lat": 12.9352, "lng": 77.6245},
+    {"name": "Apollo Pharmacy - Indiranagar", "address": "126, 100 ft Road, Indiranagar, Bengaluru", "lat": 12.9718, "lng": 77.6412},
+    {"name": "MedPlus - Jayanagar", "address": "45, 11th Main, Jayanagar, Bengaluru", "lat": 12.9349, "lng": 77.5943},
+    {"name": "Netmeds - Koramangala", "address": "456, 4th Block, Koramangala, Bengaluru", "lat": 12.9354, "lng": 77.6248},
+    {"name": "1mg Pharmacy - Whitefield", "address": "789, Whitefield Main Road, Bengaluru", "lat": 12.9700, "lng": 77.7484},
+    {"name": "Wellness Forever - MG Road", "address": "123, MG Road, Bengaluru", "lat": 12.9721, "lng": 77.6068},
+    {"name": "Frank Ross - Bommanahalli", "address": "234, Bommanahalli, Bengaluru", "lat": 12.9226, "lng": 77.6114},
+    {"name": "Guardian Pharmacy - BTM Layout", "address": "567, BTM Layout, Bengaluru", "lat": 12.9218, "lng": 77.6065},
+    {"name": "Pharmeasy - HSR Layout", "address": "890, HSR Layout, Bengaluru", "lat": 12.9116, "lng": 77.6412},
+    {"name": "Medlife - Marathahalli", "address": "345, Marathahalli, Bengaluru", "lat": 12.9548, "lng": 77.7004},
+    {"name": "Care Pharmacy - Yeshwanthpur", "address": "678, Yeshwanthpur, Bengaluru", "lat": 13.0295, "lng": 77.5612},
+    {"name": "Cochin Pharmacy - Vijayanagar", "address": "123, Vijayanagar, Bengaluru", "lat": 12.9643, "lng": 77.5455},
+    {"name": "Apollo Pharmacy - BTM", "address": "456, BTM Layout, Bengaluru", "lat": 12.9217, "lng": 77.6058},
+    {"name": "MedPlus - Whitefield", "address": "789, Whitefield Main Road, Bengaluru", "lat": 12.9715, "lng": 77.7489},
+    {"name": "Netmeds - Indiranagar", "address": "234, Indiranagar, Bengaluru", "lat": 12.9696, "lng": 77.6391},
+    {"name": "Wellness Forever - Koramangala", "address": "567, Koramangala, Bengaluru", "lat": 12.9371, "lng": 77.6239},
 ]
 
 # Common medicines with price variations (±20% across pharmacies)
