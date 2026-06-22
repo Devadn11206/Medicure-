@@ -95,8 +95,8 @@ def _normalize_name(s: str) -> str:
     return re.sub(r"\s+", " ", (s or "").lower().strip())
 
 
-def _is_vague_charge(name: str) -> bool:
-    n = (name or "").lower()
+def _is_vague_charge(name: str, category: str = "") -> bool:
+    n = f"{name or ''} {category or ''}".lower()
     vague_keywords = [
         "miscellaneous",
         "sundry",

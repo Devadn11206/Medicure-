@@ -1,8 +1,10 @@
-from fastapi import FastAPI, HTTPException
+from email.parser import BytesParser
+from email import policy
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Tuple
 
 from .db_setup import init_db
 from .interactions import get_known_interactions, process_interactions
@@ -59,6 +61,43 @@ def root():
         return FileResponse(str(FRONTEND_FILE), media_type="text/html")
     return {"status": "ok"}
 
+
+
+class MemoryUpload:
+    def __init__(self, filename: str, content: bytes):
+        self.filename = filename
+        self._content = content
+
+    async def read(self) -> bytes:
+        return self._content
+
+
+async def parse_multipart_request(request: Request) -> Tuple[dict, dict]:
+    content_type = request.headers.get("content-type", "")
+    if "multipart/form-data" not in content_type.lower():
+        raise HTTPException(status_code=400, detail="multipart/form-data is required")
+
+    body = await request.body()
+    raw_message = (
+        f"Content-Type: {content_type}\r\nMIME-Version: 1.0\r\n\r\n".encode("utf-8")
+        + body
+    )
+    message = BytesParser(policy=policy.default).parsebytes(raw_message)
+
+    fields = {}
+    files = {}
+    for part in message.iter_parts():
+        name = part.get_param("name", header="content-disposition")
+        if not name:
+            continue
+        filename = part.get_filename()
+        payload = part.get_payload(decode=True) or b""
+        if filename is None:
+            fields[name] = payload.decode(part.get_content_charset() or "utf-8", errors="replace")
+        else:
+            files[name] = MemoryUpload(filename=filename, content=payload)
+
+    return fields, files
 
 @app.post("/interactions")
 def interactions_endpoint(payload: dict):
@@ -186,13 +225,22 @@ def shortage_history(medicine: str):
 
 
 @app.post("/ocr")
-async def ocr_endpoint(file, user_id: Optional[str] = None):
+async def ocr_endpoint(request: Request):
     """
     Multipart upload:
       - file: prescription image (jpg/png/pdf)
       - user_id: string (optional)
     """
-    return await ocr_from_upload(file, user_id)
+    fields, files = await parse_multipart_request(request)
+    file = files.get("file")
+    if file is None:
+        raise HTTPException(status_code=400, detail="file is required")
+
+    user_id = fields.get("user_id")
+    try:
+        return await ocr_from_upload(file, user_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
 
 
 @app.post("/ocr/text")
@@ -212,21 +260,21 @@ def ocr_history_endpoint(user_id: str):
 
 
 @app.post("/audit")
-async def audit_endpoint(
-    file,  # multipart file
-    bill_type: Optional[str] = None,
-    user_id: Optional[str] = None,
-):
+async def audit_endpoint(request: Request):
     """
     Multipart upload:
       - file: jpg/png/pdf (<= 10MB)
       - bill_type: optional string
       - user_id: optional string
     """
+    fields, files = await parse_multipart_request(request)
+    file = files.get("file")
     if file is None:
         raise HTTPException(status_code=400, detail="file is required")
 
-    bill_type = bill_type or "general"
+    bill_type = fields.get("bill_type") or "general"
+    user_id = fields.get("user_id")
+    include_dispute_letter = str(fields.get("include_dispute_letter", "true")).lower() not in {"false", "0", "no"}
     filename = getattr(file, "filename", None) or "upload"
     try:
         content = await file.read()
@@ -239,7 +287,7 @@ async def audit_endpoint(
             filename=filename,
             bill_type=bill_type,
             user_id=user_id,
-            include_dispute_letter=True,
+            include_dispute_letter=include_dispute_letter,
         )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))

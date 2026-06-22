@@ -1,3 +1,4 @@
+import base64
 import json
 import os
 import re
@@ -29,6 +30,7 @@ except Exception:  # pragma: no cover
     Image = None
 
 import sqlite3
+import subprocess
 
 BASE_DIR = Path(__file__).resolve().parent
 TMP_UPLOAD_DIR = Path(os.environ.get("MEDIWISE_TMP_UPLOAD_DIR", "/tmp/mediwise_uploads/"))
@@ -223,7 +225,7 @@ def _gemini_parse(
         "  BD    = Twice daily\n"
         "  TDS   = Three times daily\n"
         "  OD    = Once daily\n"
-        "4. Calculate total_tablets = frequency_per_day Ã— duration_days\n"
+        "4. Calculate total_tablets = frequency_per_day × duration_days\n"
         "5. Map brand names to generic names using Indian medicine knowledge\n"
         "6. Also extract doctor name, clinic name, and date if visible\n\n"
         "Return ONLY this JSON, no other text:\n"
@@ -298,6 +300,121 @@ def _compute_total_tablets(med: Dict[str, Any]) -> None:
         return
     med["total_tablets"] = per_day * duration_days
 
+def _known_medicine_candidates() -> List[Tuple[str, str]]:
+    candidates: Dict[str, str] = {}
+    try:
+        for brand, generic in _load_brand_to_generic().items():
+            key = str(brand).strip().lower()
+            if len(key) >= 3:
+                candidates[key] = str(generic or brand).strip()
+    except Exception:
+        pass
+
+    try:
+        from .pharmacy import MEDICINE_BASE_PRICES
+
+        for name in MEDICINE_BASE_PRICES.keys():
+            key = str(name).strip().lower()
+            if len(key) >= 3:
+                candidates[key] = str(name).strip()
+            base = re.sub(r"\b\d+(?:\.\d+)?\s*(?:mg|mcg|g|ml)?\b", "", key).strip()
+            if len(base) >= 3:
+                candidates.setdefault(base, str(name).strip())
+    except Exception:
+        pass
+
+    return sorted(candidates.items(), key=lambda item: len(item[0]), reverse=True)
+
+
+def _extract_frequency_from_line(line: str) -> Optional[str]:
+    upper = line.upper()
+    for key in sorted(FREQUENCY_MAP.keys(), key=len, reverse=True):
+        if re.search(rf"(?<![A-Z0-9]){re.escape(key)}(?![A-Z0-9])", upper):
+            return key
+    return None
+
+
+def _extract_duration_from_line(line: str) -> Optional[str]:
+    match = re.search(r"(?:\bx\s*|\bfor\s*)?(\d+\s*(?:day|days|week|weeks|month|months))\b", line, flags=re.IGNORECASE)
+    return match.group(1) if match else None
+
+
+def _extract_dosage_from_line(line: str) -> Optional[str]:
+    with_unit = re.search(r"\b\d+(?:\.\d+)?\s*(?:mg|mcg|g|ml|iu)\b", line, flags=re.IGNORECASE)
+    if with_unit:
+        return with_unit.group(0).replace(" ", "").lower()
+    number = re.search(r"\b(\d{2,4}(?:\.\d+)?)\b", line)
+    if number:
+        return f"{number.group(1)} mg"
+    return None
+
+
+def _fallback_parse_medicines(raw_text: str) -> List[Dict[str, Any]]:
+    if not raw_text or not raw_text.strip():
+        return []
+
+    candidates = _known_medicine_candidates()
+    medicines: List[Dict[str, Any]] = []
+    seen = set()
+    skip_words = {
+        "rx", "dr", "doctor", "clinic", "patient", "date", "age", "sex", "male", "female",
+        "diagnosis", "advice", "review", "follow", "signature", "hospital",
+    }
+
+    for raw_line in raw_text.splitlines():
+        line = re.sub(r"\s+", " ", raw_line).strip(" -:;\t")
+        if not line or not re.search(r"[A-Za-z]", line):
+            continue
+        lower = line.lower()
+        if lower in skip_words or any(lower.startswith(word + " ") for word in ["dr", "doctor", "patient", "date"]):
+            continue
+
+        matched_name: Optional[str] = None
+        generic_name: Optional[str] = None
+        for key, generic in candidates:
+            if re.search(rf"(?<![a-z0-9]){re.escape(key)}(?![a-z0-9])", lower):
+                matched_name = key
+                generic_name = generic
+                break
+
+        if matched_name is None:
+            inferred = re.search(
+                r"^\s*(?:tab|tablet|cap|capsule|syr|syrup|inj|injection|drops?|cream|oint)?\.?\s*([A-Za-z][A-Za-z0-9+-]{2,}(?:\s+[A-Za-z0-9+-]{2,}){0,2})",
+                line,
+                flags=re.IGNORECASE,
+            )
+            if not inferred:
+                continue
+            phrase = inferred.group(1).strip()
+            first_word = phrase.split()[0].lower()
+            if first_word in skip_words:
+                continue
+            matched_name = phrase
+            generic_name = _map_brand_to_generic(phrase, default_generic=None)
+
+        dedupe_key = matched_name.lower()
+        if dedupe_key in seen:
+            continue
+        seen.add(dedupe_key)
+
+        frequency = _extract_frequency_from_line(line)
+        frequency_human, _ = _frequency_decode(frequency) if frequency else (None, None)
+        med: Dict[str, Any] = {
+            "medicine": matched_name.title(),
+            "brand_name": matched_name.title(),
+            "generic_name": generic_name,
+            "dosage": _extract_dosage_from_line(line),
+            "frequency": frequency,
+            "frequency_human": frequency_human,
+            "duration": _extract_duration_from_line(line),
+            "total_tablets": None,
+            "instructions": line,
+            "confidence": "MEDIUM" if generic_name else "LOW",
+        }
+        _compute_total_tablets(med)
+        medicines.append(med)
+
+    return medicines
 
 def _post_process_gemini_output(raw: Dict[str, Any], raw_text: str, warnings: List[str]) -> Dict[str, Any]:
     medicines_out: List[Dict[str, Any]] = []
@@ -308,7 +425,7 @@ def _post_process_gemini_output(raw: Dict[str, Any], raw_text: str, warnings: Li
         if w not in out_warnings:
             out_warnings.append(w)
 
-    # Validate medicines via basic rules requested (and brandâ†’generic mapping)
+    # Validate medicines via basic rules requested (and brand?generic mapping)
     for med in meds_in:
         if not isinstance(med, dict):
             continue
@@ -347,7 +464,7 @@ def _post_process_gemini_output(raw: Dict[str, Any], raw_text: str, warnings: Li
         if out_med.get("duration") is None and out_med.get("frequency") and out_med.get("frequency") != "SOS":
             # per spec warn duration not mentioned
             if "Duration not mentioned" not in " ".join(out_warnings):
-                out_warnings.append(f"Duration not mentioned for {out_med.get('brand_name')} â€” assuming per frequency as written")
+                out_warnings.append(f"Duration not mentioned for {out_med.get('brand_name')} — assuming per frequency as written")
 
         # Calculate total_tablets if missing
         if out_med.get("total_tablets") is None:
@@ -355,9 +472,14 @@ def _post_process_gemini_output(raw: Dict[str, Any], raw_text: str, warnings: Li
 
         medicines_out.append(out_med)
 
+    if not medicines_out and raw_text.strip():
+        medicines_out = _fallback_parse_medicines(raw_text)
+        if medicines_out:
+            out_warnings.append("Used local text parser because AI extraction was unavailable or returned no medicines.")
+
     # Overall warning if empty
     if not medicines_out:
-        out_warnings.append("No medicines detected. Please upload a clearer image")
+        out_warnings.append("No medicines detected. Please upload a clearer image or paste prescription text.")
 
     return {
         "medicines": medicines_out,
@@ -478,9 +600,9 @@ async def ocr_from_upload(file_upload: Any, user_id: Optional[str]) -> Dict[str,
     try:
         raw_text = _run_easyocr(image_for_ocr_path) if image_for_ocr_path else ""
         if not raw_text.strip():
-            warnings.append("EasyOCR produced no text")
+            warnings.append("OCR produced no text")
     except Exception:
-        warnings.append("EasyOCR failed â€” skipping OCR text; sending image only")
+        warnings.append("EasyOCR failed — skipping OCR text; sending image only")
         raw_text = ""
 
     # Gemini step (Vision cleanup)
@@ -489,10 +611,11 @@ async def ocr_from_upload(file_upload: Any, user_id: Optional[str]) -> Dict[str,
         structured = _post_process_gemini_output(gemini_raw, raw_text=raw_text, warnings=warnings)
     except Exception:
         # If Gemini fails, still return empty medicines and warnings
+        fallback_meds = _fallback_parse_medicines(raw_text)
         structured = {
-            "medicines": [],
+            "medicines": fallback_meds,
             "doctor_info": {"name": "", "clinic": "", "date": ""},
-            "warnings": warnings + ["Gemini Vision failed; returning empty medicines."],
+            "warnings": warnings + (["Gemini Vision failed; used local text parser."] if fallback_meds else ["Gemini Vision failed; returning empty medicines."]),
         }
 
     # Confidence
@@ -543,10 +666,11 @@ async def ocr_from_raw_text(raw_text: str, user_id: Optional[str] = None) -> Dic
         gemini_raw = _gemini_parse(raw_text=raw_text, image_path=None)
         structured = _post_process_gemini_output(gemini_raw, raw_text=raw_text, warnings=warnings)
     except Exception:
+        fallback_meds = _fallback_parse_medicines(raw_text)
         structured = {
-            "medicines": [],
+            "medicines": fallback_meds,
             "doctor_info": {"name": "", "clinic": "", "date": ""},
-            "warnings": warnings + ["Gemini Vision failed; returning empty medicines."],
+            "warnings": warnings + (["Gemini Vision failed; used local text parser."] if fallback_meds else ["Gemini Vision failed; returning empty medicines."]),
         }
 
     meds = structured.get("medicines") or []
