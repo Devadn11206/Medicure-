@@ -34,3 +34,8 @@ node_modules/
 .next/
 out/
 .env.local
+
+# Environment variables
+.env
+backend/.env
+*.env
