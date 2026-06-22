@@ -26,3 +26,11 @@ Thumbs.db
 
 # Brand mappings (generated)
 brand_to_generic.json
+
+# Node.js
+node_modules/
+
+# Next.js
+.next/
+out/
+.env.local
