@@ -227,6 +227,22 @@ def init_db(db_path: Optional[str] = None) -> None:
             );
             """
         )
+
+        # OCR / prescription storage
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS prescriptions (
+                prescription_id TEXT PRIMARY KEY,
+                user_id TEXT,
+                raw_text TEXT,
+                medicines_json TEXT,
+                image_path TEXT,
+                confidence TEXT,
+                extracted_at TIMESTAMP
+            );
+            """
+        )
+
         conn.commit()
         cur.execute("SELECT COUNT(1) FROM pharmacy")
         row = cur.fetchone()

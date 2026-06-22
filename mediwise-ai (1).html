@@ -631,8 +631,33 @@ footer{
   </p>
 
   <div class="hero-ctas animate d4">
-    <button class="btn-primary">Upload a Prescription &rarr;</button>
+    <button id="run-prescription-ocr" class="btn-primary">Upload a Prescription &rarr;</button>
     <button class="btn-ghost">&#9654;&nbsp; Watch Demo</button>
+  </div>
+
+  <!-- ════════════════ OCR: Prescription Upload (wired to /ocr) ════════════════ -->
+  <div style="width:100%;max-width:720px;margin:0 auto 0.5rem;padding:0 6%;" class="animate d5">
+    <div class="demo-card" style="background:rgba(8,13,28,0.95);border:1px solid var(--border);border-radius:20px;">
+      <div class="demo-header">
+        <span style="color:#7BB8FF">&#128196;</span>
+        Prescription OCR
+      </div>
+      <div class="demo-body">
+        <input id="prescription-file" type="file" accept=".pdf,image/*" style="width:100%;margin-bottom:0.75rem;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none"/>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+          <label style="font-size:0.82rem;color:var(--muted);display:flex;gap:0.6rem;align-items:center;">
+            <span style="font-weight:700;color:#7A8899;">User ID</span>
+            <input id="prescription-user-id" type="text" value="user_123" style="width:220px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.55rem 0.75rem;border-radius:10px;font-size:0.9rem;outline:none"/>
+          </label>
+          <button id="run-prescription-ocr-button" class="btn-primary" style="padding:10px 18px;font-size:0.9rem;min-width:200px;">Extract medicines</button>
+        </div>
+        <div id="prescription-ocr-status" style="margin-top:0.5rem;font-size:0.95rem;color:#fff;min-height:1.5rem"></div>
+        <div id="prescription-ocr-results" style="margin-top:1rem;display:grid;gap:0.75rem;"></div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.75rem;line-height:1.5;">
+          Max 10MB. If extraction fails, backend returns 500.
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ANIMATED ECG LINE -->
@@ -1452,6 +1477,76 @@ footer{
     </div>
   </div>
 </div>
+
+<!-- ════════════════ AUDIT (Bill Auditor) UI ════════════════ -->
+<section class="safety-section" id="audit" style="background:#040810;">
+  <div style="max-width:680px;margin:0 auto;text-align:center" class="animate">
+    <div class="section-eyebrow">AI Medical Bill Auditor</div>
+    <div class="section-title">Detect billing<br/><span class="gradient-text">errors instantly.</span></div>
+    <p class="section-sub" style="margin:0 auto">Upload a hospital bill (PDF/JPG/PNG). We’ll flag duplicates/overpricing/vague charges and generate an optional dispute letter.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3.5rem;padding:0 6%;">
+    <div class="animate d1">
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#FBBF24">&#128202;</span>
+          Upload Bill
+        </div>
+        <div class="demo-body">
+          <div style="display:grid;gap:0.85rem;margin-bottom:1rem;">
+            <label class="sim-label">Bill file</label>
+            <input id="audit-file" type="file" accept=".pdf,image/*" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
+            <div style="font-size:0.75rem;color:var(--muted);line-height:1.5">Max 10MB. Supported: PDF, JPG, PNG.</div>
+          </div>
+
+          <div style="display:grid;gap:0.85rem;margin-bottom:1rem;">
+            <label class="sim-label">Bill type (optional)</label>
+            <input id="audit-bill-type" type="text" value="general" placeholder="e.g., hospitalization, surgery" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
+          </div>
+
+          <div style="display:grid;gap:0.85rem;margin-bottom:1rem;">
+            <label class="sim-label">User ID (optional)</label>
+            <input id="audit-user-id" type="text" value="user_123" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
+          </div>
+
+          <label style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem;font-size:0.95rem;color:var(--muted);">
+            <input id="audit-include-letter" type="checkbox" style="width:16px;height:16px;" checked />
+            Include dispute letter
+          </label>
+
+          <button id="run-bill-audit" class="btn-primary" style="width:100%;padding:12px;font-size:0.95rem;">Audit my bill</button>
+          <div id="audit-status" style="margin-top:1rem;font-size:0.95rem;color:#fff;min-height:1.5rem"></div>
+          <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--muted);line-height:1.5">
+            If Gemini/extraction fails, we’ll return an error response (backend spec: 500 for extraction failure).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate d2" style="display:flex;flex-direction:column;gap:1.5rem;">
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#4ADE80">&#10003;</span>
+          Audit Results
+        </div>
+        <div class="demo-body" id="audit-results" style="min-height:420px;">
+          <div style="color:var(--muted);font-size:0.9rem;">Upload a bill to see flags, confidence, and dispute guidance.</div>
+        </div>
+      </div>
+
+      <div class="demo-card">
+        <div class="demo-header">
+          <span style="color:#7BB8FF">&#128221;</span>
+          Dispute Letter
+        </div>
+        <div class="demo-body" id="audit-letter" style="min-height:260px;">
+          <div style="color:var(--muted);font-size:0.9rem;">Letter will appear after audit completion (if available).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ════════════════ FOOTER ════════════════ -->
 <footer>
@@ -2318,6 +2413,171 @@ if (watchBtn) watchBtn.addEventListener('click', loadShortageWatchlist);
 
 const alertsBtn = document.getElementById('load-shortage-alerts');
 if (alertsBtn) alertsBtn.addEventListener('click', loadShortageAlerts);
+
+// ════════════════ AUDIT (Bill Auditor) UI ════════════════
+async function runBillAuditFromUI() {
+  const fileInput = document.getElementById('audit-file');
+  const billType = document.getElementById('audit-bill-type')?.value || 'general';
+  const userId = document.getElementById('audit-user-id')?.value || null;
+  const includeDisputeLetter = document.getElementById('audit-include-letter')?.checked !== false;
+
+  const statusEl = document.getElementById('audit-status');
+  const resultsEl = document.getElementById('audit-results');
+  const letterEl = document.getElementById('audit-letter');
+
+  if (!fileInput || !fileInput.files || !fileInput.files.length) {
+    if (statusEl) {
+      statusEl.style.color = '#FF6B6B';
+      statusEl.textContent = 'Select a bill file (JPG/PNG/PDF).';
+    }
+    if (resultsEl) resultsEl.innerHTML = '';
+    if (letterEl) letterEl.innerHTML = '';
+    return;
+  }
+
+  const file = fileInput.files[0];
+  if (statusEl) {
+    statusEl.style.color = '#fff';
+    statusEl.textContent = 'Auditing bill…';
+  }
+  if (resultsEl) resultsEl.innerHTML = '';
+  if (letterEl) letterEl.innerHTML = '';
+
+  try {
+    const form = new FormData();
+    form.append('file', file, file.name);
+    form.append('bill_type', billType);
+    if (userId) form.append('user_id', userId);
+    form.append('include_dispute_letter', includeDisputeLetter ? 'true' : 'false');
+
+    const resp = await fetch('http://127.0.0.1:8000/audit', {
+      method: 'POST',
+      body: form,
+    });
+
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok) {
+      const msg = data?.detail || data?.error || resp.statusText;
+      throw new Error(msg);
+    }
+
+    renderAuditResults(data);
+    if (includeDisputeLetter) await loadAuditLetterIfNeeded(data?.audit_id);
+    if (statusEl) {
+      statusEl.style.color = '#4ADE80';
+      statusEl.textContent = 'Audit completed.';
+    }
+  } catch (err) {
+    if (statusEl) {
+      statusEl.style.color = '#FF6B6B';
+      statusEl.textContent = `Audit failed: ${err.message}`;
+    }
+    if (resultsEl) resultsEl.innerHTML = '';
+    if (letterEl) letterEl.innerHTML = '';
+  }
+}
+
+function formatMoney(n) {
+  if (n === null || n === undefined || Number.isNaN(+n)) return '—';
+  return '₹' + Math.round(+n).toLocaleString('en-IN');
+}
+
+function severityBadge(sev) {
+  const s = (sev || '').toUpperCase();
+  if (s === 'HIGH') return `<span class="sev-badge sev-high">HIGH</span>`;
+  if (s === 'MODERATE') return `<span class="sev-badge sev-med">MED</span>`;
+  return `<span class="sev-badge sev-low">LOW</span>`;
+}
+
+function renderAuditResults(data) {
+  const resultsEl = document.getElementById('audit-results');
+  if (!resultsEl) return;
+
+  const summary = data?.summary || {};
+  const warnings = data?.warnings || [];
+
+  const flags = Array.isArray(data?.flags) ? data.flags : [];
+  const topFlagsHtml = flags.length
+    ? flags.slice(0, 12).map(f => `
+        <div style="border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:0.85rem;background:rgba(255,255,255,0.03);margin-bottom:0.6rem;">
+          <div style="display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap;">
+            <div>
+              <div style="font-size:0.95rem;font-weight:900;color:#fff;">${f.type || 'FLAG'}</div>
+              <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.25rem;">${f.item || '—'}</div>
+              ${f.details ? `<div style="font-size:0.82rem;color:#C5CDD9;margin-top:0.35rem;line-height:1.6;">${f.details}</div>` : ''}
+              ${f.how_to_dispute ? `<div style="font-size:0.82rem;color:#9BA8BB;margin-top:0.35rem;line-height:1.6;"><strong style="color:#7BB8FF;">How to dispute:</strong> ${f.how_to_dispute}</div>` : ''}
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0.4rem;align-items:flex-end;">
+              ${severityBadge(f.severity)}
+              ${f.evidence ? `<div style="font-size:0.78rem;color:#7A8899;text-align:right;max-width:240px;">Evidence: ${f.evidence}</div>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('')
+    : `<div style="color:var(--muted);font-size:0.9rem;">No flags detected.</div>`;
+
+  resultsEl.innerHTML = `
+    <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+      <div style="min-width:240px;">
+        <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.4rem">Audit ID</div>
+        <div style="font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:900;color:#fff;">${data?.audit_id || '—'}</div>
+      </div>
+      <div style="min-width:240px;text-align:right;">
+        <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.4rem">Dispute confidence</div>
+        <div style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:900;color:#1A6BFF;">${summary.dispute_confidence || 'LOW'}</div>
+        <div style="margin-top:0.25rem;color:#7A8899;font-size:0.85rem;font-weight:700">${summary.recommendation || 'ACCEPTABLE'}</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
+      <div class="sim-row">
+        <span class="sim-row-label" style="color:var(--muted)">Potential overcharge</span>
+        <span class="sim-row-val" style="color:#FBBF24">${formatMoney(summary.potential_overcharge)}</span>
+      </div>
+      <div class="sim-row">
+        <span class="sim-row-label" style="color:var(--muted)">Confirmed overcharge</span>
+        <span class="sim-row-val" style="color:#FF7BAD">${formatMoney(summary.confirmed_overcharge)}</span>
+      </div>
+    </div>
+
+    ${warnings.length ? `<div style="padding:0.9rem 1rem;border:1px solid rgba(255,191,36,0.15);border-radius:12px;background:rgba(251,191,36,0.07);color:#FBBF24;margin-bottom:1rem;">
+      <strong style="color:#FBBF24;">Notice</strong>
+      <ul style="margin:0.6rem 0 0 1.1rem;">${warnings.map(w => `<li>${w}</li>`).join('')}</ul>
+    </div>` : ''}
+
+    <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.6rem;">Top flags</div>
+    <div>${topFlagsHtml}</div>
+  `;
+}
+
+async function loadAuditLetterIfNeeded(auditId) {
+  const letterEl = document.getElementById('audit-letter');
+  if (!letterEl || !auditId) return;
+  try {
+    letterEl.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">Loading dispute letter…</div>';
+    const resp = await fetch(`http://127.0.0.1:8000/audit/${encodeURIComponent(auditId)}/letter`);
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok) throw new Error(data?.detail || data?.error || resp.statusText);
+
+    const letterText = data?.letter || '';
+    if (!letterText) {
+      letterEl.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">No dispute letter generated.</div>';
+      return;
+    }
+
+    letterEl.innerHTML = `
+      <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.6rem;">Dispute letter</div>
+      <pre style="white-space:pre-wrap;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:1rem;color:#C5CDD9;line-height:1.7;font-family:inherit;max-height:360px;overflow:auto;">${letterText}</pre>
+    `;
+  } catch (err) {
+    letterEl.innerHTML = `<div style="color:#FF6B6B;font-size:0.95rem;">Unable to load letter: ${err.message}</div>`;
+  }
+}
+
+const auditRunBtn = document.getElementById('run-bill-audit');
+if (auditRunBtn) auditRunBtn.addEventListener('click', runBillAuditFromUI);
+
+// ════════════════ end audit UI ════════════════
 </script>
 </body>
 </html>
