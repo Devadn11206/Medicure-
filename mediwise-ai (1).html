@@ -2577,6 +2577,103 @@ async function loadAuditLetterIfNeeded(auditId) {
 const auditRunBtn = document.getElementById('run-bill-audit');
 if (auditRunBtn) auditRunBtn.addEventListener('click', runBillAuditFromUI);
 
+async function runPrescriptionOcrFromUI() {
+  const fileInput = document.getElementById('prescription-file');
+  const userId = document.getElementById('prescription-user-id')?.value || null;
+
+  const statusEl = document.getElementById('prescription-ocr-status');
+  const resultsEl = document.getElementById('prescription-ocr-results');
+
+  if (!fileInput || !fileInput.files || !fileInput.files.length) {
+    if (statusEl) {
+      statusEl.style.color = '#FF6B6B';
+      statusEl.textContent = 'Select a prescription file (PDF/JPG/PNG).';
+    }
+    if (resultsEl) resultsEl.innerHTML = '';
+    return;
+  }
+
+  const file = fileInput.files[0];
+
+  if (statusEl) {
+    statusEl.style.color = '#fff';
+    statusEl.textContent = 'Extracting medicines…';
+  }
+  if (resultsEl) resultsEl.innerHTML = '';
+
+  try {
+    const form = new FormData();
+    form.append('file', file, file.name);
+    if (userId) form.append('user_id', userId);
+
+    const resp = await fetch('http://127.0.0.1:8000/ocr', {
+      method: 'POST',
+      body: form,
+    });
+
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok) {
+      const msg = data?.detail || data?.error || resp.statusText;
+      throw new Error(msg);
+    }
+
+    // Expecting backend to return something like:
+    // { extracted_medicines: [...] } OR { medicines: [...] } OR { medicines_json: [...] } OR { text: ..., medicines: ... }
+    const extracted =
+      data?.extracted_medicines ||
+      data?.medicines ||
+      data?.medicines_json ||
+      data?.result?.medicines ||
+      [];
+
+    const list = Array.isArray(extracted) ? extracted : [];
+
+    if (!list.length) {
+      if (statusEl) {
+        statusEl.style.color = '#FFB3C4';
+        statusEl.textContent = 'No medicines found in extraction.';
+      }
+      if (resultsEl) resultsEl.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">Try another image or clearer photo.</div>';
+      return;
+    }
+
+    const cards = list.slice(0, 25).map(m => {
+      const name = typeof m === 'string' ? m : (m?.name || m?.medicine || m?.medicine_name || 'Medicine');
+      const dosage = typeof m === 'object' && m ? (m?.dosage || m?.dose || '') : '';
+      const freq = typeof m === 'object' && m ? (m?.frequency || m?.freq || '') : '';
+      const duration = typeof m === 'object' && m ? (m?.duration || '') : '';
+
+      const subParts = [dosage, freq, duration].filter(Boolean);
+      const sub = subParts.length ? ` ${subParts.join(' · ')}` : '';
+
+      return `
+        <div style="border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:0.9rem;background:rgba(255,255,255,0.03);">
+          <div style="font-weight:900;color:#fff;font-size:0.95rem;">${name}</div>
+          ${sub ? `<div style="margin-top:0.25rem;color:#A7B5D3;font-size:0.82rem;">${sub}</div>` : ''}
+        </div>
+      `;
+    }).join('');
+
+    if (statusEl) {
+      statusEl.style.color = '#4ADE80';
+      statusEl.textContent = `Extraction complete. Found ${list.length} medicine(s).`;
+    }
+    if (resultsEl) resultsEl.innerHTML = cards;
+  } catch (err) {
+    if (statusEl) {
+      statusEl.style.color = '#FF6B6B';
+      statusEl.textContent = `OCR failed: ${err.message}`;
+    }
+    if (resultsEl) resultsEl.innerHTML = '';
+  }
+}
+
+const heroOcrBtn = document.getElementById('run-prescription-ocr');
+if (heroOcrBtn) heroOcrBtn.addEventListener('click', runPrescriptionOcrFromUI);
+
+const heroOcrBtn2 = document.getElementById('run-prescription-ocr-button');
+if (heroOcrBtn2) heroOcrBtn2.addEventListener('click', runPrescriptionOcrFromUI);
+
 // ════════════════ end audit UI ════════════════
 </script>
 </body>
