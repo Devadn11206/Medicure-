@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MediWise AI � Healthcare Intelligence Platform</title>
+<title>MediWise AI — Healthcare Intelligence Platform</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -48,12 +48,12 @@ body{
 }
 .medicine-input::placeholder{color:rgba(255,255,255,0.55);}
 
-/* -- SCROLLBAR -- */
+/* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(26,107,255,0.35);border-radius:2px}
 
-/* -- NAV -- */
+/* ── NAV ── */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:200;
   display:flex;align-items:center;justify-content:space-between;
@@ -101,7 +101,7 @@ nav.scrolled{background:rgba(6,11,24,0.95)}
 }
 .nav-cta:hover{opacity:0.85;transform:translateY(-1px)}
 
-/* -- HERO -- */
+/* ── HERO ── */
 .hero{
   min-height:100vh;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -187,10 +187,157 @@ nav.scrolled{background:rgba(6,11,24,0.95)}
 }
 .trust-pill span{color:#4ADE80;font-size:0.8rem}
 
-/* -- SECTION HEADERS -- */
-.section-eyebrow{font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#1A6BFF;margin-bottom:1rem;}
-.section-title{font-family:'Outfit',sans-serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:800;letter-spacing:-0.03em;line-height:1.12;margin-bottom:1rem;}
-.section-sub{color:#7A8899;font-size:1rem;max-width:520px;line-height:1.75}/* -- SAVINGS DEMO -- */
+/* ── STATS ── */
+.stats-row{
+  display:flex;gap:0;justify-content:center;flex-wrap:wrap;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,0.015);
+}
+.stat{
+  text-align:center;padding:2.5rem 3rem;
+  border-right:1px solid var(--border);
+  flex:1;min-width:160px;
+}
+.stat:last-child{border-right:none}
+.stat-num{
+  font-family:'Outfit',sans-serif;font-size:2.1rem;
+  font-weight:800;letter-spacing:-0.025em;line-height:1;
+  margin-bottom:6px;
+}
+.stat-label{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:500}
+
+/* ── WORKFLOW ── */
+.workflow-section{padding:7rem 6%}
+.section-eyebrow{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:#1A6BFF;margin-bottom:1rem;
+}
+.section-title{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800;letter-spacing:-0.03em;line-height:1.12;
+  margin-bottom:1rem;
+}
+.section-sub{color:#7A8899;font-size:1rem;max-width:520px;line-height:1.75}
+
+.steps-outer{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:4rem}
+.steps-track{display:flex;flex-direction:column;gap:0}
+.step-item{display:flex;gap:1.5rem;align-items:flex-start}
+.step-connector{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.step-num{
+  width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:0.85rem;font-family:'Outfit',sans-serif;
+  border:1.5px solid;flex-shrink:0;
+}
+.step-line{
+  width:1.5px;height:38px;
+  background:linear-gradient(to bottom,rgba(26,107,255,0.4),rgba(123,47,255,0.1));
+}
+.step-item:last-child .step-line{display:none}
+.step-body{padding-bottom:2.25rem}
+.step-body h3{
+  font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:700;
+  margin-bottom:5px;letter-spacing:-0.015em;
+}
+.step-body p{font-size:0.875rem;color:var(--muted);line-height:1.65}
+
+/* RIGHT PANEL DEMO */
+.workflow-preview{
+  position:sticky;top:100px;
+  background:#080D1C;border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;
+}
+.wp-header{
+  padding:1rem 1.5rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.wp-title{font-family:'Outfit',sans-serif;font-size:0.875rem;font-weight:700}
+.wp-status{
+  display:flex;align-items:center;gap:6px;
+  font-size:0.72rem;color:#4ADE80;font-weight:600;
+}
+.wp-dot{width:6px;height:6px;border-radius:50%;background:#4ADE80;box-shadow:0 0 6px #4ADE80}
+.wp-body{padding:1.5rem}
+.wp-upload-zone{
+  border:1.5px dashed rgba(26,107,255,0.3);border-radius:12px;
+  padding:2rem;text-align:center;background:rgba(26,107,255,0.04);
+  margin-bottom:1.25rem;cursor:pointer;transition:background 0.2s;
+}
+.wp-upload-zone:hover{background:rgba(26,107,255,0.08)}
+.wp-upload-icon{font-size:1.8rem;margin-bottom:0.5rem}
+.wp-upload-text{font-size:0.8rem;color:var(--muted)}
+.wp-upload-text strong{color:#7BB8FF;display:block;font-size:0.9rem;margin-bottom:4px}
+.analysis-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:8px;
+  font-size:0.75rem;font-weight:600;margin:0 4px 8px 0;
+}
+.tag-blue{background:rgba(26,107,255,0.12);color:#7BB8FF;border:1px solid rgba(26,107,255,0.2)}
+.tag-green{background:rgba(74,222,128,0.08);color:#4ADE80;border:1px solid rgba(74,222,128,0.15)}
+.tag-rose{background:rgba(255,61,127,0.08);color:#FF7BAD;border:1px solid rgba(255,61,127,0.15)}
+.tag-violet{background:rgba(123,47,255,0.1);color:#B085FF;border:1px solid rgba(123,47,255,0.2)}
+.tag-amber{background:rgba(251,191,36,0.08);color:#FBBF24;border:1px solid rgba(251,191,36,0.15)}
+.tags-row{display:flex;flex-wrap:wrap;margin-top:0.75rem}
+.wp-divider{height:1px;background:var(--border);margin:1rem 0}
+.wp-result-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.75rem;border-radius:10px;
+  background:rgba(255,255,255,0.03);border:1px solid var(--border);
+  margin-bottom:0.6rem;
+}
+.wr-name{font-size:0.825rem;font-weight:600}
+.wr-sub{font-size:0.72rem;color:var(--muted);margin-top:2px}
+.wr-save{font-size:0.875rem;font-weight:700;color:#4ADE80}
+.wp-total{
+  background:rgba(26,107,255,0.08);border:1px solid rgba(26,107,255,0.2);
+  border-radius:10px;padding:0.875rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:0.5rem;
+}
+.wt-label{font-size:0.8rem;color:#7BB8FF;font-weight:600}
+.wt-val{font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:800;color:#1A6BFF}
+
+/* ── FEATURES ── */
+.features-section{background:#040810;padding:7rem 6%}
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5px;
+  border:1.5px solid var(--border);
+  border-radius:22px;overflow:hidden;
+  background:var(--border);
+  margin-top:3.5rem;
+}
+.feature-card{
+  background:#080D1C;padding:2rem 2rem 1.75rem;
+  transition:background 0.3s,transform 0.2s;
+  cursor:default;position:relative;overflow:hidden;
+}
+.feature-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%,rgba(26,107,255,0.06),transparent 60%);
+  opacity:0;transition:opacity 0.3s;
+}
+.feature-card:hover{background:#0C1220}
+.feature-card:hover::before{opacity:1}
+.feat-icon{
+  width:50px;height:50px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:1.5rem;
+}
+.feature-card h3{
+  font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;
+  margin-bottom:0.6rem;letter-spacing:-0.01em;
+}
+.feature-card p{font-size:0.85rem;color:var(--muted);line-height:1.7}
+.feat-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:0.68rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+  padding:3px 10px;border-radius:30px;margin-top:1.2rem;
+}
+
+/* ── SAVINGS DEMO ── */
 .savings-section{padding:7rem 6%}
 .demo-split{
   display:grid;grid-template-columns:1fr 1fr;
@@ -272,7 +419,7 @@ nav.scrolled{background:rgba(6,11,24,0.95)}
 .t-drop{background:rgba(74,222,128,0.1);color:#4ADE80}
 .t-warn{background:rgba(255,61,127,0.1);color:#FF7BAD}
 
-/* -- SAVINGS SIMULATOR -- */
+/* ── SAVINGS SIMULATOR ── */
 .simulator-section{background:#040810;padding:7rem 6%}
 .sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:3.5rem}
 .sim-controls{display:flex;flex-direction:column;gap:1.5rem}
@@ -311,7 +458,7 @@ nav.scrolled{background:rgba(6,11,24,0.95)}
 .sim-row-label{font-size:0.825rem;color:var(--muted)}
 .sim-row-val{font-size:0.925rem;font-weight:700;font-family:'Outfit',sans-serif}
 
-/* -- SAFETY -- */
+/* ── SAFETY ── */
 .safety-section{padding:7rem 6%}
 .safety-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -330,7 +477,61 @@ nav.scrolled{background:rgba(6,11,24,0.95)}
 }
 .safety-card p{font-size:0.82rem;color:var(--muted);line-height:1.65}
 
-/* -- FOOTER -- */
+/* ── TESTIMONIALS ── */
+.testi-section{background:#040810;padding:7rem 6%}
+.testi-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin-top:3rem;
+}
+.testi-card{
+  background:#080D1C;border:1px solid var(--border);
+  border-radius:18px;padding:1.75rem;
+  transition:border-color 0.2s;
+}
+.testi-card:hover{border-color:rgba(26,107,255,0.2)}
+.testi-stars{color:#FBBF24;font-size:0.875rem;margin-bottom:1rem;letter-spacing:2px}
+.testi-quote{
+  font-size:0.9rem;color:#C5CDD9;line-height:1.75;
+  margin-bottom:1.5rem;font-style:italic;
+}
+.testi-author{display:flex;align-items:center;gap:10px}
+.testi-avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.78rem;font-weight:700;flex-shrink:0;
+}
+.testi-name{font-size:0.875rem;font-weight:600}
+.testi-role{font-size:0.75rem;color:var(--muted);margin-top:1px}
+
+/* ── CTA BANNER ── */
+.cta-section{padding:0 6% 7rem}
+.cta-banner{
+  background:linear-gradient(135deg,#0D1E42 0%,#150D2A 50%,#1A0814 100%);
+  border:1px solid rgba(26,107,255,0.2);
+  border-radius:26px;padding:5rem 3rem;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-banner::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 25% 50%,rgba(26,107,255,0.15) 0%,transparent 55%),
+    radial-gradient(ellipse at 75% 50%,rgba(123,47,255,0.12) 0%,transparent 55%);
+  pointer-events:none;
+}
+.cta-banner h2{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:800;letter-spacing:-0.025em;line-height:1.15;
+  margin-bottom:1rem;position:relative;
+}
+.cta-banner p{
+  color:#8892A4;margin-bottom:2.5rem;
+  font-size:1.05rem;position:relative;max-width:500px;margin-left:auto;margin-right:auto;
+  margin-bottom:2.5rem;
+}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}
+
+/* ── FOOTER ── */
 footer{
   border-top:1px solid var(--border);
   padding:2.5rem 6%;
@@ -358,7 +559,7 @@ footer{
   font-size:0.72rem;color:#3A4558;max-width:420px;text-align:right;line-height:1.5;
 }
 
-/* -- ANIMATIONS -- */
+/* ── ANIMATIONS ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 .animate{opacity:0}
 .animate.visible{animation:fadeUp 0.65s ease forwards}
@@ -369,43 +570,47 @@ footer{
 .d5{animation-delay:0.45s}
 .d6{animation-delay:0.55s}
 
-/* -- RESPONSIVE -- */
+/* ── RESPONSIVE ── */
 @media(max-width:900px){
+  .steps-outer{grid-template-columns:1fr}
   .demo-split{grid-template-columns:1fr}
   .sim-grid{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr 1fr}
   .nav-links{display:none}
+  .stat{padding:2rem 1.5rem}
 }
 @media(max-width:600px){
+  .features-grid{grid-template-columns:1fr}
   .tracker-grid{grid-template-columns:1fr 1fr}
   nav{padding:0 4%}
   .hero{padding:110px 4% 80px}
+  .cta-banner{padding:3rem 1.5rem}
 }
 </style>
 </head>
 <body>
 
-<!-- ---------------- NAV ---------------- -->
+<!-- ════════════════ NAV ════════════════ -->
 <nav id="main-nav">
-  <a class="nav-logo" href="#top">
+  <a class="nav-logo" href="#">
     <div class="logo-icon">M+</div>
     MediWise AI
   </a>
   <ul class="nav-links">
-    <li><a href="#savings-demo">Interactions</a></li>
-    <li><a href="#pharmacy">Pharmacy</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#savings-demo">Savings</a></li>
     <li><a href="#simulator">Simulator</a></li>
-    <li><a href="#insurance">Insurance</a></li>
-    <li><a href="#price-alerts">Alerts</a></li>
-    <li><a href="#shortage-predictor">Shortage</a></li>
-    <li><a href="#audit">Bill Audit</a></li>
+    <li><a href="#safety">Safety</a></li>
   </ul>
   <div class="nav-right">
-    <a class="nav-cta" href="#prescription-uploader">Start Free</a>
+    <button class="nav-ghost">Sign In</button>
+    <button class="nav-cta">Get Started Free</button>
   </div>
 </nav>
 
-<!-- ---------------- HERO ---------------- -->
-<section class="hero" id="top">
+<!-- ════════════════ HERO ════════════════ -->
+<section class="hero">
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
   <div class="orb orb3"></div>
@@ -422,46 +627,12 @@ footer{
   </h1>
 
   <p class="hero-sub animate d3">
-    Upload any prescription. MediWise AI finds savings, catches dangerous interactions, audits your hospital bill, and delivers a complete healthcare intelligence report � in seconds.
+    Upload any prescription. MediWise AI finds savings, catches dangerous interactions, audits your hospital bill, and delivers a complete healthcare intelligence report — in seconds.
   </p>
 
   <div class="hero-ctas animate d4">
-    <a href="#prescription-uploader" class="btn-primary">Upload a Prescription &rarr;</a>
-  </div>
-
-  <!-- ---------------- OCR: Prescription Upload (wired to /ocr) ---------------- -->
-  <div id="prescription-uploader" style="width:100%;max-width:720px;margin:0 auto 0.5rem;padding:0 6%;" class="animate d5">
-    <div class="demo-card" style="background:rgba(8,13,28,0.95);border:1px solid var(--border);border-radius:20px;">
-      <div class="demo-header">
-        <span style="color:#7BB8FF">&#128196;</span>
-        Prescription OCR
-      </div>
-      <div class="demo-body">
-        <input id="prescription-file" type="file" accept=".pdf,image/*" style="width:100%;margin-bottom:0.75rem;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
-        <textarea id="prescription-raw-text" rows="4" placeholder="Optional: paste prescription text here if image extraction is unavailable" style="width:100%;margin-bottom:0.75rem;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none;resize:vertical"></textarea>
-        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
-          <label style="font-size:0.82rem;color:var(--muted);display:flex;gap:0.6rem;align-items:center;">
-            <span style="font-weight:700;color:#7A8899;">User ID</span>
-            <input id="prescription-user-id" type="text" value="user_123" style="width:220px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.55rem 0.75rem;border-radius:10px;font-size:0.9rem;outline:none" />
-          </label>
-          <button id="run-prescription-ocr-button" class="btn-primary" style="padding:10px 18px;font-size:0.9rem;min-width:200px;">Extract medicines</button>
-        </div>
-        <div id="prescription-ocr-progress" style="margin-top:0.75rem;display:none;">
-          <div style="font-size:0.72rem;color:#A7B5D3;text-transform:uppercase;font-weight:700;letter-spacing:0.08em;margin-bottom:0.4rem">Processing</div>
-          <div style="display:grid;gap:0.5rem;">
-            <div style="height:8px;border-radius:999px;background:rgba(255,255,255,0.08);overflow:hidden;border:1px solid rgba(255,255,255,0.08)">
-              <div id="prescription-ocr-progress-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#1A6BFF,#7B2FFF);transition:width 0.35s ease"></div>
-            </div>
-            <div id="prescription-ocr-progress-text" style="font-size:0.9rem;color:#fff;min-height:1.15rem">Starting...</div>
-          </div>
-        </div>
-        <div id="prescription-ocr-status" style="margin-top:0.5rem;font-size:0.95rem;color:#fff;min-height:1.5rem"></div>
-        <div id="prescription-ocr-results" style="margin-top:1rem;display:grid;gap:0.75rem;"></div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.75rem;line-height:1.5;">
-          Max 10MB. Image OCR needs EasyOCR or Gemini configured; pasted text can be extracted locally.
-        </div>
-      </div>
-    </div>
+    <button class="btn-primary">Upload a Prescription &rarr;</button>
+    <button class="btn-ghost">&#9654;&nbsp; Watch Demo</button>
   </div>
 
   <!-- ANIMATED ECG LINE -->
@@ -489,14 +660,209 @@ footer{
 
   <!-- TRUST PILLS -->
   <div class="trust-row animate d6">
-    <div class="trust-pill"><span>?</span> No credit card required</div>
-    <div class="trust-pill"><span>?</span> OpenFDA verified data</div>
-    <div class="trust-pill"><span>?</span> 2,400+ Indian medicines</div>
-    <div class="trust-pill"><span>?</span> End-to-end encrypted</div>
+    <div class="trust-pill"><span>✓</span> No credit card required</div>
+    <div class="trust-pill"><span>✓</span> OpenFDA verified data</div>
+    <div class="trust-pill"><span>✓</span> 2,400+ Indian medicines</div>
+    <div class="trust-pill"><span>✓</span> End-to-end encrypted</div>
   </div>
 </section>
 
-<!-- ---------------- SAVINGS DEMO ---------------- -->
+<!-- ════════════════ STATS ════════════════ -->
+<div class="stats-row">
+  <div class="stat animate">
+    <div class="stat-num gradient-text">&#8377;15,000</div>
+    <div class="stat-label">Avg. Annual Savings</div>
+  </div>
+  <div class="stat animate d1">
+    <div class="stat-num gradient-text">2,400+</div>
+    <div class="stat-label">Medicines Indexed</div>
+  </div>
+  <div class="stat animate d2">
+    <div class="stat-num gradient-text">99.2%</div>
+    <div class="stat-label">OCR Accuracy</div>
+  </div>
+  <div class="stat animate d3">
+    <div class="stat-num gradient-text">9</div>
+    <div class="stat-label">AI Features</div>
+  </div>
+  <div class="stat animate d4">
+    <div class="stat-num gradient-text">50K+</div>
+    <div class="stat-label">Patients Helped</div>
+  </div>
+</div>
+
+<!-- ════════════════ HOW IT WORKS ════════════════ -->
+<section class="workflow-section" id="how-it-works">
+  <div class="animate">
+    <div class="section-eyebrow">Workflow</div>
+    <div class="section-title">From prescription to<br/><span class="gradient-text">full intelligence.</span></div>
+    <p class="section-sub">Upload once. Get everything — savings, interaction warnings, insurance breakdown, bill audit, and shortage alerts.</p>
+  </div>
+
+  <div class="steps-outer">
+    <div class="steps-track animate d1">
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#1A6BFF;color:#1A6BFF;background:rgba(26,107,255,0.08)">01</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Upload Prescription</h3>
+          <p>Photo, PDF, or typed text — our AI OCR handles handwritten scripts in any format with 99.2% accuracy.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#2B5AFF;color:#2B5AFF;background:rgba(43,90,255,0.08)">02</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>AI Medicine Extraction</h3>
+          <p>Names, dosages, frequencies and durations — structured and verified against our 2,400+ Indian medicine database.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#5048FF;color:#5048FF;background:rgba(80,72,255,0.08)">03</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Drug Interaction Check</h3>
+          <p>Cross-references every medicine combination against OpenFDA clinical data to catch dangerous interactions instantly.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#7B2FFF;color:#7B2FFF;background:rgba(123,47,255,0.08)">04</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Therapeutic Substitution</h3>
+          <p>Finds clinically identical generics at a fraction of the branded price — same molecule, same efficacy, real savings.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#A020CC;color:#A020CC;background:rgba(160,32,204,0.08)">05</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Insurance Decoding + Bill Audit</h3>
+          <p>Calculates your exact out-of-pocket cost and scans your hospital bill for duplicates and overcharges.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-connector">
+          <div class="step-num" style="border-color:#FF3D7F;color:#FF3D7F;background:rgba(255,61,127,0.08)">06</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Personalized Intelligence Report</h3>
+          <p>A complete brief covering prices, risks, savings, nearby pharmacies, alerts and shortage predictions — all in one view.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STICKY PREVIEW -->
+    <div class="animate d2">
+      <div class="workflow-preview">
+        <div class="wp-header">
+          <span class="wp-title">&#128196; Prescription Analyzer</span>
+          <div class="wp-status"><span class="wp-dot"></span>Live Analysis</div>
+        </div>
+        <div class="wp-body" id="ocr-workflow-body">
+          <div class="wp-upload-zone" id="ocr-upload-zone" onclick="document.getElementById('ocr-file-input').click()">
+            <div class="wp-upload-icon">&#128220;</div>
+            <div class="wp-upload-text">
+              <strong>Upload Prescription</strong>
+              Image or PDF (Click to browse)
+            </div>
+          </div>
+          <input type="file" id="ocr-file-input" style="display:none" accept="image/*,application/pdf" />
+          
+          <div id="ocr-status-area" style="display:none;">
+             <div style="font-size:0.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Analysis Active</div>
+             <div class="tags-row" id="ocr-tags">
+             </div>
+          </div>
+          
+          <div id="ocr-results-area" style="display:none;">
+             <div class="wp-divider"></div>
+             <div style="font-size:0.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Extracted Medicines</div>
+             <div id="ocr-medicines-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FEATURES GRID ════════════════ -->
+<section class="features-section" id="features">
+  <div class="animate">
+    <div class="section-eyebrow">Features</div>
+    <div class="section-title">Nine ways to make<br/><span class="gradient-text">healthcare work for you.</span></div>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card animate">
+      <div class="feat-icon" style="background:rgba(26,107,255,0.12)">&#128269;</div>
+      <h3>Prescription OCR</h3>
+      <p>AI reads handwritten prescriptions and converts them into structured digital records. Any language, any handwriting, any format.</p>
+      <span class="feat-badge" style="background:rgba(26,107,255,0.1);color:#7BB8FF">&#10003; Core Feature</span>
+    </div>
+    <div class="feature-card animate d1">
+      <div class="feat-icon" style="background:rgba(74,222,128,0.1)">&#128138;</div>
+      <h3>Therapeutic Substitution</h3>
+      <p>Swap branded drugs for clinically identical generics. Crocin 650 at &#8377;60 vs Paracetamol at &#8377;20. Same molecule, real savings.</p>
+      <span class="feat-badge" style="background:rgba(74,222,128,0.08);color:#4ADE80">Save up to 70%</span>
+    </div>
+    <div class="feature-card animate d2">
+      <div class="feat-icon" style="background:rgba(255,61,127,0.1)">&#9888;&#65039;</div>
+      <h3>Drug Interaction Checker</h3>
+      <p>Real-time cross-referencing of your full medicine list against clinical databases. Warfarin + Aspirin? You'll know before the pharmacy.</p>
+      <span class="feat-badge" style="background:rgba(255,61,127,0.08);color:#FF7BAD">Safety Critical</span>
+    </div>
+    <div class="feature-card animate d3">
+      <div class="feat-icon" style="background:rgba(123,47,255,0.12)">&#128737;&#65039;</div>
+      <h3>Insurance Cost Decoder</h3>
+      <p>Know exactly what you'll pay before treatment starts. &#8377;50,000 hospital bill → &#8377;8,000 patient cost — decoded in seconds, not weeks.</p>
+      <span class="feat-badge" style="background:rgba(123,47,255,0.1);color:#B085FF">No Surprises</span>
+    </div>
+    <div class="feature-card animate d4">
+      <div class="feat-icon" style="background:rgba(251,191,36,0.1)">&#128270;</div>
+      <h3>AI Medical Bill Auditor</h3>
+      <p>Detects duplicate charges, inflated test prices, and billing inconsistencies hospitals hope you'll miss. Average catch: &#8377;2,350+.</p>
+      <span class="feat-badge" style="background:rgba(251,191,36,0.08);color:#FBBF24">Catch Errors</span>
+    </div>
+    <div class="feature-card animate d5">
+      <div class="feat-icon" style="background:rgba(0,194,255,0.1)">&#128507;</div>
+      <h3>Pharmacy Trip Optimizer</h3>
+      <p>Compares nearby pharmacy prices against travel distance. Apollo &#8377;550 vs MedPlus &#8377;420 at 1.2km — the choice is data-driven.</p>
+      <span class="feat-badge" style="background:rgba(0,194,255,0.08);color:#00C2FF">Location Smart</span>
+    </div>
+    <div class="feature-card animate">
+      <div class="feat-icon" style="background:rgba(74,222,128,0.1)">&#128200;</div>
+      <h3>Health Savings Simulator</h3>
+      <p>Projects your annual healthcare savings across all recommendations. See &#8377;24,000/year transform into &#8377;9,000 with smarter decisions.</p>
+      <span class="feat-badge" style="background:rgba(74,222,128,0.08);color:#4ADE80">Plan Ahead</span>
+    </div>
+    <div class="feature-card animate d1">
+      <div class="feat-icon" style="background:rgba(251,191,36,0.1)">&#128276;</div>
+      <h3>Price Alert System</h3>
+      <p>Tracks your medicines daily and alerts when prices fall. Metformin drops &#8377;120→&#8377;90? Instant notification — buy at the right moment.</p>
+      <span class="feat-badge" style="background:rgba(251,191,36,0.08);color:#FBBF24">Live Monitoring</span>
+    </div>
+    <div class="feature-card animate d2">
+      <div class="feat-icon" style="background:rgba(255,61,127,0.1)">&#128202;</div>
+      <h3>Medicine Shortage Predictor</h3>
+      <p>Reads demand signals and supply data to warn you before critical medicines run out. Insulin shortage risk? 5 days early notice.</p>
+      <span class="feat-badge" style="background:rgba(255,61,127,0.08);color:#FF7BAD">Stay Prepared</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ SAVINGS DEMO ════════════════ -->
 <section class="savings-section" id="savings-demo">
   <div class="animate">
     <div class="section-eyebrow">Live Demo</div>
@@ -512,74 +878,12 @@ footer{
           <span style="color:#1A6BFF">&#128196;</span>
           Extracted Prescription &amp; Generics
         </div>
-        <div class="demo-body">
-          <div class="rx-row">
-            <div>
-              <div class="rx-name">Augmentin 625mg</div>
-              <div class="rx-dosage">1-0-1 &middot; 5 Days &middot; Branded</div>
-            </div>
-            <div style="text-align:right">
-              <div class="rx-label" style="color:var(--muted)">Prescribed</div>
-              <div class="rx-price-branded">&#8377;220</div>
-            </div>
+        <div class="demo-body" id="savings-demo-body">
+          <div style="text-align:center;color:var(--muted);padding:2rem 1rem;" id="savings-empty">
+            <div style="font-size:2rem;margin-bottom:1rem">💊</div>
+            <p>Upload a prescription to automatically find generic alternatives.</p>
           </div>
-          <div class="rx-row" style="border-color:rgba(74,222,128,0.2);background:rgba(74,222,128,0.03)">
-            <div>
-              <div class="rx-name">Amoxicillin + Clavulanate</div>
-              <div class="rx-dosage">1-0-1 &middot; 5 Days &middot; Generic Alt.</div>
-            </div>
-            <div style="text-align:right">
-              <div class="rx-label" style="color:#4ADE80">Recommended</div>
-              <div class="rx-price-generic">&#8377;75</div>
-            </div>
-          </div>
-          <div class="rx-row">
-            <div>
-              <div class="rx-name">Glycomet SR 500mg</div>
-              <div class="rx-dosage">1-1-1 &middot; 30 Days &middot; Branded</div>
-            </div>
-            <div style="text-align:right">
-              <div class="rx-label" style="color:var(--muted)">Prescribed</div>
-              <div class="rx-price-branded">&#8377;120</div>
-            </div>
-          </div>
-          <div class="rx-row" style="border-color:rgba(74,222,128,0.2);background:rgba(74,222,128,0.03)">
-            <div>
-              <div class="rx-name">Metformin 500mg</div>
-              <div class="rx-dosage">1-1-1 &middot; 30 Days &middot; Generic Alt.</div>
-            </div>
-            <div style="text-align:right">
-              <div class="rx-label" style="color:#4ADE80">Recommended</div>
-              <div class="rx-price-generic">&#8377;42</div>
-            </div>
-          </div>
-          <div class="rx-row">
-            <div>
-              <div class="rx-name">Crocin 650mg</div>
-              <div class="rx-dosage">SOS &middot; As needed &middot; Branded</div>
-            </div>
-            <div style="text-align:right">
-              <div class="rx-label" style="color:var(--muted)">Prescribed</div>
-              <div class="rx-price-branded">&#8377;60</div>
-            </div>
-          </div>
-          <div class="rx-row" style="border-color:rgba(74,222,128,0.2);background:rgba(74,222,128,0.03)">
-            <div>
-              <div class="rx-name">Paracetamol 650mg</div>
-              <div class="rx-dosage">SOS &middot; As needed &middot; Generic Alt.</div>
-            </div>
-            <div style="text-align:right">
-              <div class="rx-label" style="color:#4ADE80">Recommended</div>
-              <div class="rx-price-generic">&#8377;20</div>
-            </div>
-          </div>
-          <div class="savings-callout">
-            <div>
-              <div class="savings-label">Total Savings This Month</div>
-              <div style="font-size:0.72rem;color:#4A7BAA;margin-top:2px">Switching to all recommended generics</div>
-            </div>
-            <div class="savings-amount">&#8377;263</div>
-          </div>
+          <div id="savings-results" style="display:none;"></div>
         </div>
       </div>
     </div>
@@ -596,9 +900,9 @@ footer{
           <div class="int-control" style="margin-bottom:1rem;display:flex;flex-direction:column;gap:0.75rem;">
             <label for="medicine-input" style="font-size:0.9rem;color:var(--muted)">Add medicines below, then click Analyze.</label>
             <div class="pill-input-wrapper" id="medicine-pill-list" aria-label="Medicine list">
-              <div class="medicine-pill"><span>Warfarin 5mg</span><div class="pill-remove" data-pill="Warfarin 5mg">�</div></div>
-              <div class="medicine-pill"><span>Aspirin 75 mg</span><div class="pill-remove" data-pill="Aspirin 75 mg">�</div></div>
-              <div class="medicine-pill"><span>Metformin 500mg</span><div class="pill-remove" data-pill="Metformin 500mg">�</div></div>
+              <div class="medicine-pill"><span>Warfarin 5mg</span><div class="pill-remove" data-pill="Warfarin 5mg">×</div></div>
+              <div class="medicine-pill"><span>Aspirin 75 mg</span><div class="pill-remove" data-pill="Aspirin 75 mg">×</div></div>
+              <div class="medicine-pill"><span>Metformin 500mg</span><div class="pill-remove" data-pill="Metformin 500mg">×</div></div>
               <input id="medicine-input" class="medicine-input" type="text" placeholder="Type a medicine and press Enter" />
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;justify-content:space-between">
@@ -666,8 +970,8 @@ footer{
   </div>
 </section>
 
-<!-- ---------------- PHARMACY OPTIMIZER ---------------- -->
-<section id="pharmacy" style="background:#040810;padding:7rem 6%">
+<!-- ════════════════ PHARMACY OPTIMIZER ════════════════ -->
+<section style="background:#040810;padding:7rem 6%">
   <div class="animate">
     <div class="section-eyebrow">Smart Routing</div>
     <div class="section-title">Find the best<br/><span class="gradient-text">pharmacy for your needs.</span></div>
@@ -686,8 +990,8 @@ footer{
           <div style="margin-bottom:1rem;">
             <label style="font-size:0.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;display:block;margin-bottom:0.5rem">Medicines to find</label>
             <div class="pill-input-wrapper" id="pharmacy-pill-list" aria-label="Pharmacy medicines list" style="min-height:50px;margin-bottom:0.5rem;">
-              <div class="medicine-pill"><span>Augmentin 625</span><div class="pill-remove">�</div></div>
-              <div class="medicine-pill"><span>Crocin 650</span><div class="pill-remove">�</div></div>
+              <div class="medicine-pill"><span>Augmentin 625</span><div class="pill-remove">×</div></div>
+              <div class="medicine-pill"><span>Crocin 650</span><div class="pill-remove">×</div></div>
               <input id="pharmacy-input" class="medicine-input" type="text" placeholder="Add medicine, press Enter" />
             </div>
           </div>
@@ -708,7 +1012,7 @@ footer{
     <div class="animate d2">
       <div class="demo-card">
         <div class="demo-header">
-          <span style="color:#4ADE80">?</span>
+          <span style="color:#4ADE80">✓</span>
           Recommended Pharmacy
         </div>
         <div class="demo-body" id="pharmacy-results-container" style="display:none;">
@@ -717,15 +1021,15 @@ footer{
           <div style="font-size:0.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem">Alternatives</div>
           <div id="pharmacy-alternatives" style="display:flex;flex-direction:column;gap:0.75rem;"></div>
           <div style="margin-top:1rem;padding:1rem;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.15);border-radius:10px;display:flex;align-items:center;gap:0.75rem;">
-            <span style="font-size:1.2rem;color:#4ADE80">??</span>
+            <span style="font-size:1.2rem;color:#4ADE80">💰</span>
             <div>
               <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;font-weight:600">Savings vs Worst</div>
-              <div id="pharmacy-savings" style="font-size:1.25rem;font-weight:800;color:#4ADE80;font-family:'Outfit',sans-serif">?180</div>
+              <div id="pharmacy-savings" style="font-size:1.25rem;font-weight:800;color:#4ADE80;font-family:'Outfit',sans-serif">₹180</div>
             </div>
           </div>
         </div>
         <div id="pharmacy-results-empty" style="text-align:center;color:var(--muted);padding:2rem 1rem;">
-          <div style="font-size:2rem;margin-bottom:1rem">??</div>
+          <div style="font-size:2rem;margin-bottom:1rem">📍</div>
           <p>Add at least one medicine and click "Find Best Pharmacy" to see recommendations.</p>
         </div>
       </div>
@@ -733,7 +1037,7 @@ footer{
   </div>
 </section>
 
-<!-- ---------------- SAVINGS SIMULATOR ---------------- -->
+<!-- ════════════════ SAVINGS SIMULATOR ════════════════ -->
 <section class="simulator-section" id="simulator">
   <div class="animate">
     <div class="section-eyebrow">Simulator</div>
@@ -787,7 +1091,7 @@ footer{
   </div>
 </section>
 
-<!-- ---------------- INSURANCE COST DECODER ---------------- -->
+<!-- ════════════════ INSURANCE COST DECODER ════════════════ -->
 <section class="safety-section" id="insurance">
   <div style="max-width:680px;margin:0 auto;text-align:center" class="animate">
     <div class="section-eyebrow">Insurance</div>
@@ -852,7 +1156,7 @@ footer{
   </div>
 </section>
 
-<!-- ---------------- PRICE ALERTS ---------------- -->
+<!-- ════════════════ PRICE ALERTS ════════════════ -->
 <section class="safety-section" id="price-alerts">
   <div style="max-width:680px;margin:0 auto;text-align:center" class="animate">
     <div class="section-eyebrow">Price Alerts</div>
@@ -911,7 +1215,7 @@ footer{
   </div>
 </section>
 
-<!-- ---------------- MEDICINE SHORTAGE PREDICTOR ---------------- -->
+<!-- ════════════════ MEDICINE SHORTAGE PREDICTOR ════════════════ -->
 <section class="safety-section" id="shortage-predictor">
   <div style="max-width:680px;margin:0 auto;text-align:center" class="animate">
     <div class="section-eyebrow">Shortage Predictor</div>
@@ -923,15 +1227,15 @@ footer{
     <div class="animate d1">
       <div class="demo-card">
         <div class="demo-header">
-          <span style="color:#FF7BAD">?</span>
+          <span style="color:#FF7BAD">⏳</span>
           Predict Shortage
         </div>
         <div class="demo-body">
           <div style="display:grid;gap:0.85rem;margin-bottom:1rem;">
             <label class="sim-label">Medicines</label>
             <div class="pill-input-wrapper" id="shortage-pill-list" aria-label="Shortage medicine list" style="min-height:50px;">
-              <div class="medicine-pill"><span>Insulin Glargine</span><div class="pill-remove" title="Remove">�</div></div>
-              <div class="medicine-pill"><span>Metformin 500mg</span><div class="pill-remove" title="Remove">�</div></div>
+              <div class="medicine-pill"><span>Insulin Glargine</span><div class="pill-remove" title="Remove">×</div></div>
+              <div class="medicine-pill"><span>Metformin 500mg</span><div class="pill-remove" title="Remove">×</div></div>
               <input id="shortage-medicine-input" class="medicine-input" type="text" placeholder="Add medicine, press Enter" />
             </div>
           </div>
@@ -950,7 +1254,7 @@ footer{
     <div class="animate d2">
       <div class="demo-card">
         <div class="demo-header">
-          <span style="color:#4ADE80">?</span>
+          <span style="color:#4ADE80">⚡</span>
           Predictions
         </div>
         <div class="demo-body" id="shortage-predictions" style="min-height:420px;display:flex;flex-direction:column;gap:0.75rem;">
@@ -962,7 +1266,7 @@ footer{
 
       <div class="demo-card" style="margin-top:1.5rem;">
         <div class="demo-header">
-          <span style="color:#FBBF24">??</span>
+          <span style="color:#FBBF24">📌</span>
           Watchlist &amp; Alerts
         </div>
         <div class="demo-body">
@@ -978,7 +1282,7 @@ footer{
   </div>
 </section>
 
-<!-- ---------------- SAFETY ---------------- -->
+<!-- ════════════════ SAFETY ════════════════ -->
 <section class="safety-section" id="safety">
   <div style="max-width:680px;margin:0 auto;text-align:center" class="animate">
     <div class="section-eyebrow">Trust &amp; Safety</div>
@@ -995,12 +1299,12 @@ footer{
     <div class="safety-card animate d1">
       <div class="safety-icon">&#127973;</div>
       <h3>OpenFDA Verified</h3>
-      <p>All drug interaction and substitution data is cross-referenced with OpenFDA clinical databases � not crowd-sourced.</p>
+      <p>All drug interaction and substitution data is cross-referenced with OpenFDA clinical databases — not crowd-sourced.</p>
     </div>
     <div class="safety-card animate d2">
       <div class="safety-icon">&#128203;</div>
       <h3>Doctor-First Philosophy</h3>
-      <p>MediWise AI empowers informed conversations with your doctor. It surfaces information � never replaces professional advice.</p>
+      <p>MediWise AI empowers informed conversations with your doctor. It surfaces information — never replaces professional advice.</p>
     </div>
     <div class="safety-card animate d3">
       <div class="safety-icon">&#9889;</div>
@@ -1010,77 +1314,62 @@ footer{
   </div>
 </section>
 
-<!-- ---------------- AUDIT (Bill Auditor) UI ---------------- -->
-<section class="safety-section" id="audit" style="background:#040810;">
-  <div style="max-width:680px;margin:0 auto;text-align:center" class="animate">
-    <div class="section-eyebrow">AI Medical Bill Auditor</div>
-    <div class="section-title">Detect billing<br/><span class="gradient-text">errors instantly.</span></div>
-    <p class="section-sub" style="margin:0 auto">Upload a hospital bill (PDF/JPG/PNG). We�ll flag duplicates/overpricing/vague charges and generate an optional dispute letter.</p>
+<!-- ════════════════ TESTIMONIALS ════════════════ -->
+<section class="testi-section">
+  <div class="animate">
+    <div class="section-eyebrow">Stories</div>
+    <div class="section-title">Real patients.<br/><span class="gradient-text">Real savings.</span></div>
   </div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3.5rem;padding:0 6%;">
-    <div class="animate d1">
-      <div class="demo-card">
-        <div class="demo-header">
-          <span style="color:#FBBF24">&#128202;</span>
-          Upload Bill
-        </div>
-        <div class="demo-body">
-          <div style="display:grid;gap:0.85rem;margin-bottom:1rem;">
-            <label class="sim-label">Bill file</label>
-            <input id="audit-file" type="file" accept=".pdf,image/*" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
-            <div style="font-size:0.75rem;color:var(--muted);line-height:1.5">Max 10MB. Supported: PDF, JPG, PNG.</div>
-          </div>
-
-          <div style="display:grid;gap:0.85rem;margin-bottom:1rem;">
-            <label class="sim-label">Bill type (optional)</label>
-            <input id="audit-bill-type" type="text" value="general" placeholder="e.g., hospitalization, surgery" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
-          </div>
-
-          <div style="display:grid;gap:0.85rem;margin-bottom:1rem;">
-            <label class="sim-label">User ID (optional)</label>
-            <input id="audit-user-id" type="text" value="user_123" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:0.85rem 1rem;border-radius:12px;font-size:0.95rem;outline:none" />
-          </div>
-
-          <label style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem;font-size:0.95rem;color:var(--muted);">
-            <input id="audit-include-letter" type="checkbox" style="width:16px;height:16px;" checked />
-            Include dispute letter
-          </label>
-
-          <button id="run-bill-audit" class="btn-primary" style="width:100%;padding:12px;font-size:0.95rem;">Audit my bill</button>
-          <div id="audit-status" style="margin-top:1rem;font-size:0.95rem;color:#fff;min-height:1.5rem"></div>
-          <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--muted);line-height:1.5">
-            If Gemini/extraction fails, we�ll return an error response (backend spec: 500 for extraction failure).
-          </div>
+  <div class="testi-grid">
+    <div class="testi-card animate d1">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="testi-quote">"My father takes 7 medicines daily. MediWise found a dangerous Warfarin interaction that two different doctors had both missed. It may have saved his life."</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:rgba(26,107,255,0.15);color:#7BB8FF">RK</div>
+        <div>
+          <div class="testi-name">Rahul Kapoor</div>
+          <div class="testi-role">Son &amp; Caregiver &middot; Mumbai</div>
         </div>
       </div>
     </div>
-
-    <div class="animate d2" style="display:flex;flex-direction:column;gap:1.5rem;">
-      <div class="demo-card">
-        <div class="demo-header">
-          <span style="color:#4ADE80">&#10003;</span>
-          Audit Results
-        </div>
-        <div class="demo-body" id="audit-results" style="min-height:420px;">
-          <div style="color:var(--muted);font-size:0.9rem;">Upload a bill to see flags, confidence, and dispute guidance.</div>
+    <div class="testi-card animate d2">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="testi-quote">"Switched our entire family to generics based on the recommendations. We save &#8377;12,000 every month now. The AI explained everything — no medical jargon."</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:rgba(123,47,255,0.15);color:#B085FF">PM</div>
+        <div>
+          <div class="testi-name">Priya Mehta</div>
+          <div class="testi-role">School Teacher &middot; Chennai</div>
         </div>
       </div>
-
-      <div class="demo-card">
-        <div class="demo-header">
-          <span style="color:#7BB8FF">&#128221;</span>
-          Dispute Letter
-        </div>
-        <div class="demo-body" id="audit-letter" style="min-height:260px;">
-          <div style="color:var(--muted);font-size:0.9rem;">Letter will appear after audit completion (if available).</div>
+    </div>
+    <div class="testi-card animate d3">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="testi-quote">"The bill auditor caught &#8377;4,200 in duplicate charges from my hospital stay. MediWise paid for itself a hundred times over in a single afternoon."</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:rgba(255,61,127,0.12);color:#FF7BAD">AS</div>
+        <div>
+          <div class="testi-name">Arjun Sharma</div>
+          <div class="testi-role">Software Engineer &middot; Bengaluru</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ---------------- FOOTER ---------------- -->
+<!-- ════════════════ CTA ════════════════ -->
+<div class="cta-section">
+  <div class="cta-banner animate">
+    <h2>Your prescriptions cost<br/><span class="gradient-text">more than they should.</span></h2>
+    <p>Join thousands of patients saving money, catching billing errors, and staying safer — completely free to start.</p>
+    <div class="cta-btns">
+      <button class="btn-primary">Upload a Prescription — It's Free</button>
+      <button class="btn-ghost">Schedule a Demo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ FOOTER ════════════════ -->
 <footer>
   <div class="footer-top">
     <div class="footer-logo">
@@ -1088,12 +1377,12 @@ footer{
       MediWise AI
     </div>
     <nav class="footer-nav">
-      <a href="#savings-demo">Interactions</a>
-      <a href="#pharmacy">Pharmacy</a>
-      <a href="#simulator">Simulator</a>
-      <a href="#insurance">Insurance</a>
-      <a href="#price-alerts">Alerts</a>
-      <a href="#audit">Bill Audit</a>
+      <a href="#">Features</a>
+      <a href="#">How It Works</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Disclaimer</a>
+      <a href="#">Contact</a>
     </nav>
   </div>
   <div class="footer-bottom">
@@ -1104,10 +1393,9 @@ footer{
   </div>
 </footer>
 
-<!-- ---------------- SCRIPTS ---------------- -->
+<!-- ════════════════ SCRIPTS ════════════════ -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const API_BASE = window.location.protocol === 'file:' ? 'http://127.0.0.1:8000' : window.location.origin;
 // Nav scroll
 const nav = document.getElementById('main-nav');
 window.addEventListener('scroll', () => {
@@ -1178,7 +1466,7 @@ function addMedicinePill(name) {
   const list = document.getElementById('medicine-pill-list');
   const pill = document.createElement('div');
   pill.className = 'medicine-pill';
-  pill.innerHTML = `<span>${trimmed}</span><div class="pill-remove" title="Remove">�</div>`;
+  pill.innerHTML = `<span>${trimmed}</span><div class="pill-remove" title="Remove">×</div>`;
   list.insertBefore(pill, document.getElementById('medicine-input'));
   pill.querySelector('.pill-remove').addEventListener('click', () => pill.remove());
 }
@@ -1209,7 +1497,7 @@ async function loadInsurancePlans() {
   if (!select) return;
 
   try {
-    const response = await fetch(`${API_BASE}/insurance/plans`);
+    const response = await fetch('http://127.0.0.1:8000/insurance/plans');
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     if (!data.plans || !Array.isArray(data.plans)) return;
@@ -1238,7 +1526,7 @@ async function loadInsuranceResults() {
   resultsEl.innerHTML = '<div style="color:var(--muted);">Calculating coverage...</div>';
 
   try {
-    const response = await fetch(`${API_BASE}/insurance`, {
+    const response = await fetch('http://127.0.0.1:8000/insurance', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -1256,9 +1544,9 @@ async function loadInsuranceResults() {
           <div style="font-size:0.82rem;color:var(--muted);margin-top:0.25rem">${item.reason}</div>
         </div>
         <div style="text-align:right;min-width:140px;">
-          <div style="font-size:0.9rem;color:#fff">?${item.amount}</div>
-          <div style="font-size:0.85rem;color:#7BB8FF">Covered ?${item.covered}</div>
-          <div style="font-size:0.85rem;color:#FF7BAD">You pay ?${item.patient_pays}</div>
+          <div style="font-size:0.9rem;color:#fff">₹${item.amount}</div>
+          <div style="font-size:0.85rem;color:#7BB8FF">Covered ₹${item.covered}</div>
+          <div style="font-size:0.85rem;color:#FF7BAD">You pay ₹${item.patient_pays}</div>
         </div>
       </div>
     `).join('');
@@ -1267,11 +1555,11 @@ async function loadInsuranceResults() {
       <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
         <div style="min-width:220px;">
           <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Total bill</div>
-          <div style="font-size:1.4rem;font-weight:800;margin-top:0.35rem;">?${data.total_bill}</div>
+          <div style="font-size:1.4rem;font-weight:800;margin-top:0.35rem;">₹${data.total_bill}</div>
         </div>
         <div style="min-width:220px;">
           <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Patient pays</div>
-          <div style="font-size:1.4rem;font-weight:800;margin-top:0.35rem;color:#FF7BAD;">?${data.summary.total_patient_pays}</div>
+          <div style="font-size:1.4rem;font-weight:800;margin-top:0.35rem;color:#FF7BAD;">₹${data.summary.total_patient_pays}</div>
         </div>
         <div style="min-width:220px;">
           <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Coverage</div>
@@ -1315,7 +1603,7 @@ function formatDateLabel(timestamp) {
 async function loadPriceHistoryChart(medicine) {
   const dashboard = document.getElementById('alert-dashboard');
   try {
-    const response = await fetch(`${API_BASE}/alerts/history/${encodeURIComponent(medicine)}`);
+    const response = await fetch(`http://127.0.0.1:8000/alerts/history/${encodeURIComponent(medicine)}`);
     if (!response.ok) {
       throw new Error(`History fetch failed ${response.status}`);
     }
@@ -1335,7 +1623,7 @@ async function loadPriceHistoryChart(medicine) {
         labels: history.map(entry => formatDateLabel(entry.recorded_at)),
         datasets: [
           {
-            label: 'Price (?)',
+            label: 'Price (₹)',
             data: history.map(entry => entry.price),
             borderColor: '#4ADE80',
             backgroundColor: 'rgba(74,222,128,0.18)',
@@ -1364,10 +1652,10 @@ async function loadPriceHistoryChart(medicine) {
 async function renderPriceAlerts(userId) {
   const dashboard = document.getElementById('alert-dashboard');
   if (!dashboard) return;
-  dashboard.innerHTML = '<div style="color:var(--muted);">Loading alerts�</div>';
+  dashboard.innerHTML = '<div style="color:var(--muted);">Loading alerts…</div>';
 
   try {
-    const response = await fetch(`${API_BASE}/alerts/${encodeURIComponent(userId)}`);
+    const response = await fetch(`http://127.0.0.1:8000/alerts/${encodeURIComponent(userId)}`);
     if (!response.ok) {
       throw new Error(`Unable to load alerts: ${response.status}`);
     }
@@ -1384,7 +1672,7 @@ async function renderPriceAlerts(userId) {
         <div style="display:flex;justify-content:space-between;gap:1rem;align-items:start;flex-wrap:wrap;">
           <div>
             <div style="font-size:0.95rem;font-weight:700;color:#fff">${alert.medicine}</div>
-            <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.4rem">Target ?${alert.target_price} | Current ?${alert.current_price}</div>
+            <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.4rem">Target ₹${alert.target_price} | Current ₹${alert.current_price}</div>
           </div>
           <button onclick="deletePriceAlert('${alert.user_id}','${alert.medicine.replace("'","\\'")}')" style="border:1px solid rgba(255,255,255,0.12);background:transparent;color:#fff;padding:0.6rem 0.9rem;border-radius:10px;font-size:0.85rem;cursor:pointer">Cancel</button>
         </div>
@@ -1409,10 +1697,10 @@ async function renderPriceAlerts(userId) {
 
 async function subscribePriceAlert() {
   const status = document.getElementById('alert-status');
-  status.textContent = 'Saving alert�';
+  status.textContent = 'Saving alert…';
   try {
     const payload = getPriceAlertPayload();
-    const response = await fetch(`${API_BASE}/alerts/subscribe`, {
+    const response = await fetch('http://127.0.0.1:8000/alerts/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -1436,7 +1724,7 @@ async function subscribePriceAlert() {
 
 async function deletePriceAlert(userId, medicine) {
   try {
-    const response = await fetch(`${API_BASE}/alerts/${encodeURIComponent(userId)}/${encodeURIComponent(medicine)}`, {
+    const response = await fetch(`http://127.0.0.1:8000/alerts/${encodeURIComponent(userId)}/${encodeURIComponent(medicine)}`, {
       method: 'DELETE',
     });
     if (!response.ok) {
@@ -1451,9 +1739,9 @@ async function deletePriceAlert(userId, medicine) {
 async function runPriceAlertCheck() {
   const status = document.getElementById('alert-status');
   status.style.color = '#fff';
-  status.textContent = 'Checking price alerts�';
+  status.textContent = 'Checking price alerts…';
   try {
-    const response = await fetch(`${API_BASE}/alerts/check`, {
+    const response = await fetch('http://127.0.0.1:8000/alerts/check', {
       method: 'POST',
     });
     const data = await response.json();
@@ -1537,7 +1825,7 @@ async function loadInteractions() {
   error.style.display = 'none';
 
   try {
-    const response = await fetch(`${API_BASE}/interactions`, {
+    const response = await fetch('http://127.0.0.1:8000/interactions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ medicines }),
@@ -1584,7 +1872,7 @@ window.addEventListener('load', () => {
   loadInteractions();
 });
 
-// -------- PHARMACY OPTIMIZER --------
+// ════════ PHARMACY OPTIMIZER ════════
 function getPharmacyMedicinesFromInput() {
   const pills = Array.from(document.querySelectorAll('#pharmacy-pill-list .medicine-pill span'))
     .map(el => el.textContent.trim())
@@ -1601,7 +1889,7 @@ function addPharmacyMedicinePill(name) {
   const list = document.getElementById('pharmacy-pill-list');
   const pill = document.createElement('div');
   pill.className = 'medicine-pill';
-  pill.innerHTML = `<span>${trimmed}</span><div class="pill-remove" title="Remove">�</div>`;
+  pill.innerHTML = `<span>${trimmed}</span><div class="pill-remove" title="Remove">×</div>`;
   list.insertBefore(pill, document.getElementById('pharmacy-input'));
   pill.querySelector('.pill-remove').addEventListener('click', () => pill.remove());
 }
@@ -1641,7 +1929,7 @@ async function loadPharmacyResults() {
   }
 
   try {
-    const response = await fetch(`${API_BASE}/pharmacy`, {
+    const response = await fetch('http://127.0.0.1:8000/pharmacy', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ medicines, user_lat, user_lng }),
@@ -1666,7 +1954,7 @@ async function loadPharmacyResults() {
         <div>
           <div class="wr-name" style="color:#00C2FF">${rec.pharmacy_name}</div>
           <div class="wr-sub">${rec.address}</div>
-          <div style="font-size:0.8rem;color:#7A8899;margin-top:0.4rem">Distance: <strong>${rec.distance_km}km</strong> | Cost: <strong>?${rec.total_medicine_cost}</strong></div>
+          <div style="font-size:0.8rem;color:#7A8899;margin-top:0.4rem">Distance: <strong>${rec.distance_km}km</strong> | Cost: <strong>₹${rec.total_medicine_cost}</strong></div>
         </div>
         <div style="text-align:right;">
           <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;font-weight:600">Score</div>
@@ -1675,7 +1963,7 @@ async function loadPharmacyResults() {
       </div>
       <div style="font-size:0.8rem;color:#7A8899;margin-top:0.75rem;">
         <div style="margin-bottom:0.4rem"><strong>${rec.medicines_available.length}</strong> medicines available</div>
-        ${rec.medicines_unavailable.length > 0 ? `<div style="color:#FF7BAD">?? ${rec.medicines_unavailable.join(', ')} not in stock</div>` : ''}
+        ${rec.medicines_unavailable.length > 0 ? `<div style="color:#FF7BAD">⚠️ ${rec.medicines_unavailable.join(', ')} not in stock</div>` : ''}
       </div>
     `;
     document.getElementById('pharmacy-best-result').innerHTML = bestHTML;
@@ -1685,7 +1973,7 @@ async function loadPharmacyResults() {
       <div class="wp-result-row">
         <div>
           <div class="wr-name">${p.pharmacy_name}</div>
-          <div style="font-size:0.8rem;color:var(--muted);margin-top:0.3rem">${p.distance_km}km � ?${p.total_medicine_cost}</div>
+          <div style="font-size:0.8rem;color:var(--muted);margin-top:0.3rem">${p.distance_km}km • ₹${p.total_medicine_cost}</div>
           <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem">${p.medicines_available_count}/${p.medicines_available_count + p.medicines_unavailable_count} medicines</div>
         </div>
         <div style="text-align:right;color:#7A8899;font-family:'Outfit',sans-serif;font-weight:700">${p.score}</div>
@@ -1694,7 +1982,7 @@ async function loadPharmacyResults() {
     document.getElementById('pharmacy-alternatives').innerHTML = altHTML;
 
     // Savings
-    document.getElementById('pharmacy-savings').textContent = `?${Math.round(data.savings_vs_worst)}`;
+    document.getElementById('pharmacy-savings').textContent = `₹${Math.round(data.savings_vs_worst)}`;
 
     empty.style.display = 'none';
     container.style.display = 'block';
@@ -1728,7 +2016,7 @@ document.querySelectorAll('.feature-card').forEach(card => {
   card.addEventListener('mouseleave', () => card.style.boxShadow = 'none');
 });
 
-// ---------------- SHORTAGE PREDICTOR (Frontend Integration) ----------------
+// ════════════════ SHORTAGE PREDICTOR (Frontend Integration) ════════════════
 function getShortageMedicinesFromInput() {
   const pills = Array.from(document.querySelectorAll('#shortage-pill-list .medicine-pill span'))
     .map(el => el.textContent.trim())
@@ -1745,7 +2033,7 @@ function addShortageMedicinePill(name) {
   const list = document.getElementById('shortage-pill-list');
   const pill = document.createElement('div');
   pill.className = 'medicine-pill';
-  pill.innerHTML = `<span>${trimmed}</span><div class="pill-remove" title="Remove">�</div>`;
+  pill.innerHTML = `<span>${trimmed}</span><div class="pill-remove" title="Remove">×</div>`;
   list.insertBefore(pill, document.getElementById('shortage-medicine-input'));
   pill.querySelector('.pill-remove').addEventListener('click', () => pill.remove());
 }
@@ -1784,7 +2072,7 @@ function riskBadgeHtml(risk, riskScore, seasonalFlag) {
   if (risk === 'HIGH') { cls = 'sev-high'; label = 'HIGH'; }
   else if (risk === 'MODERATE') { cls = 'sev-med'; label = 'MED'; }
 
-  const seasonalPart = (seasonalFlag === 1) ? ' � Seasonal peak' : '';
+  const seasonalPart = (seasonalFlag === 1) ? ' • Seasonal peak' : '';
   return `<span class="sev-badge ${cls}" title="Risk score: ${riskScore}/100">${label}${seasonalPart}</span>`;
 }
 
@@ -1820,7 +2108,7 @@ function renderShortagePredictions(predictions) {
           <div>
             <div style="font-size:0.95rem;font-weight:800;color:#fff;">${p.medicine}</div>
             <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.25rem;">${p.recommendation || ''}</div>
-            <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.25rem;">Shortage: <strong style="color:#fff;">${risk}</strong> � ${daysText}</div>
+            <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.25rem;">Shortage: <strong style="color:#fff;">${risk}</strong> • ${daysText}</div>
             ${bullets}
             ${altHtml}
           </div>
@@ -1851,10 +2139,10 @@ async function runShortagePredict() {
   }
 
   statusEl.style.color = '#fff';
-  statusEl.textContent = 'Predicting shortage�';
+  statusEl.textContent = 'Predicting shortage…';
 
   try {
-    const resp = await fetch(`${API_BASE}/shortage/predict`, {
+    const resp = await fetch('http://127.0.0.1:8000/shortage/predict', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ medicines: pills, user_location: location || 'Unknown' }),
@@ -1879,20 +2167,20 @@ async function loadShortageWatchlist() {
   const el = document.getElementById('shortage-watchlist');
   if (!el) return;
 
-  el.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">Loading watchlist�</div>';
+  el.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">Loading watchlist…</div>';
   try {
-    const resp = await fetch(`${API_BASE}/shortage/watchlist`);
+    const resp = await fetch('http://127.0.0.1:8000/shortage/watchlist');
     const data = await resp.json();
     if (!resp.ok) throw new Error(data?.detail || resp.statusText);
 
     const items = (data.watchlist || []).slice(0, 20).map(w => {
-      const season = w.seasonal_flag === 1 ? ' � Seasonal peak' : '';
+      const season = w.seasonal_flag === 1 ? ' • Seasonal peak' : '';
       return `
         <div style="border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:0.85rem;background:rgba(255,255,255,0.03);">
           <div style="display:flex;justify-content:space-between;gap:1rem;align-items:center;">
             <div>
               <div style="font-weight:800;color:#fff;font-size:0.9rem;">${w.medicine}</div>
-              <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.25rem;">Risk: <strong style="color:#fff;">${w.risk_level}</strong> � ${w.risk_score}/100${season}</div>
+              <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.25rem;">Risk: <strong style="color:#fff;">${w.risk_level}</strong> • ${w.risk_score}/100${season}</div>
             </div>
           </div>
         </div>
@@ -1909,9 +2197,9 @@ async function loadShortageAlerts() {
   const el = document.getElementById('shortage-watchlist');
   if (!el) return;
 
-  el.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">Loading HIGH alerts�</div>';
+  el.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">Loading HIGH alerts…</div>';
   try {
-    const resp = await fetch(`${API_BASE}/shortage/alerts`);
+    const resp = await fetch('http://127.0.0.1:8000/shortage/alerts');
     const data = await resp.json();
     if (!resp.ok) throw new Error(data?.detail || resp.statusText);
 
@@ -1927,7 +2215,7 @@ async function loadShortageAlerts() {
           <div>
             <div style="font-weight:900;color:#fff;font-size:0.95rem;">${a.medicine}</div>
             <div style="margin-top:0.35rem;font-size:0.85rem;color:#FFB3C4;">${a.recommendation || 'Stock up soon'}</div>
-            <div style="margin-top:0.25rem;font-size:0.82rem;color:#C5CDD9;">Risk score: <strong style="color:#fff;">${a.risk_score}/100</strong> � ETA: ${a.predicted_shortage_in_days} days (estimated)</div>
+            <div style="margin-top:0.25rem;font-size:0.82rem;color:#C5CDD9;">Risk score: <strong style="color:#fff;">${a.risk_score}/100</strong> • ETA: ${a.predicted_shortage_in_days} days (estimated)</div>
             ${Array.isArray(a.reason) && a.reason.length ? `<ul style="margin:0.6rem 0 0 1.1rem;color:#C5CDD9;">${a.reason.map(r=>`<li>${r}</li>`).join('')}</ul>` : ''}
           </div>
         </div>
@@ -1947,290 +2235,147 @@ if (watchBtn) watchBtn.addEventListener('click', loadShortageWatchlist);
 const alertsBtn = document.getElementById('load-shortage-alerts');
 if (alertsBtn) alertsBtn.addEventListener('click', loadShortageAlerts);
 
-// ---------------- AUDIT (Bill Auditor) UI ----------------
-async function runBillAuditFromUI() {
-  const fileInput = document.getElementById('audit-file');
-  const billType = document.getElementById('audit-bill-type')?.value || 'general';
-  const userId = document.getElementById('audit-user-id')?.value || null;
-  const includeDisputeLetter = document.getElementById('audit-include-letter')?.checked !== false;
+// ════════════════ OCR & SUBSTITUTION ENGINE ════════════════
+const ocrFileInput = document.getElementById('ocr-file-input');
+const ocrStatusArea = document.getElementById('ocr-status-area');
+const ocrTags = document.getElementById('ocr-tags');
+const ocrResultsArea = document.getElementById('ocr-results-area');
+const ocrMedicinesList = document.getElementById('ocr-medicines-list');
 
-  const statusEl = document.getElementById('audit-status');
-  const resultsEl = document.getElementById('audit-results');
-  const letterEl = document.getElementById('audit-letter');
+const savingsEmpty = document.getElementById('savings-empty');
+const savingsResults = document.getElementById('savings-results');
 
-  if (!fileInput || !fileInput.files || !fileInput.files.length) {
-    if (statusEl) {
-      statusEl.style.color = '#FF6B6B';
-      statusEl.textContent = 'Select a bill file (JPG/PNG/PDF).';
-    }
-    if (resultsEl) resultsEl.innerHTML = '';
-    if (letterEl) letterEl.innerHTML = '';
-    return;
-  }
+if (ocrFileInput) {
+  ocrFileInput.addEventListener('change', async (e) => {
+    if (!e.target.files.length) return;
+    const file = e.target.files[0];
+    
+    // Reset UI
+    ocrStatusArea.style.display = 'block';
+    ocrResultsArea.style.display = 'none';
+    ocrTags.innerHTML = '<span class="analysis-tag tag-blue">&#8987; Uploading Prescription...</span>';
+    savingsEmpty.style.display = 'block';
+    savingsResults.style.display = 'none';
 
-  const file = fileInput.files[0];
-  if (statusEl) {
-    statusEl.style.color = '#fff';
-    statusEl.textContent = 'Auditing bill�';
-  }
-  if (resultsEl) resultsEl.innerHTML = '';
-  if (letterEl) letterEl.innerHTML = '';
-
-  try {
-    const form = new FormData();
-    form.append('file', file, file.name);
-    form.append('bill_type', billType);
-    if (userId) form.append('user_id', userId);
-    form.append('include_dispute_letter', includeDisputeLetter ? 'true' : 'false');
-
-    const resp = await fetch(`${API_BASE}/audit`, {
-      method: 'POST',
-      body: form,
-    });
-
-    const data = await resp.json().catch(() => ({}));
-    if (!resp.ok) {
-      const msg = data?.detail || data?.error || resp.statusText;
-      throw new Error(msg);
-    }
-
-    renderAuditResults(data);
-    if (includeDisputeLetter) await loadAuditLetterIfNeeded(data?.audit_id);
-    if (statusEl) {
-      statusEl.style.color = '#4ADE80';
-      statusEl.textContent = 'Audit completed.';
-    }
-  } catch (err) {
-    if (statusEl) {
-      statusEl.style.color = '#FF6B6B';
-      statusEl.textContent = `Audit failed: ${err.message}`;
-    }
-    if (resultsEl) resultsEl.innerHTML = '';
-    if (letterEl) letterEl.innerHTML = '';
-  }
-}
-
-function formatMoney(n) {
-  if (n === null || n === undefined || Number.isNaN(+n)) return '�';
-  return '?' + Math.round(+n).toLocaleString('en-IN');
-}
-
-function severityBadge(sev) {
-  const s = (sev || '').toUpperCase();
-  if (s === 'HIGH') return `<span class="sev-badge sev-high">HIGH</span>`;
-  if (s === 'MODERATE') return `<span class="sev-badge sev-med">MED</span>`;
-  return `<span class="sev-badge sev-low">LOW</span>`;
-}
-
-function renderAuditResults(data) {
-  const resultsEl = document.getElementById('audit-results');
-  if (!resultsEl) return;
-
-  const summary = data?.summary || {};
-  const warnings = data?.warnings || [];
-
-  const flags = Array.isArray(data?.flags) ? data.flags : [];
-  const topFlagsHtml = flags.length
-    ? flags.slice(0, 12).map(f => `
-        <div style="border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:0.85rem;background:rgba(255,255,255,0.03);margin-bottom:0.6rem;">
-          <div style="display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap;">
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      ocrTags.innerHTML = '<span class="analysis-tag tag-blue">&#8987; Running OCR & AI Extraction...</span>';
+      
+      const response = await fetch('http://127.0.0.1:8000/api/prescription/analyze', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (!response.ok) {
+        let errorMsg = 'Analysis failed';
+        try {
+          const errData = await response.json();
+          errorMsg = errData.detail || errorMsg;
+        } catch (e) {}
+        throw new Error(errorMsg);
+      }
+      
+      const data = await response.json();
+      
+      ocrTags.innerHTML = '<span class="analysis-tag tag-green">&#10003; AI Extraction Complete</span>';
+      
+      if (data.medicines && data.medicines.length > 0) {
+        ocrResultsArea.style.display = 'block';
+        ocrMedicinesList.innerHTML = data.medicines.map(m => `
+          <div class="wp-result-row" style="background:rgba(26,107,255,0.08);border:1px solid rgba(26,107,255,0.2);">
             <div>
-              <div style="font-size:0.95rem;font-weight:900;color:#fff;">${f.type || 'FLAG'}</div>
-              <div style="font-size:0.82rem;color:#A7B5D3;margin-top:0.25rem;">${f.item || '�'}</div>
-              ${f.details ? `<div style="font-size:0.82rem;color:#C5CDD9;margin-top:0.35rem;line-height:1.6;">${f.details}</div>` : ''}
-              ${f.how_to_dispute ? `<div style="font-size:0.82rem;color:#9BA8BB;margin-top:0.35rem;line-height:1.6;"><strong style="color:#7BB8FF;">How to dispute:</strong> ${f.how_to_dispute}</div>` : ''}
-            </div>
-            <div style="display:flex;flex-direction:column;gap:0.4rem;align-items:flex-end;">
-              ${severityBadge(f.severity)}
-              ${f.evidence ? `<div style="font-size:0.78rem;color:#7A8899;text-align:right;max-width:240px;">Evidence: ${f.evidence}</div>` : ''}
+              <div class="wr-name" style="color:#7BB8FF">${m.medicine_name}</div>
+              <div class="wr-sub">${m.dosage || ''} &middot; ${m.frequency || ''} &middot; ${m.duration || ''}</div>
             </div>
           </div>
-        </div>
-      `).join('')
-    : `<div style="color:var(--muted);font-size:0.9rem;">No flags detected.</div>`;
-
-  resultsEl.innerHTML = `
-    <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
-      <div style="min-width:240px;">
-        <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.4rem">Audit ID</div>
-        <div style="font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:900;color:#fff;">${data?.audit_id || '�'}</div>
-      </div>
-      <div style="min-width:240px;text-align:right;">
-        <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.4rem">Dispute confidence</div>
-        <div style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:900;color:#1A6BFF;">${summary.dispute_confidence || 'LOW'}</div>
-        <div style="margin-top:0.25rem;color:#7A8899;font-size:0.85rem;font-weight:700">${summary.recommendation || 'ACCEPTABLE'}</div>
-      </div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
-      <div class="sim-row">
-        <span class="sim-row-label" style="color:var(--muted)">Potential overcharge</span>
-        <span class="sim-row-val" style="color:#FBBF24">${formatMoney(summary.potential_overcharge)}</span>
-      </div>
-      <div class="sim-row">
-        <span class="sim-row-label" style="color:var(--muted)">Confirmed overcharge</span>
-        <span class="sim-row-val" style="color:#FF7BAD">${formatMoney(summary.confirmed_overcharge)}</span>
-      </div>
-    </div>
-
-    ${warnings.length ? `<div style="padding:0.9rem 1rem;border:1px solid rgba(255,191,36,0.15);border-radius:12px;background:rgba(251,191,36,0.07);color:#FBBF24;margin-bottom:1rem;">
-      <strong style="color:#FBBF24;">Notice</strong>
-      <ul style="margin:0.6rem 0 0 1.1rem;">${warnings.map(w => `<li>${w}</li>`).join('')}</ul>
-    </div>` : ''}
-
-    <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.6rem;">Top flags</div>
-    <div>${topFlagsHtml}</div>
-  `;
-}
-
-async function loadAuditLetterIfNeeded(auditId) {
-  const letterEl = document.getElementById('audit-letter');
-  if (!letterEl || !auditId) return;
-  try {
-    letterEl.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">Loading dispute letter�</div>';
-    const resp = await fetch(`${API_BASE}/audit/${encodeURIComponent(auditId)}/letter`);
-    const data = await resp.json().catch(() => ({}));
-    if (!resp.ok) throw new Error(data?.detail || data?.error || resp.statusText);
-
-    const letterText = data?.letter || '';
-    if (!letterText) {
-      letterEl.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">No dispute letter generated.</div>';
-      return;
-    }
-
-    letterEl.innerHTML = `
-      <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.6rem;">Dispute letter</div>
-      <pre style="white-space:pre-wrap;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:1rem;color:#C5CDD9;line-height:1.7;font-family:inherit;max-height:360px;overflow:auto;">${letterText}</pre>
-    `;
-  } catch (err) {
-    letterEl.innerHTML = `<div style="color:#FF6B6B;font-size:0.95rem;">Unable to load letter: ${err.message}</div>`;
-  }
-}
-
-const auditRunBtn = document.getElementById('run-bill-audit');
-if (auditRunBtn) auditRunBtn.addEventListener('click', runBillAuditFromUI);
-
-async function runPrescriptionOcrFromUI() {
-  const fileInput = document.getElementById('prescription-file');
-  const userId = document.getElementById('prescription-user-id')?.value || null;
-  const rawText = document.getElementById('prescription-raw-text')?.value?.trim() || '';
-
-  const statusEl = document.getElementById('prescription-ocr-status');
-  const resultsEl = document.getElementById('prescription-ocr-results');
-  const progressEl = document.getElementById('prescription-ocr-progress');
-  const progressBarEl = document.getElementById('prescription-ocr-progress-bar');
-  const progressTextEl = document.getElementById('prescription-ocr-progress-text');
-
-  if ((!fileInput || !fileInput.files || !fileInput.files.length) && !rawText) {
-    if (statusEl) {
-      statusEl.style.color = '#FF6B6B';
-      statusEl.textContent = 'Select a prescription file or paste prescription text.';
-    }
-    if (resultsEl) resultsEl.innerHTML = '';
-    return;
-  }
-
-  const file = fileInput?.files?.[0] || null;
-
-  if (statusEl) {
-    statusEl.style.color = '#fff';
-    statusEl.textContent = rawText ? 'Extracting medicines from pasted text...' : 'Extracting medicines from upload...';
-  }
-  if (resultsEl) resultsEl.innerHTML = '';
-  if (progressEl) progressEl.style.display = 'block';
-  if (progressBarEl) progressBarEl.style.width = '35%';
-  if (progressTextEl) progressTextEl.textContent = rawText ? 'Parsing prescription text' : 'Uploading prescription file';
-
-  try {
-    let resp;
-    if (rawText) {
-      resp = await fetch(`${API_BASE}/ocr/text`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ raw_text: rawText, user_id: userId }),
-      });
-    } else {
-      const form = new FormData();
-      form.append('file', file, file.name);
-      if (userId) form.append('user_id', userId);
-      resp = await fetch(`${API_BASE}/ocr`, {
-        method: 'POST',
-        body: form,
-      });
-    }
-
-    if (progressBarEl) progressBarEl.style.width = '75%';
-    if (progressTextEl) progressTextEl.textContent = 'Structuring medicine list';
-
-    const data = await resp.json().catch(() => ({}));
-    if (!resp.ok) {
-      const msg = data?.detail || data?.error || resp.statusText;
-      throw new Error(msg);
-    }
-
-    const extracted =
-      data?.extracted_medicines ||
-      data?.medicines ||
-      data?.medicines_json ||
-      data?.result?.medicines ||
-      [];
-
-    const list = Array.isArray(extracted) ? extracted : [];
-
-    if (!list.length) {
-      if (statusEl) {
-        statusEl.style.color = '#FFB3C4';
-        statusEl.textContent = rawText ? 'No medicines found in pasted text.' : 'No medicines found in extraction.';
+        `).join('');
+        
+        // Populate interaction simulator too
+        data.medicines.forEach(m => addMedicinePill(m.medicine_name));
+        
+        // Trigger Substitution Engine
+        await runSubstitutionEngine(data.medicines.map(m => m.medicine_name));
+      } else {
+        ocrMedicinesList.innerHTML = '<div style="color:#FF7BAD;font-size:0.8rem;">No medicines found in prescription.</div>';
       }
-      if (resultsEl) resultsEl.innerHTML = '<div style="color:var(--muted);font-size:0.9rem;">Try pasted prescription text or configure EasyOCR/Gemini for image extraction.</div>';
-      if (progressEl) progressEl.style.display = 'none';
+      
+    } catch (err) {
+      ocrTags.innerHTML = `<span class="analysis-tag tag-rose">&#9888; Error: ${err.message}</span>`;
+    }
+  });
+}
+
+async function runSubstitutionEngine(medicineNames) {
+  savingsEmpty.innerHTML = '<div style="font-size:2rem;margin-bottom:1rem">⏳</div><p>Finding Generic Alternatives...</p>';
+  savingsEmpty.style.display = 'block';
+  savingsResults.style.display = 'none';
+  
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/substitution/check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ medicines: medicineNames })
+    });
+    
+    if (!response.ok) throw new Error('Substitution check failed');
+    
+    const data = await response.json();
+    
+    savingsEmpty.style.display = 'none';
+    savingsResults.style.display = 'block';
+    
+    if (!data.results || data.results.length === 0) {
+      savingsResults.innerHTML = '<div style="text-align:center;color:var(--muted);padding:1rem;">No generic alternatives found for the prescribed medicines.</div>';
       return;
     }
-
-    const cards = list.slice(0, 25).map(m => {
-      const name = typeof m === 'string' ? m : (m?.name || m?.medicine || m?.medicine_name || 'Medicine');
-      const dosage = typeof m === 'object' && m ? (m?.dosage || m?.dose || '') : '';
-      const freq = typeof m === 'object' && m ? (m?.frequency_human || m?.frequency || m?.freq || '') : '';
-      const duration = typeof m === 'object' && m ? (m?.duration || '') : '';
-      const generic = typeof m === 'object' && m && m?.generic_name ? `Generic: ${m.generic_name}` : '';
-      const subParts = [dosage, freq, duration, generic].filter(Boolean);
-      const sub = subParts.length ? ` ${subParts.join(' � ')}` : '';
-
-      return `
-        <div style="border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:0.9rem;background:rgba(255,255,255,0.03);">
-          <div style="font-weight:900;color:#fff;font-size:0.95rem;">${name}</div>
-          ${sub ? `<div style="margin-top:0.25rem;color:#A7B5D3;font-size:0.82rem;">${sub}</div>` : ''}
+    
+    let html = '';
+    data.results.forEach(res => {
+      html += `
+        <div class="rx-row">
+          <div>
+            <div class="rx-name">${res.medicine}</div>
+            <div class="rx-dosage">Branded</div>
+          </div>
+          <div style="text-align:right">
+            <div class="rx-label" style="color:var(--muted)">Prescribed</div>
+            <div class="rx-price-branded">&#8377;${res.brand_price}</div>
+          </div>
+        </div>
+        <div class="rx-row" style="border-color:rgba(74,222,128,0.2);background:rgba(74,222,128,0.03);margin-bottom:0;">
+          <div>
+            <div class="rx-name">${res.alternative}</div>
+            <div class="rx-dosage">Generic Alternative</div>
+          </div>
+          <div style="text-align:right">
+            <div class="rx-label" style="color:#4ADE80">Recommended</div>
+            <div class="rx-price-generic">&#8377;${res.generic_price}</div>
+          </div>
+        </div>
+        <div style="font-size:0.75rem;color:#A7B5D3;padding:0.5rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;margin-bottom:1rem;font-style:italic;">
+          💡 <strong>AI Explanation:</strong> ${res.explanation}
         </div>
       `;
-    }).join('');
-
-    if (progressBarEl) progressBarEl.style.width = '100%';
-    if (progressTextEl) progressTextEl.textContent = 'Complete';
-    if (statusEl) {
-      statusEl.style.color = '#4ADE80';
-      statusEl.textContent = `Extraction complete. Found ${list.length} medicine(s).`;
-    }
-    if (resultsEl) resultsEl.innerHTML = cards;
+    });
+    
+    html += `
+      <div class="savings-callout">
+        <div>
+          <div class="savings-label">Total Savings This Month</div>
+          <div style="font-size:0.72rem;color:#4A7BAA;margin-top:2px">Switching to all recommended generics</div>
+        </div>
+        <div class="savings-amount">&#8377;${data.monthly_savings}</div>
+      </div>
+    `;
+    
+    savingsResults.innerHTML = html;
+    
   } catch (err) {
-    if (statusEl) {
-      statusEl.style.color = '#FF6B6B';
-      statusEl.textContent = `OCR failed: ${err.message}`;
-    }
-    if (resultsEl) resultsEl.innerHTML = '';
-  } finally {
-    setTimeout(() => {
-      if (progressEl) progressEl.style.display = 'none';
-      if (progressBarEl) progressBarEl.style.width = '0%';
-    }, 700);
+    savingsEmpty.innerHTML = `<div style="color:#FF7BAD;font-size:0.9rem;">Error: ${err.message}</div>`;
   }
 }
-const heroOcrBtn = document.getElementById('run-prescription-ocr');
-if (heroOcrBtn) heroOcrBtn.addEventListener('click', runPrescriptionOcrFromUI);
-
-const heroOcrBtn2 = document.getElementById('run-prescription-ocr-button');
-if (heroOcrBtn2) heroOcrBtn2.addEventListener('click', runPrescriptionOcrFromUI);
-
-// ---------------- end audit UI ----------------
 </script>
 </body>
 </html>
